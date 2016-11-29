@@ -2,7 +2,7 @@
 # ** I2C Tester
 #------------------------------------------------
 # Date created: 23/Nov/2016
-# Created by:   Night_Runner
+# Created by:   Mark Evans
 # Description:
 #  Cycles GPIO1 (XIO-2) low and high, while
 #  reporting the state of GPIO2 (XIO-3).
@@ -21,10 +21,10 @@ GPIO.setup("GPIO2", GPIO.IN )
 
 def main():
     dev = Device(0x40)
-    dev.set_pwm_frequency(50)   # Hz
+    dev.set_pwm_frequency(1600*0.9)   # Hz
     while True:
-        for val in range(1364,2730):
-            dev.set_pwm(5, val)
+        for val in range(0,4096,8):
+            dev.set_pwm(5, (val + (4096/16)*5) % 4096)
             time.sleep(0.01)
     
 
