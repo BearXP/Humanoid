@@ -20,10 +20,10 @@ GPIO.setup("GPIO1", GPIO.OUT)
 GPIO.setup("GPIO2", GPIO.IN )
 
 def main():
-	dev = Device(0x40)
+    dev = Device(0x40)
     dev.set_pwm_frequency(50)   # Hz
     while True:
-        for val in range(4094/3,4094*2/3)
+        for val in range(1364,2730):
             dev.set_pwm(5, val)
             time.sleep(0.01)
     
