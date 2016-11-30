@@ -27,7 +27,7 @@ def main():
             pos = abs(4095-val*2)
             print "New pos: " + repr(pos)
             dev.set_pwm(5, pos)
-            time.sleep(0.01)
+            time.sleep(0.1)
     
 
 
