@@ -21,11 +21,12 @@ GPIO.setup("GPIO2", GPIO.IN )
 
 def main():
     dev = Device(0x40)
-    dev.set_pwm_frequency(1600*0.9)   # Hz
+    dev.set_pwm_frequency(60)   # Hz
     while True:
-        for val in range(0,4095,8):
-            pos = abs(4095-val*2)
-            print "New pos: " + repr(pos)
+        for val in range(150,600,10):
+            dev.set_pwm(5, pos)
+            time.sleep(0.1)
+        for val in range(600,150,-10):
             dev.set_pwm(5, pos)
             time.sleep(0.1)
     
