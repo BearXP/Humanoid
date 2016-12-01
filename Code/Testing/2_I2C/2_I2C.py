@@ -24,10 +24,10 @@ def main():
     dev.set_pwm_frequency(60)   # Hz
     while True:
         for val in range(150,600,10):
-            dev.set_pwm(5, pos)
+            dev.set_pwm(5, val)
             time.sleep(0.1)
         for val in range(600,150,-10):
-            dev.set_pwm(5, pos)
+            dev.set_pwm(5, val)
             time.sleep(0.1)
     
 
