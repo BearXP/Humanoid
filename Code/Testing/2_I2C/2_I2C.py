@@ -19,17 +19,19 @@ import time
 GPIO.setup("GPIO1", GPIO.OUT)
 GPIO.setup("GPIO2", GPIO.IN )
 
+min=150
+max=800
+
 def main():
     dev = Device(0x40)
     dev.set_pwm_frequency(60)   # Hz
     while True:
-        for val in range(150,600,10):
+        for val in range(min,max,10):
             dev.set_pwm(5, val)
-            time.sleep(0.1)
-        for val in range(600,150,-10):
+            time.sleep(0.01)
+        for val in range(max,min,-10):
             dev.set_pwm(5, val)
-            time.sleep(0.1)
-    
+            time.sleep(0.01)
 
 
 try:
