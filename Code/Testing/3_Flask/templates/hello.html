@@ -1,0 +1,37 @@
+<!doctype html>
+<link rel="stylesheet" href="https://yui-s.yahooapis.com/pure/0.6.0/pure-min.css">
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"> -->
+
+
+
+<title>Hello from Flask</title>
+{% if name %}
+  <h1>Hello {{ name }}!</h1>
+{% else %}
+  <h1>Hello, World!</h1>
+{% endif %}
+
+<style>
+img {
+     width:75%;
+     display:block;
+     margin:0 auto;
+}
+</style>
+
+<form>
+  <img src="http://cdn.thegadgetflow.com/wp-content/uploads/2015/05/JD-Humanoid-Revolutionary-Robot-Kit-04.jpg">
+  <br>
+  <input type="radio" name="Servo" value="Neck" checked>Neck 
+  <input type="radio" name="Servo" value="LArm">LArm 
+  <input type="radio" name="Servo" value="RArm">RArm 
+  <input type="radio" name="Servo" value="LLeg">LLeg 
+  <input type="radio" name="Servo" value="RLeg">RLeg
+  <dev display="block" margin="0 auto" text-align="center">
+    <br> <input type="range" min="0" max="180" step="10" value="90" value=Servo1 />
+    <br> <input type="range" min="0" max="180" step="10" value="90" value=Servo2 />
+    <br> <input type="range" min="0" max="180" step="10" value="90" value=Servo3 />
+    <br> <input type="range" min="0" max="180" step="10" value="90" value=Servo4 />
+    <br> <input type="range" min="0" max="180" step="10" value="90" value=Servo5 />
+  </dev>
+</form>

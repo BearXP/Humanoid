@@ -2,7 +2,7 @@
 # ** IO Tester
 #------------------------------------------------
 # Date created: 23/Nov/2016
-# Created by:   Night_Runner
+# Created by:   Mark Evans
 # Description:
 #  Cycles GPIO1 (XIO-2) low and high, while
 #  reporting the state of GPIO2 (XIO-3).
