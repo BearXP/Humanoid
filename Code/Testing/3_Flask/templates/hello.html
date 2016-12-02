@@ -86,33 +86,29 @@ img {
   <div data-role="main" class="ui-content">
 
     <ul class="tab">
-      <li><a href="javascript:void(0)" class="tablinks" onclick="openTab(event, 'Neck')" id="defaultOpen">Neck</a></li>
-      <li><a href="javascript:void(0)" class="tablinks" onclick="openTab(event, 'LArm')">LArm</a></li>
-      <li><a href="javascript:void(0)" class="tablinks" onclick="openTab(event, 'RArm')">RArm</a></li>
-      <li><a href="javascript:void(0)" class="tablinks" onclick="openTab(event, 'LLeg')">LLeg</a></li>
-      <li><a href="javascript:void(0)" class="tablinks" onclick="openTab(event, 'RLeg')">RLeg</a></li>
+      {% for limb in limbs %}
+      <li><a href="javascript:void(0)" class="tablinks" onclick="openTab(event, '{{ limb }}')" id="defaultOpen">{{ limb }}</a></li>
+      {% endfor %}
     </ul>
     
 
-    <form id="servosForm" method="post" action="#">
-      <div id="Neck" class="tabcontent">
-        <label for="Servo1">Spin:</label>
-        <input type="range" name="Servo1" id="Servo1" value="90" min="0" max="180" step="10">
-        <label for="Servo2">Nod:</label>
-        <input type="range" name="Servo2" id="Servo2" value="90" min="0" max="180" step="10">
-      </div>
-    
-      <div id="LArm" class="tabcontent">
-        <label for="Servo3">Shoulder Rotate:</label>
-        <input type="range" name="Servo3" id="Servo3" value="90" min="0" max="180" step="10">
-        <label for="Servo4">Shoulder Up/Down:</label>
-        <input type="range" name="Servo4" id="Servo4" value="90" min="0" max="180" step="10">
-        <label for="Servo5">Elbow:</label>
-        <input type="range" name="Servo5" id="Servo5" value="90" min="0" max="180" step="10">
-        <label for="Servo6">Grip:</label>
-        <input type="range" name="Servo6" id="Servo6" value="90" min="0" max="180" step="10">
-      </div>
+    <form id="servosForm" method="post">
 
+      {% for limb in limbs %}
+        <div id="{{limb}}" class="tabcontent">
+          {%for servo in servoDb %}
+            
+              <label for="Servo{{ servo.id }}">{{ servo.name }}:</label>
+              <input type="range"
+                     name="Servo{{ servo.id }}"
+                     id="Servo{{ servo.id }}"
+                     value="{{ servo.pos }}"
+                     min="{{ servo.min }}"
+                     max="{{ servo.max }}"
+                     step="10">
+          {% endfor %}
+      {% endfor %}
+      
       <input type="submit" data-inline="true" value="  Submit  ">
     </form>
 
