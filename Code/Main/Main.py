@@ -70,7 +70,7 @@ app = Flask(__name__)
 def update_servos():
     for i in range (1,NUM_SERVOS+1):
         servoDb[i]['pos'] = request.form['Servo' + str(i)]
-        pwm_val = 150 + servoDb[i]['pos'] * 65.0 / 18.0
+        pwm_val = 150.0 + float(servoDb[i]['pos']) * 65.0 / 18.0
         ServoController.set_pwm(i, int(pwm_val))
 
 
