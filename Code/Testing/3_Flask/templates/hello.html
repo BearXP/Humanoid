@@ -14,7 +14,15 @@
 </head>
 
 <style>
-body {font-family: "Lato", sans-serif;}
+body {
+    font-family: "Lato", sans-serif;
+    font-size: 12px;
+}
+
+label {
+    font-family: "Lato", sans-serif;
+    font-size: 12px;
+}
 
 ul.tab {
     list-style-type: none;
@@ -73,7 +81,7 @@ img {
     <h1>Robobot</h1>
   </div>
 
-  <img src="http://cdn.thegadgetflow.com/wp-content/uploads/2015/05/JD-Humanoid-Revolutionary-Robot-Kit-04.jpg">
+  <img src="https://cad.onshape.com/api/thumbnails/d/673e2068db18134e20d03cef/w/27f3b55c71efa25a17beb110/s/300x170?t=1480638183871">
 
   <div data-role="main" class="ui-content">
 
@@ -85,18 +93,16 @@ img {
       <li><a href="javascript:void(0)" class="tablinks" onclick="openTab(event, 'RLeg')">RLeg</a></li>
     </ul>
     
-    <div id="Neck" class="tabcontent">
-      <form method="post" action="demoform.asp">
+
+    <form id="servosForm" method="post" action="#">
+      <div id="Neck" class="tabcontent">
         <label for="Servo1">Spin:</label>
         <input type="range" name="Servo1" id="Servo1" value="90" min="0" max="180" step="10">
         <label for="Servo2">Nod:</label>
         <input type="range" name="Servo2" id="Servo2" value="90" min="0" max="180" step="10">
-        <input type="submit" data-inline="true" value=" Submit ">
-      </form>
-    </div>
+      </div>
     
-    <div id="LArm" class="tabcontent">
-      <form method="post" action="demoform.asp">
+      <div id="LArm" class="tabcontent">
         <label for="Servo3">Shoulder Rotate:</label>
         <input type="range" name="Servo3" id="Servo3" value="90" min="0" max="180" step="10">
         <label for="Servo4">Shoulder Up/Down:</label>
@@ -105,9 +111,10 @@ img {
         <input type="range" name="Servo5" id="Servo5" value="90" min="0" max="180" step="10">
         <label for="Servo6">Grip:</label>
         <input type="range" name="Servo6" id="Servo6" value="90" min="0" max="180" step="10">
-        <input type="submit" data-inline="true" value=" Submit ">
-      </form>
-    </div>
+      </div>
+
+      <input type="submit" data-inline="true" value="  Submit  ">
+    </form>
 
   </div>
 </div>
@@ -129,6 +136,21 @@ function openTab(evt, tabName) {
 
 // Get the element with id="defaultOpen" and click on it
 document.getElementById("defaultOpen").click();
+
+
+
+$(document).ready(function(){
+    form = $('form');
+
+    $(form).on('submit', function() {
+        $.post($(form).attr('action'), $(this).serialize(), function(response) {
+            $('form').hide();
+        },'json');
+
+        return false;
+    });
+});
+
 </script>
      
 </body>
