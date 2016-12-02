@@ -87,26 +87,32 @@ img {
 
     <ul class="tab">
       {% for limb in limbs %}
-      <li><a href="javascript:void(0)" class="tablinks" onclick="openTab(event, '{{ limb }}')" id="defaultOpen">{{ limb }}</a></li>
+        <li><a href="javascript:void(0)"
+               class="tablinks"
+               onclick="openTab(event, '{{ limb }}')"
+        >
+          {{ limb }}
+        </a></li>
       {% endfor %}
     </ul>
     
 
     <form id="servosForm" method="post">
-
       {% for limb in limbs %}
-        <div id="{{limb}}" class="tabcontent">
-          {%for servo in servoDb %}
-            
-              <label for="Servo{{ servo.id }}">{{ servo.name }}:</label>
+        <div id="{{ limb }}" class="tabcontent">
+          {% for servo in servoDb %}
+            {% if servo['limb'] == limb %}
+              <label for="Servo{{ servo.index }}">{{ servo.name }}:</label>
               <input type="range"
-                     name="Servo{{ servo.id }}"
-                     id="Servo{{ servo.id }}"
+                     name="Servo{{ servo.index }}"
+                     id="Servo{{ servo.index }}"
                      value="{{ servo.pos }}"
                      min="{{ servo.min }}"
                      max="{{ servo.max }}"
                      step="10">
+            {% endif %}
           {% endfor %}
+        </div>
       {% endfor %}
       
       <input type="submit" data-inline="true" value="  Submit  ">
@@ -130,10 +136,6 @@ function openTab(evt, tabName) {
     evt.currentTarget.className += " active";
 }
 
-// Get the element with id="defaultOpen" and click on it
-document.getElementById("defaultOpen").click();
-
-
 
 $(document).ready(function(){
     form = $('form');
@@ -146,6 +148,9 @@ $(document).ready(function(){
         return false;
     });
 });
+
+// Get the element with id="defaultOpen" and click on it
+document.getElementsByClassName('tablinks')[1].click();
 
 </script>
      
