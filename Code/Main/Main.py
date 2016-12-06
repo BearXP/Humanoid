@@ -13,7 +13,10 @@
 #  http://flask.pocoo.org/docs/0.11/
 #=================================================
 
-from flask import Flask, redirect, abort, url_for, render_template, request
+import os
+from flask import Flask, redirect, abort, url_for, render_template, 
+request
+import sqlite3
 import socket
 import CHIP_IO.GPIO as GPIO
 from pca9685_driver import Device
@@ -65,6 +68,17 @@ ServoController = Device(0x40)
 ServoController.set_pwm_frequency(60)
 
 app = Flask(__name__)
+# create config variable, which acts like a dicto
+app.config.from_object(__name__)
+
+# Load the default config and oberride config from environment variable
+app.config.update(dict(
+  DATABASE=os.path.join(app.root_path, 'patterns.db'),
+  SECRET_KEY='123',
+  USERNAME='admin',
+  PASSWORD='admin'
+))
+app.config.from_envvar('FLASKR_SETTINGS', silent=True)
 
 def update_servos():
     for i in range (NUM_SERVOS):
