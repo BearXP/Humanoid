@@ -1604,8 +1604,14 @@ Source: RS Component / Phycomp</description>
 <part name="JP3" library="jumper" deviceset="JP2W" device=""/>
 <part name="JP4" library="jumper" deviceset="JP2W" device=""/>
 <part name="JP5" library="jumper" deviceset="JP2W" device=""/>
-<part name="P+7" library="supply1" deviceset="+5V" device=""/>
 <part name="GND6" library="supply1" deviceset="GND" device=""/>
+<part name="GND7" library="supply1" deviceset="GND" device=""/>
+<part name="GND8" library="supply1" deviceset="GND" device=""/>
+<part name="GND9" library="supply1" deviceset="GND" device=""/>
+<part name="P+8" library="supply1" deviceset="+5V" device=""/>
+<part name="P+9" library="supply1" deviceset="+5V" device=""/>
+<part name="P+10" library="supply1" deviceset="+5V" device=""/>
+<part name="P+11" library="supply1" deviceset="+5V" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -1670,8 +1676,14 @@ Source: RS Component / Phycomp</description>
 <instance part="JP3" gate="1" x="297.18" y="223.52"/>
 <instance part="JP4" gate="1" x="307.34" y="218.44"/>
 <instance part="JP5" gate="1" x="317.5" y="213.36"/>
-<instance part="P+7" gate="1" x="304.8" y="195.58" rot="R180"/>
-<instance part="GND6" gate="1" x="320.04" y="205.74"/>
+<instance part="GND6" gate="1" x="320.04" y="208.28"/>
+<instance part="GND7" gate="1" x="309.88" y="213.36"/>
+<instance part="GND8" gate="1" x="299.72" y="218.44"/>
+<instance part="GND9" gate="1" x="289.56" y="223.52"/>
+<instance part="P+8" gate="1" x="281.94" y="223.52" rot="R90"/>
+<instance part="P+9" gate="1" x="292.1" y="218.44" rot="R90"/>
+<instance part="P+10" gate="1" x="302.26" y="213.36" rot="R90"/>
+<instance part="P+11" gate="1" x="312.42" y="208.28" rot="R90"/>
 </instances>
 <busses>
 </busses>
@@ -1796,7 +1808,18 @@ Source: RS Component / Phycomp</description>
 <segment>
 <pinref part="JP5" gate="1" pin="3"/>
 <pinref part="GND6" gate="1" pin="GND"/>
-<wire x1="320.04" y1="208.28" x2="320.04" y2="210.82" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="JP4" gate="1" pin="3"/>
+<pinref part="GND7" gate="1" pin="GND"/>
+</segment>
+<segment>
+<pinref part="JP3" gate="1" pin="3"/>
+<pinref part="GND8" gate="1" pin="GND"/>
+</segment>
+<segment>
+<pinref part="JP1" gate="1" pin="3"/>
+<pinref part="GND9" gate="1" pin="GND"/>
 </segment>
 </net>
 <net name="\O\E" class="0">
@@ -1902,6 +1925,26 @@ Source: RS Component / Phycomp</description>
 <pinref part="P+6" gate="1" pin="+5V"/>
 <wire x1="190.5" y1="114.3" x2="182.88" y2="114.3" width="0.1524" layer="91"/>
 <wire x1="182.88" y1="114.3" x2="182.88" y2="119.38" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="P+11" gate="1" pin="+5V"/>
+<pinref part="JP5" gate="1" pin="2"/>
+<wire x1="314.96" y1="208.28" x2="317.5" y2="210.82" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="P+10" gate="1" pin="+5V"/>
+<pinref part="JP4" gate="1" pin="2"/>
+<wire x1="304.8" y1="213.36" x2="307.34" y2="215.9" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="P+9" gate="1" pin="+5V"/>
+<pinref part="JP3" gate="1" pin="2"/>
+<wire x1="294.64" y1="218.44" x2="297.18" y2="220.98" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="P+8" gate="1" pin="+5V"/>
+<pinref part="JP1" gate="1" pin="2"/>
+<wire x1="284.48" y1="223.52" x2="287.02" y2="226.06" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$1" class="0">
@@ -2256,6 +2299,34 @@ Source: RS Component / Phycomp</description>
 <pinref part="U2" gate="G$1" pin="PWM14"/>
 <wire x1="243.84" y1="101.6" x2="231.14" y2="101.6" width="0.1524" layer="91"/>
 <label x="233.68" y="101.6" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="N$2" class="0">
+<segment>
+<pinref part="R6" gate="D" pin="1"/>
+<pinref part="JP1" gate="1" pin="1"/>
+<wire x1="274.32" y1="226.06" x2="284.48" y2="226.06" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$3" class="0">
+<segment>
+<pinref part="R6" gate="C" pin="1"/>
+<pinref part="JP3" gate="1" pin="1"/>
+<wire x1="274.32" y1="220.98" x2="294.64" y2="220.98" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$4" class="0">
+<segment>
+<pinref part="JP4" gate="1" pin="1"/>
+<pinref part="R6" gate="B" pin="1"/>
+<wire x1="304.8" y1="215.9" x2="274.32" y2="215.9" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$5" class="0">
+<segment>
+<pinref part="R6" gate="A" pin="1"/>
+<pinref part="JP5" gate="1" pin="1"/>
+<wire x1="274.32" y1="210.82" x2="314.96" y2="210.82" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>
