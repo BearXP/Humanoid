@@ -215,14 +215,14 @@
 <text x="0" y="38.608" size="1.778" layer="96">&gt;VALUE</text>
 </symbol>
 <symbol name="POLYSWITCH">
-<pin name="P$1" x="-2.54" y="0" visible="off" length="short"/>
-<pin name="P$2" x="7.62" y="0" visible="off" length="short" rot="R180"/>
+<pin name="P$1" x="-2.54" y="0" length="short"/>
+<pin name="P$2" x="7.62" y="0" length="short" rot="R180"/>
 <wire x1="0" y1="0" x2="2.54" y2="0" width="0.254" layer="94" curve="-180"/>
 <wire x1="5.08" y1="0" x2="2.54" y2="0" width="0.254" layer="94" curve="-180"/>
 <circle x="0" y="0" radius="0.508" width="0.254" layer="94"/>
 <circle x="5.08" y="0" radius="0.508" width="0.254" layer="94"/>
-<text x="-2.54" y="1.016" size="1.27" layer="94">&gt;NAME</text>
-<text x="5.08" y="1.016" size="1.27" layer="94">&gt;CURRENT</text>
+<text x="-2.54" y="2.54" size="1.27" layer="94">&gt;NAME</text>
+<text x="5.08" y="2.54" size="1.27" layer="94">&gt;CURRENT</text>
 </symbol>
 <symbol name="JUMPER_3WAY">
 <pin name="1" x="0" y="0" visible="off" length="point"/>
@@ -242,7 +242,7 @@
 </symbol>
 </symbols>
 <devicesets>
-<deviceset name="POLYSWITCH" prefix="F">
+<deviceset name="POLYSWITCH">
 <gates>
 <gate name="G$1" symbol="POLYSWITCH" x="5.08" y="0"/>
 </gates>

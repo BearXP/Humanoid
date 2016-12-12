@@ -14,11 +14,10 @@
 #=================================================
 
 import os
-from flask import Flask, redirect, abort, url_for, render_template, 
-request
+from flask import Flask, redirect, abort, url_for, render_template, request
 import sqlite3
 import socket
-import CHIP_IO.GPIO as GPIO
+#import CHIP_IO.GPIO as GPIO
 from pca9685_driver import Device
 import time
 
@@ -97,8 +96,8 @@ def index():
 
 
 if __name__ == "__main__":
-    try:
-        print([(s.connect(('8.8.8.8', 53)), s.getsockname()[0], s.close()) for s in [socket.socket(socket.AF_INET, socket.SOCK_DGRAM)]][0][1])
-        app.run(host="0.0.0.0", debug=1)
-    finally:
-        GPIO.cleanup()
+    #try:
+    print([(s.connect(('8.8.8.8', 53)), s.getsockname()[0], s.close()) for s in [socket.socket(socket.AF_INET, socket.SOCK_DGRAM)]][0][1])
+    app.run(host="0.0.0.0", debug=1)
+    #finally:
+        #GPIO.cleanup()
