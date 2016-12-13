@@ -2463,6 +2463,19 @@ Basic schematic elements and footprints for 0603, 1206, and PTH resistors.</desc
 <smd name="15" x="2.475" y="3.175" dx="1.45" dy="0.67" layer="1"/>
 <smd name="16" x="2.475" y="4.445" dx="1.45" dy="0.67" layer="1"/>
 </package>
+<package name="SOT23-6">
+<smd name="P$1" x="-1.524" y="1.016" dx="1.524" dy="0.635" layer="1"/>
+<smd name="P$2" x="-1.524" y="0" dx="1.524" dy="0.635" layer="1"/>
+<smd name="P$3" x="-1.524" y="-1.016" dx="1.524" dy="0.635" layer="1"/>
+<smd name="P$4" x="1.524" y="-1.016" dx="1.524" dy="0.635" layer="1"/>
+<smd name="P$5" x="1.524" y="0" dx="1.524" dy="0.635" layer="1"/>
+<smd name="P$6" x="1.524" y="1.016" dx="1.524" dy="0.635" layer="1"/>
+<wire x1="-0.875" y1="1.55" x2="-0.875" y2="-1.55" width="0.127" layer="21"/>
+<wire x1="-0.875" y1="-1.55" x2="0.875" y2="-1.55" width="0.127" layer="21"/>
+<wire x1="0.875" y1="-1.55" x2="0.875" y2="1.55" width="0.127" layer="21"/>
+<wire x1="0.875" y1="1.55" x2="-0.875" y2="1.55" width="0.127" layer="21"/>
+<text x="-1.016" y="1.778" size="0.254" layer="21">&gt;NAME</text>
+</package>
 </packages>
 <symbols>
 <symbol name="POLYSWITCH">
@@ -2514,6 +2527,19 @@ Basic schematic elements and footprints for 0603, 1206, and PTH resistors.</desc
 <pin name="VCC" x="12.7" y="12.7" length="middle" rot="R180"/>
 <text x="-15.24" y="15.24" size="1.778" layer="94">&gt;NAME</text>
 <text x="-2.54" y="15.24" size="1.778" layer="94">CH340G</text>
+</symbol>
+<symbol name="SX1308B628">
+<pin name="SW" x="12.7" y="5.08" length="middle" rot="R180"/>
+<pin name="GND" x="-12.7" y="-5.08" length="middle"/>
+<pin name="FB" x="12.7" y="-5.08" length="middle" rot="R180"/>
+<pin name="EN" x="-12.7" y="0" length="middle"/>
+<pin name="IN" x="-12.7" y="5.08" length="middle"/>
+<pin name="NC" x="12.7" y="0" length="middle" rot="R180"/>
+<wire x1="-7.62" y1="7.62" x2="-7.62" y2="-7.62" width="0.254" layer="94"/>
+<wire x1="-7.62" y1="-7.62" x2="7.62" y2="-7.62" width="0.254" layer="94"/>
+<wire x1="7.62" y1="-7.62" x2="7.62" y2="7.62" width="0.254" layer="94"/>
+<wire x1="7.62" y1="7.62" x2="-7.62" y2="7.62" width="0.254" layer="94"/>
+<text x="-7.62" y="7.62" size="1.27" layer="94">&gt;NAME</text>
 </symbol>
 </symbols>
 <devicesets>
@@ -2575,6 +2601,26 @@ Basic schematic elements and footprints for 0603, 1206, and PTH resistors.</desc
 <connect gate="G$1" pin="VCC" pad="16"/>
 <connect gate="G$1" pin="XI" pad="7"/>
 <connect gate="G$1" pin="XO" pad="8"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="SX1308_B628" prefix="U">
+<gates>
+<gate name="G$1" symbol="SX1308B628" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="SOT23-6">
+<connects>
+<connect gate="G$1" pin="EN" pad="P$4"/>
+<connect gate="G$1" pin="FB" pad="P$3"/>
+<connect gate="G$1" pin="GND" pad="P$2"/>
+<connect gate="G$1" pin="IN" pad="P$5"/>
+<connect gate="G$1" pin="NC" pad="P$6"/>
+<connect gate="G$1" pin="SW" pad="P$1"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -4270,6 +4316,142 @@ Source: www.ecsxtal.com .. Crystal 3.6864MHz CSM_7X_DU.PDF</description>
 </deviceset>
 </devicesets>
 </library>
+<library name="avago">
+<description>&lt;b&gt;AVAGO Technologies&lt;/b&gt;&lt;p&gt;
+www.avagotech.com&lt;p&gt;</description>
+<packages>
+<package name="SOT323">
+<description>&lt;b&gt;SOT-323 (SC-70 3 Lead)&lt;/b&gt;&lt;p&gt;
+Source: &lt;a href="http://www.farnell.com/datasheets/461166.pdf"&lt; Data sheet &lt;/a&gt;</description>
+<wire x1="1.0474" y1="0.6229" x2="1.0474" y2="-0.6229" width="0.1524" layer="51"/>
+<wire x1="1.0474" y1="-0.6229" x2="-1.0474" y2="-0.6229" width="0.1524" layer="51"/>
+<wire x1="-1.0474" y1="-0.6229" x2="-1.0474" y2="0.6229" width="0.1524" layer="51"/>
+<wire x1="-1.0474" y1="0.6229" x2="1.0474" y2="0.6229" width="0.1524" layer="51"/>
+<wire x1="1.0474" y1="0.6229" x2="1.0474" y2="-0.4729" width="0.1524" layer="21"/>
+<wire x1="0.1646" y1="-0.6229" x2="-0.1646" y2="-0.6229" width="0.1524" layer="21"/>
+<wire x1="-1.0474" y1="-0.4729" x2="-1.0474" y2="0.6229" width="0.1524" layer="21"/>
+<wire x1="-1.0474" y1="0.6229" x2="-0.6229" y2="0.6229" width="0.1524" layer="21"/>
+<wire x1="0.6229" y1="0.6229" x2="1.0474" y2="0.6229" width="0.1524" layer="21"/>
+<smd name="1" x="-0.65" y="-0.925" dx="0.6" dy="0.55" layer="1"/>
+<smd name="2" x="0.65" y="-0.925" dx="0.6" dy="0.55" layer="1"/>
+<smd name="3" x="0" y="0.925" dx="0.6" dy="0.55" layer="1"/>
+<text x="-1" y="1.3" size="1.27" layer="25">&gt;NAME</text>
+<text x="-1" y="-2.6" size="1.27" layer="27">&gt;VALUE</text>
+<rectangle x1="-0.2" y1="0.625" x2="0.2" y2="1.1" layer="51"/>
+<rectangle x1="-0.85" y1="-1.1" x2="-0.45" y2="-0.625" layer="51" rot="R180"/>
+<rectangle x1="0.45" y1="-1.1" x2="0.85" y2="-0.625" layer="51" rot="R180"/>
+</package>
+</packages>
+<symbols>
+<symbol name="D">
+<wire x1="-1.27" y1="-1.27" x2="1.27" y2="0" width="0.254" layer="94"/>
+<wire x1="1.27" y1="0" x2="-1.27" y2="1.27" width="0.254" layer="94"/>
+<wire x1="1.27" y1="1.27" x2="1.27" y2="0" width="0.254" layer="94"/>
+<wire x1="-1.27" y1="1.27" x2="-1.27" y2="-1.27" width="0.254" layer="94"/>
+<wire x1="1.27" y1="0" x2="1.27" y2="-1.27" width="0.254" layer="94"/>
+<text x="2.54" y="0.4826" size="1.778" layer="95">&gt;NAME</text>
+<text x="2.54" y="-2.3114" size="1.778" layer="96">&gt;VALUE</text>
+<pin name="A" x="-2.54" y="0" visible="off" length="short" direction="pas"/>
+<pin name="C" x="2.54" y="0" visible="off" length="short" direction="pas" rot="R180"/>
+<text x="-2.54" y="0" size="0.4064" layer="99" align="center">SpiceOrder 1</text>
+<text x="2.54" y="0" size="0.4064" layer="99" align="center">SpiceOrder 2</text>
+</symbol>
+</symbols>
+<devicesets>
+<deviceset name="HSMS-285B" prefix="D">
+<description>&lt;b&gt;Surface Mount Microwave Schottky Detector Diodes&lt;/b&gt;&lt;p&gt;
+Source: &lt;a href="http://www.farnell.com/datasheets/461166.pdf"&gt; Data sheet &lt;/a&gt;</description>
+<gates>
+<gate name="A" symbol="D" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="SOT323">
+<connects>
+<connect gate="A" pin="A" pad="1"/>
+<connect gate="A" pin="C" pad="3"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+</devicesets>
+</library>
+<library name="inductor-neosid">
+<description>&lt;b&gt;Neosid Chokes and Transformers&lt;/b&gt;&lt;p&gt;
+
+Based on the following sources:
+&lt;ul&gt;
+&lt;li&gt;Electronic Component Book, Part 2 : Chokes, Fixed Value Inductors
+&lt;li&gt;Part 3 : Filters, Coil Assemblies, Thermoplastic Parts
+&lt;li&gt;Part 4 : SMD Filters, Coils, Fixed Value Inductors
+&lt;li&gt;www.neosid.de
+&lt;/ul&gt;
+ &lt;author&gt;Created by librarian@cadsoft.de&lt;/author&gt;</description>
+<packages>
+<package name="SM-1206">
+<description>SMD CHIP &lt;B&gt;INDUCTOR&lt;/B&gt;&lt;p&gt;
+body 1206</description>
+<wire x1="1.3" y1="0.7" x2="1.3" y2="0.6" width="0.2032" layer="51"/>
+<wire x1="1.3" y1="0.6" x2="1.3" y2="-0.6" width="0.2032" layer="51"/>
+<wire x1="1.3" y1="-0.6" x2="1.3" y2="-0.7" width="0.2032" layer="51"/>
+<wire x1="1.3" y1="-0.7" x2="2.1" y2="-0.7" width="0.2032" layer="51"/>
+<wire x1="2.1" y1="-0.7" x2="2.1" y2="0.7" width="0.2032" layer="51"/>
+<wire x1="2.1" y1="0.7" x2="1.3" y2="0.7" width="0.2032" layer="51"/>
+<wire x1="-2.1" y1="0.7" x2="-2.1" y2="-0.7" width="0.2032" layer="51"/>
+<wire x1="-2.1" y1="-0.7" x2="-1.3" y2="-0.7" width="0.2032" layer="51"/>
+<wire x1="-1.3" y1="-0.7" x2="-1.3" y2="-0.6" width="0.2032" layer="51"/>
+<wire x1="-1.3" y1="-0.6" x2="-1.3" y2="0.6" width="0.2032" layer="51"/>
+<wire x1="-1.3" y1="0.6" x2="-1.3" y2="0.7" width="0.2032" layer="51"/>
+<wire x1="-1.3" y1="0.7" x2="-2.1" y2="0.7" width="0.2032" layer="51"/>
+<wire x1="-1.3" y1="-0.6" x2="-0.9" y2="-0.6" width="0.2032" layer="51"/>
+<wire x1="-0.9" y1="-0.6" x2="0.9" y2="-0.6" width="0.2032" layer="21"/>
+<wire x1="0.9" y1="-0.6" x2="1.3" y2="-0.6" width="0.2032" layer="51"/>
+<wire x1="1.3" y1="0.6" x2="0.9" y2="0.6" width="0.2032" layer="51"/>
+<wire x1="0.9" y1="0.6" x2="-0.9" y2="0.6" width="0.2032" layer="21"/>
+<wire x1="-0.9" y1="0.6" x2="-1.3" y2="0.6" width="0.2032" layer="51"/>
+<smd name="1" x="-1.65" y="0" dx="1.2" dy="1.8" layer="1"/>
+<smd name="2" x="1.65" y="0" dx="1.2" dy="1.8" layer="1"/>
+<text x="-2.143" y="0.997" size="1.27" layer="25">&gt;NAME</text>
+<text x="-2.208" y="-2.308" size="1.27" layer="27">&gt;VALUE</text>
+</package>
+</packages>
+<symbols>
+<symbol name="L">
+<text x="-3.81" y="1.778" size="1.778" layer="95">&gt;NAME</text>
+<text x="-3.81" y="-3.556" size="1.778" layer="96">&gt;VALUE</text>
+<rectangle x1="-3.81" y1="-1.27" x2="3.81" y2="1.27" layer="94"/>
+<pin name="1" x="-5.08" y="0" visible="off" length="short" direction="pas" swaplevel="1"/>
+<pin name="2" x="5.08" y="0" visible="off" length="short" direction="pas" swaplevel="1" rot="R180"/>
+</symbol>
+</symbols>
+<devicesets>
+<deviceset name="SM-1206" prefix="L" uservalue="yes">
+<description>&lt;b&gt;INDUCTOR&lt;/b&gt;&lt;p&gt;
+SMD chip inductor</description>
+<gates>
+<gate name="G$1" symbol="L" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="SM-1206">
+<connects>
+<connect gate="G$1" pin="1" pad="1"/>
+<connect gate="G$1" pin="2" pad="2"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="MF" value="" constant="no"/>
+<attribute name="MPN" value="" constant="no"/>
+<attribute name="OC_FARNELL" value="unknown" constant="no"/>
+<attribute name="OC_NEWARK" value="unknown" constant="no"/>
+</technology>
+</technologies>
+</device>
+</devices>
+</deviceset>
+</devicesets>
+</library>
 </libraries>
 <attributes>
 </attributes>
@@ -4412,6 +4594,15 @@ Source: www.ecsxtal.com .. Crystal 3.6864MHz CSM_7X_DU.PDF</description>
 <part name="C3" library="capacitor-wima" deviceset="C" device="2,5-3" value="22p"/>
 <part name="GND38" library="supply1" deviceset="GND" device=""/>
 <part name="Q1" library="crystal" deviceset="CSM-7X-DU" device="" value="12MHz"/>
+<part name="U5" library="HumanoidLbr" deviceset="SX1308_B628" device=""/>
+<part name="P+11" library="supply1" deviceset="+5V" device=""/>
+<part name="GND39" library="supply1" deviceset="GND" device=""/>
+<part name="R11" library="SparkFun-Passives" deviceset="RESISTOR" device="0805-RES" value="670R"/>
+<part name="R12" library="SparkFun-Passives" deviceset="RESISTOR" device="0805-RES" value="670R"/>
+<part name="GND40" library="supply1" deviceset="GND" device=""/>
+<part name="C4" library="capacitor-wima" deviceset="C" device="2,5-3" value="22p"/>
+<part name="D1" library="avago" deviceset="HSMS-285B" device=""/>
+<part name="L1" library="inductor-neosid" deviceset="SM-1206" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -4583,6 +4774,15 @@ Source: www.ecsxtal.com .. Crystal 3.6864MHz CSM_7X_DU.PDF</description>
 <instance part="C3" gate="G$1" x="48.26" y="177.8" rot="R270"/>
 <instance part="GND38" gate="1" x="40.64" y="180.34" rot="MR90"/>
 <instance part="Q1" gate="P" x="53.34" y="180.34" rot="R90"/>
+<instance part="U5" gate="G$1" x="134.62" y="172.72"/>
+<instance part="P+11" gate="1" x="116.84" y="180.34"/>
+<instance part="GND39" gate="1" x="116.84" y="165.1" rot="MR0"/>
+<instance part="R11" gate="G$1" x="154.94" y="172.72" rot="R90"/>
+<instance part="R12" gate="G$1" x="154.94" y="160.02" rot="R90"/>
+<instance part="GND40" gate="1" x="154.94" y="152.4" rot="MR0"/>
+<instance part="C4" gate="G$1" x="165.1" y="162.56"/>
+<instance part="D1" gate="A" x="144.78" y="193.04"/>
+<instance part="L1" gate="G$1" x="132.08" y="193.04"/>
 </instances>
 <busses>
 </busses>
@@ -4860,6 +5060,19 @@ Source: www.ecsxtal.com .. Crystal 3.6864MHz CSM_7X_DU.PDF</description>
 <wire x1="43.18" y1="177.8" x2="43.18" y2="180.34" width="0.1524" layer="91"/>
 <junction x="43.18" y="180.34"/>
 <wire x1="43.18" y1="180.34" x2="43.18" y2="185.42" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="U5" gate="G$1" pin="GND"/>
+<pinref part="GND39" gate="1" pin="GND"/>
+<wire x1="121.92" y1="167.64" x2="116.84" y2="167.64" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="R12" gate="G$1" pin="1"/>
+<pinref part="GND40" gate="1" pin="GND"/>
+<pinref part="C4" gate="G$1" pin="2"/>
+<wire x1="165.1" y1="157.48" x2="165.1" y2="154.94" width="0.1524" layer="91"/>
+<wire x1="165.1" y1="154.94" x2="154.94" y2="154.94" width="0.1524" layer="91"/>
+<junction x="154.94" y="154.94"/>
 </segment>
 </net>
 <net name="\O\E" class="0">
@@ -5925,6 +6138,54 @@ Source: www.ecsxtal.com .. Crystal 3.6864MHz CSM_7X_DU.PDF</description>
 <wire x1="53.34" y1="177.8" x2="63.5" y2="177.8" width="0.1524" layer="91"/>
 <wire x1="63.5" y1="177.8" x2="63.5" y2="180.34" width="0.1524" layer="91"/>
 <junction x="53.34" y="177.8"/>
+</segment>
+</net>
+<net name="N$58" class="0">
+<segment>
+<pinref part="U5" gate="G$1" pin="IN"/>
+<wire x1="121.92" y1="177.8" x2="119.38" y2="177.8" width="0.1524" layer="91"/>
+<wire x1="119.38" y1="177.8" x2="116.84" y2="177.8" width="0.1524" layer="91"/>
+<wire x1="116.84" y1="177.8" x2="116.84" y2="172.72" width="0.1524" layer="91"/>
+<pinref part="U5" gate="G$1" pin="EN"/>
+<wire x1="116.84" y1="172.72" x2="121.92" y2="172.72" width="0.1524" layer="91"/>
+<pinref part="L1" gate="G$1" pin="1"/>
+<wire x1="119.38" y1="177.8" x2="119.38" y2="193.04" width="0.1524" layer="91"/>
+<wire x1="119.38" y1="193.04" x2="127" y2="193.04" width="0.1524" layer="91"/>
+<junction x="119.38" y="177.8"/>
+</segment>
+</net>
+<net name="N$59" class="0">
+<segment>
+<pinref part="U5" gate="G$1" pin="FB"/>
+<pinref part="R12" gate="G$1" pin="2"/>
+<wire x1="147.32" y1="167.64" x2="154.94" y2="167.64" width="0.1524" layer="91"/>
+<wire x1="154.94" y1="167.64" x2="154.94" y2="165.1" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$60" class="0">
+<segment>
+<pinref part="U5" gate="G$1" pin="SW"/>
+<pinref part="R11" gate="G$1" pin="2"/>
+<wire x1="147.32" y1="177.8" x2="154.94" y2="177.8" width="0.1524" layer="91"/>
+<pinref part="C4" gate="G$1" pin="1"/>
+<wire x1="154.94" y1="177.8" x2="165.1" y2="177.8" width="0.1524" layer="91"/>
+<wire x1="165.1" y1="177.8" x2="165.1" y2="165.1" width="0.1524" layer="91"/>
+<junction x="154.94" y="177.8"/>
+<wire x1="154.94" y1="177.8" x2="154.94" y2="187.96" width="0.1524" layer="91"/>
+<wire x1="154.94" y1="187.96" x2="139.7" y2="187.96" width="0.1524" layer="91"/>
+<pinref part="L1" gate="G$1" pin="2"/>
+<pinref part="D1" gate="A" pin="A"/>
+<wire x1="137.16" y1="193.04" x2="139.7" y2="193.04" width="0.1524" layer="91"/>
+<wire x1="139.7" y1="193.04" x2="142.24" y2="193.04" width="0.1524" layer="91"/>
+<wire x1="139.7" y1="187.96" x2="139.7" y2="193.04" width="0.1524" layer="91"/>
+<junction x="139.7" y="193.04"/>
+</segment>
+</net>
+<net name="V-CHG" class="0">
+<segment>
+<pinref part="D1" gate="A" pin="C"/>
+<wire x1="147.32" y1="193.04" x2="165.1" y2="193.04" width="0.1524" layer="91"/>
+<label x="160.02" y="193.04" size="1.778" layer="95"/>
 </segment>
 </net>
 </nets>

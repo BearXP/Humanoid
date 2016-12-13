@@ -176,6 +176,28 @@
 <wire x1="3.175" y1="-1.27" x2="1.905" y2="-1.27" width="0.127" layer="21"/>
 <wire x1="1.905" y1="-1.27" x2="1.27" y2="-0.635" width="0.127" layer="21"/>
 </package>
+<package name="SO-16">
+<wire x1="-2" y1="5" x2="-2" y2="-5" width="0.127" layer="21"/>
+<wire x1="-2" y1="-5" x2="2" y2="-5" width="0.127" layer="21"/>
+<wire x1="2" y1="-5" x2="2" y2="5" width="0.127" layer="21"/>
+<wire x1="2" y1="5" x2="-2" y2="5" width="0.127" layer="21"/>
+<smd name="1" x="-2.475" y="4.445" dx="1.45" dy="0.67" layer="1"/>
+<smd name="2" x="-2.475" y="3.175" dx="1.45" dy="0.67" layer="1"/>
+<smd name="3" x="-2.475" y="1.905" dx="1.45" dy="0.67" layer="1"/>
+<smd name="4" x="-2.475" y="0.635" dx="1.45" dy="0.67" layer="1"/>
+<smd name="5" x="-2.475" y="-0.635" dx="1.45" dy="0.67" layer="1"/>
+<smd name="6" x="-2.475" y="-1.905" dx="1.45" dy="0.67" layer="1"/>
+<smd name="7" x="-2.475" y="-3.175" dx="1.45" dy="0.67" layer="1"/>
+<smd name="8" x="-2.475" y="-4.445" dx="1.45" dy="0.67" layer="1"/>
+<smd name="9" x="2.475" y="-4.445" dx="1.45" dy="0.67" layer="1"/>
+<smd name="10" x="2.475" y="-3.175" dx="1.45" dy="0.67" layer="1"/>
+<smd name="11" x="2.475" y="-1.905" dx="1.45" dy="0.67" layer="1"/>
+<smd name="12" x="2.475" y="-0.635" dx="1.45" dy="0.67" layer="1"/>
+<smd name="13" x="2.475" y="0.635" dx="1.45" dy="0.67" layer="1"/>
+<smd name="14" x="2.475" y="1.905" dx="1.45" dy="0.67" layer="1"/>
+<smd name="15" x="2.475" y="3.175" dx="1.45" dy="0.67" layer="1"/>
+<smd name="16" x="2.475" y="4.445" dx="1.45" dy="0.67" layer="1"/>
+</package>
 </packages>
 <symbols>
 <symbol name="PCA9685">
@@ -245,7 +267,7 @@
 <wire x1="-15.24" y1="-7.62" x2="7.62" y2="-7.62" width="0.254" layer="94"/>
 <wire x1="7.62" y1="-7.62" x2="7.62" y2="15.24" width="0.254" layer="94"/>
 <wire x1="7.62" y1="15.24" x2="-15.24" y2="15.24" width="0.254" layer="94"/>
-<pin name="GND" x="-20.32" y="12.7" visible="pin" length="middle"/>
+<pin name="GND" x="-20.32" y="12.7" length="middle"/>
 <pin name="TXD" x="-20.32" y="10.16" length="middle"/>
 <pin name="RXD" x="-20.32" y="7.62" length="middle"/>
 <pin name="3V-OUT" x="-20.32" y="5.08" length="middle"/>
@@ -294,6 +316,36 @@
 <connect gate="G$1" pin="1" pad="P$1"/>
 <connect gate="G$1" pin="2" pad="P$2"/>
 <connect gate="G$1" pin="3" pad="P$3"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="CH340G" prefix="U">
+<gates>
+<gate name="G$1" symbol="CH340G" x="3.81" y="-5.08"/>
+</gates>
+<devices>
+<device name="" package="SO-16">
+<connects>
+<connect gate="G$1" pin="3V-OUT" pad="1"/>
+<connect gate="G$1" pin="CTS#" pad="2"/>
+<connect gate="G$1" pin="D+" pad="3"/>
+<connect gate="G$1" pin="D-" pad="4"/>
+<connect gate="G$1" pin="DCD#" pad="5"/>
+<connect gate="G$1" pin="DSR#" pad="6"/>
+<connect gate="G$1" pin="DTR#" pad="7"/>
+<connect gate="G$1" pin="GND" pad="8"/>
+<connect gate="G$1" pin="RI#" pad="9"/>
+<connect gate="G$1" pin="RS232_EN" pad="10"/>
+<connect gate="G$1" pin="RTS#" pad="11"/>
+<connect gate="G$1" pin="RXD" pad="12"/>
+<connect gate="G$1" pin="TXD" pad="13"/>
+<connect gate="G$1" pin="VCC" pad="14"/>
+<connect gate="G$1" pin="XI" pad="15"/>
+<connect gate="G$1" pin="XO" pad="16"/>
 </connects>
 <technologies>
 <technology name=""/>
