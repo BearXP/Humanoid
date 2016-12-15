@@ -211,6 +211,8 @@
 <wire x1="0.875" y1="1.55" x2="-0.875" y2="1.55" width="0.127" layer="21"/>
 <text x="-1.016" y="1.778" size="0.254" layer="21">&gt;NAME</text>
 </package>
+<package name="LQFP48">
+</package>
 </packages>
 <symbols>
 <symbol name="PCA9685">
@@ -311,6 +313,7 @@
 <wire x1="7.62" y1="-7.62" x2="7.62" y2="7.62" width="0.254" layer="94"/>
 <wire x1="7.62" y1="7.62" x2="-7.62" y2="7.62" width="0.254" layer="94"/>
 <text x="-7.62" y="7.62" size="1.27" layer="94">&gt;NAME</text>
+<text x="2.54" y="7.62" size="1.27" layer="94">&gt;DEVICE</text>
 </symbol>
 <symbol name="CM108">
 <description>CM108 USB Audio Codec
