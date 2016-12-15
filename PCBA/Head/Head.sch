@@ -685,6 +685,107 @@ Source: http://www.atmel.com .. doc8023.pdf</description>
 </deviceset>
 </devicesets>
 </library>
+<library name="frames">
+<description>&lt;b&gt;Frames for Sheet and Layout&lt;/b&gt;</description>
+<packages>
+</packages>
+<symbols>
+<symbol name="A3L-LOC">
+<wire x1="288.29" y1="3.81" x2="342.265" y2="3.81" width="0.1016" layer="94"/>
+<wire x1="342.265" y1="3.81" x2="373.38" y2="3.81" width="0.1016" layer="94"/>
+<wire x1="373.38" y1="3.81" x2="383.54" y2="3.81" width="0.1016" layer="94"/>
+<wire x1="383.54" y1="3.81" x2="383.54" y2="8.89" width="0.1016" layer="94"/>
+<wire x1="383.54" y1="8.89" x2="383.54" y2="13.97" width="0.1016" layer="94"/>
+<wire x1="383.54" y1="13.97" x2="383.54" y2="19.05" width="0.1016" layer="94"/>
+<wire x1="383.54" y1="19.05" x2="383.54" y2="24.13" width="0.1016" layer="94"/>
+<wire x1="288.29" y1="3.81" x2="288.29" y2="24.13" width="0.1016" layer="94"/>
+<wire x1="288.29" y1="24.13" x2="342.265" y2="24.13" width="0.1016" layer="94"/>
+<wire x1="342.265" y1="24.13" x2="383.54" y2="24.13" width="0.1016" layer="94"/>
+<wire x1="373.38" y1="3.81" x2="373.38" y2="8.89" width="0.1016" layer="94"/>
+<wire x1="373.38" y1="8.89" x2="383.54" y2="8.89" width="0.1016" layer="94"/>
+<wire x1="373.38" y1="8.89" x2="342.265" y2="8.89" width="0.1016" layer="94"/>
+<wire x1="342.265" y1="8.89" x2="342.265" y2="3.81" width="0.1016" layer="94"/>
+<wire x1="342.265" y1="8.89" x2="342.265" y2="13.97" width="0.1016" layer="94"/>
+<wire x1="342.265" y1="13.97" x2="383.54" y2="13.97" width="0.1016" layer="94"/>
+<wire x1="342.265" y1="13.97" x2="342.265" y2="19.05" width="0.1016" layer="94"/>
+<wire x1="342.265" y1="19.05" x2="383.54" y2="19.05" width="0.1016" layer="94"/>
+<wire x1="342.265" y1="19.05" x2="342.265" y2="24.13" width="0.1016" layer="94"/>
+<text x="344.17" y="15.24" size="2.54" layer="94">&gt;DRAWING_NAME</text>
+<text x="344.17" y="10.16" size="2.286" layer="94">&gt;LAST_DATE_TIME</text>
+<text x="357.505" y="5.08" size="2.54" layer="94">&gt;SHEET</text>
+<text x="343.916" y="4.953" size="2.54" layer="94">Sheet:</text>
+<frame x1="0" y1="0" x2="387.35" y2="260.35" columns="8" rows="5" layer="94"/>
+</symbol>
+</symbols>
+<devicesets>
+<deviceset name="A3L-LOC" prefix="FRAME" uservalue="yes">
+<description>&lt;b&gt;FRAME&lt;/b&gt;&lt;p&gt;
+DIN A3, landscape with location and doc. field</description>
+<gates>
+<gate name="G$1" symbol="A3L-LOC" x="0" y="0"/>
+</gates>
+<devices>
+<device name="">
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+</devicesets>
+</library>
+<library name="supply1">
+<description>&lt;b&gt;Supply Symbols&lt;/b&gt;&lt;p&gt;
+ GND, VCC, 0V, +5V, -5V, etc.&lt;p&gt;
+ Please keep in mind, that these devices are necessary for the
+ automatic wiring of the supply signals.&lt;p&gt;
+ The pin name defined in the symbol is identical to the net which is to be wired automatically.&lt;p&gt;
+ In this library the device names are the same as the pin names of the symbols, therefore the correct signal names appear next to the supply symbols in the schematic.&lt;p&gt;
+ &lt;author&gt;Created by librarian@cadsoft.de&lt;/author&gt;</description>
+<packages>
+</packages>
+<symbols>
+<symbol name="VCC">
+<wire x1="1.27" y1="-1.905" x2="0" y2="0" width="0.254" layer="94"/>
+<wire x1="0" y1="0" x2="-1.27" y2="-1.905" width="0.254" layer="94"/>
+<text x="-2.54" y="-2.54" size="1.778" layer="96" rot="R90">&gt;VALUE</text>
+<pin name="VCC" x="0" y="-2.54" visible="off" length="short" direction="sup" rot="R90"/>
+</symbol>
+<symbol name="0V">
+<wire x1="-1.905" y1="0" x2="1.905" y2="0" width="0.254" layer="94"/>
+<text x="-1.905" y="-2.54" size="1.778" layer="96">&gt;VALUE</text>
+<pin name="0V" x="0" y="2.54" visible="off" length="short" direction="sup" rot="R270"/>
+</symbol>
+</symbols>
+<devicesets>
+<deviceset name="VCC" prefix="P+">
+<description>&lt;b&gt;SUPPLY SYMBOL&lt;/b&gt;</description>
+<gates>
+<gate name="VCC" symbol="VCC" x="0" y="0"/>
+</gates>
+<devices>
+<device name="">
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="0V" prefix="GND">
+<description>&lt;b&gt;SUPPLY SYMBOL&lt;/b&gt;</description>
+<gates>
+<gate name="1" symbol="0V" x="0" y="0"/>
+</gates>
+<devices>
+<device name="">
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+</devicesets>
+</library>
 </libraries>
 <attributes>
 </attributes>
@@ -705,26 +806,181 @@ Source: http://www.atmel.com .. doc8023.pdf</description>
 <part name="U1" library="HumanoidLbr" deviceset="CH340G" device=""/>
 <part name="X1" library="con-cypressindustries" deviceset="MINI-USB_SHIELD5P2-" device="32005-601"/>
 <part name="IC2" library="atmel" deviceset="ATMEGA325P" device=""/>
+<part name="FRAME1" library="frames" deviceset="A3L-LOC" device=""/>
+<part name="P+1" library="supply1" deviceset="VCC" device="" value="+5V"/>
+<part name="P+2" library="supply1" deviceset="VCC" device="" value="+5V"/>
+<part name="P+3" library="supply1" deviceset="VCC" device="" value="+5V"/>
+<part name="P+4" library="supply1" deviceset="VCC" device="" value="+5V"/>
+<part name="P+5" library="supply1" deviceset="VCC" device="" value="+5V"/>
+<part name="P+6" library="supply1" deviceset="VCC" device="" value="+5V"/>
+<part name="P+7" library="supply1" deviceset="VCC" device="" value="+5V"/>
+<part name="GND1" library="supply1" deviceset="0V" device="" value="GND"/>
+<part name="GND2" library="supply1" deviceset="0V" device="" value="GND"/>
+<part name="GND3" library="supply1" deviceset="0V" device="" value="GND"/>
+<part name="GND4" library="supply1" deviceset="0V" device="" value="GND"/>
+<part name="GND5" library="supply1" deviceset="0V" device="" value="GND"/>
+<part name="GND6" library="supply1" deviceset="0V" device="" value="GND"/>
+<part name="GND7" library="supply1" deviceset="0V" device="" value="GND"/>
 </parts>
 <sheets>
 <sheet>
 <plain>
 </plain>
 <instances>
-<instance part="D1" gate="G$1" x="30.48" y="27.94"/>
-<instance part="D2" gate="G$1" x="68.58" y="27.94"/>
-<instance part="D3" gate="G$1" x="106.68" y="27.94"/>
-<instance part="D4" gate="G$1" x="144.78" y="27.94"/>
-<instance part="D5" gate="G$1" x="187.96" y="27.94"/>
-<instance part="D6" gate="G$1" x="228.6" y="27.94"/>
-<instance part="D7" gate="G$1" x="269.24" y="27.94"/>
-<instance part="U1" gate="G$1" x="40.64" y="73.66"/>
-<instance part="X1" gate="G41" x="38.1" y="160.02"/>
-<instance part="IC2" gate="G$1" x="154.94" y="101.6"/>
+<instance part="D1" gate="G$1" x="119.38" y="93.98"/>
+<instance part="D2" gate="G$1" x="157.48" y="93.98"/>
+<instance part="D3" gate="G$1" x="195.58" y="93.98"/>
+<instance part="D4" gate="G$1" x="233.68" y="93.98"/>
+<instance part="D5" gate="G$1" x="276.86" y="93.98"/>
+<instance part="D6" gate="G$1" x="317.5" y="93.98"/>
+<instance part="D7" gate="G$1" x="358.14" y="93.98"/>
+<instance part="U1" gate="G$1" x="40.64" y="35.56"/>
+<instance part="X1" gate="G41" x="17.78" y="109.22" rot="R180"/>
+<instance part="IC2" gate="G$1" x="109.22" y="38.1"/>
+<instance part="FRAME1" gate="G$1" x="0" y="0"/>
+<instance part="P+1" gate="VCC" x="137.16" y="106.68"/>
+<instance part="P+2" gate="VCC" x="175.26" y="106.68"/>
+<instance part="P+3" gate="VCC" x="213.36" y="106.68"/>
+<instance part="P+4" gate="VCC" x="251.46" y="106.68"/>
+<instance part="P+5" gate="VCC" x="294.64" y="106.68"/>
+<instance part="P+6" gate="VCC" x="335.28" y="106.68"/>
+<instance part="P+7" gate="VCC" x="375.92" y="106.68"/>
+<instance part="GND1" gate="1" x="134.62" y="83.82"/>
+<instance part="GND2" gate="1" x="172.72" y="83.82"/>
+<instance part="GND3" gate="1" x="210.82" y="83.82"/>
+<instance part="GND4" gate="1" x="248.92" y="83.82"/>
+<instance part="GND5" gate="1" x="292.1" y="83.82"/>
+<instance part="GND6" gate="1" x="332.74" y="83.82"/>
+<instance part="GND7" gate="1" x="373.38" y="83.82"/>
 </instances>
 <busses>
 </busses>
 <nets>
+<net name="N$1" class="0">
+<segment>
+<pinref part="D1" gate="G$1" pin="DOUT"/>
+<pinref part="D2" gate="G$1" pin="DIN"/>
+<wire x1="134.62" y1="93.98" x2="142.24" y2="93.98" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$2" class="0">
+<segment>
+<pinref part="D2" gate="G$1" pin="DOUT"/>
+<pinref part="D3" gate="G$1" pin="DIN"/>
+<wire x1="172.72" y1="93.98" x2="180.34" y2="93.98" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$3" class="0">
+<segment>
+<pinref part="D3" gate="G$1" pin="DOUT"/>
+<pinref part="D4" gate="G$1" pin="DIN"/>
+<wire x1="210.82" y1="93.98" x2="218.44" y2="93.98" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$4" class="0">
+<segment>
+<pinref part="D4" gate="G$1" pin="DOUT"/>
+<pinref part="D5" gate="G$1" pin="DIN"/>
+<wire x1="248.92" y1="93.98" x2="261.62" y2="93.98" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$5" class="0">
+<segment>
+<pinref part="D5" gate="G$1" pin="DOUT"/>
+<pinref part="D6" gate="G$1" pin="DIN"/>
+<wire x1="292.1" y1="93.98" x2="302.26" y2="93.98" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$6" class="0">
+<segment>
+<pinref part="D6" gate="G$1" pin="DOUT"/>
+<pinref part="D7" gate="G$1" pin="DIN"/>
+<wire x1="332.74" y1="93.98" x2="342.9" y2="93.98" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="VCC" class="0">
+<segment>
+<pinref part="P+7" gate="VCC" pin="VCC"/>
+<pinref part="D7" gate="G$1" pin="VDD"/>
+<wire x1="375.92" y1="104.14" x2="375.92" y2="101.6" width="0.1524" layer="91"/>
+<wire x1="375.92" y1="101.6" x2="373.38" y2="101.6" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="D6" gate="G$1" pin="VDD"/>
+<pinref part="P+6" gate="VCC" pin="VCC"/>
+<wire x1="332.74" y1="101.6" x2="335.28" y2="101.6" width="0.1524" layer="91"/>
+<wire x1="335.28" y1="101.6" x2="335.28" y2="104.14" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="D5" gate="G$1" pin="VDD"/>
+<pinref part="P+5" gate="VCC" pin="VCC"/>
+<wire x1="292.1" y1="101.6" x2="294.64" y2="101.6" width="0.1524" layer="91"/>
+<wire x1="294.64" y1="101.6" x2="294.64" y2="104.14" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="D4" gate="G$1" pin="VDD"/>
+<pinref part="P+4" gate="VCC" pin="VCC"/>
+<wire x1="248.92" y1="101.6" x2="251.46" y2="101.6" width="0.1524" layer="91"/>
+<wire x1="251.46" y1="101.6" x2="251.46" y2="104.14" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="D3" gate="G$1" pin="VDD"/>
+<pinref part="P+3" gate="VCC" pin="VCC"/>
+<wire x1="210.82" y1="101.6" x2="213.36" y2="101.6" width="0.1524" layer="91"/>
+<wire x1="213.36" y1="101.6" x2="213.36" y2="104.14" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="D2" gate="G$1" pin="VDD"/>
+<pinref part="P+2" gate="VCC" pin="VCC"/>
+<wire x1="172.72" y1="101.6" x2="175.26" y2="101.6" width="0.1524" layer="91"/>
+<wire x1="175.26" y1="101.6" x2="175.26" y2="104.14" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="D1" gate="G$1" pin="VDD"/>
+<pinref part="P+1" gate="VCC" pin="VCC"/>
+<wire x1="134.62" y1="101.6" x2="137.16" y2="101.6" width="0.1524" layer="91"/>
+<wire x1="137.16" y1="101.6" x2="137.16" y2="104.14" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="0V" class="0">
+<segment>
+<pinref part="D1" gate="G$1" pin="VSS"/>
+<pinref part="GND1" gate="1" pin="0V"/>
+</segment>
+<segment>
+<pinref part="D2" gate="G$1" pin="VSS"/>
+<pinref part="GND2" gate="1" pin="0V"/>
+</segment>
+<segment>
+<pinref part="D3" gate="G$1" pin="VSS"/>
+<pinref part="GND3" gate="1" pin="0V"/>
+</segment>
+<segment>
+<pinref part="D4" gate="G$1" pin="VSS"/>
+<pinref part="GND4" gate="1" pin="0V"/>
+</segment>
+<segment>
+<pinref part="D5" gate="G$1" pin="VSS"/>
+<pinref part="GND5" gate="1" pin="0V"/>
+</segment>
+<segment>
+<pinref part="D6" gate="G$1" pin="VSS"/>
+<pinref part="GND6" gate="1" pin="0V"/>
+</segment>
+<segment>
+<pinref part="D7" gate="G$1" pin="VSS"/>
+<pinref part="GND7" gate="1" pin="0V"/>
+</segment>
+</net>
+<net name="N$7" class="0">
+<segment>
+<pinref part="IC2" gate="G$1" pin="PA2"/>
+<wire x1="132.08" y1="66.04" x2="132.08" y2="76.2" width="0.1524" layer="91"/>
+<wire x1="132.08" y1="76.2" x2="104.14" y2="76.2" width="0.1524" layer="91"/>
+<pinref part="D1" gate="G$1" pin="DIN"/>
+<wire x1="104.14" y1="76.2" x2="104.14" y2="93.98" width="0.1524" layer="91"/>
+</segment>
+</net>
 </nets>
 </sheet>
 </sheets>

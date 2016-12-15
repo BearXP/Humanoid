@@ -545,106 +545,155 @@ design rules under a new name.</description>
 </pass>
 </autorouter>
 <elements>
-<element name="D1" library="WS2812B" package="LED_WS2812B" value="WS2812B" x="-7.62" y="-17.78">
-<attribute name="PRICE" value="5.56 USD" x="-7.62" y="-17.78" size="1.778" layer="27" display="off"/>
-<attribute name="PACKAGE" value="None" x="-7.62" y="-17.78" size="1.778" layer="27" display="off"/>
-<attribute name="AVAILABILITY" value="Unavailable" x="-7.62" y="-17.78" size="1.778" layer="27" display="off"/>
-<attribute name="DESCRIPTION" value="Intelligent Control Led Integrated Light Source Pack Of 10" x="-7.62" y="-17.78" size="1.778" layer="27" display="off"/>
-<attribute name="MP" value="WS2812B" x="-7.62" y="-17.78" size="1.778" layer="27" display="off"/>
-<attribute name="MF" value="Adafruit Industries" x="-7.62" y="-17.78" size="1.778" layer="27" display="off"/>
+<element name="D1" library="WS2812B" package="LED_WS2812B" value="WS2812B" x="54.61" y="68.58">
+<attribute name="PRICE" value="5.56 USD" x="54.61" y="68.58" size="1.778" layer="27" display="off"/>
+<attribute name="PACKAGE" value="None" x="54.61" y="68.58" size="1.778" layer="27" display="off"/>
+<attribute name="AVAILABILITY" value="Unavailable" x="54.61" y="68.58" size="1.778" layer="27" display="off"/>
+<attribute name="DESCRIPTION" value="Intelligent Control Led Integrated Light Source Pack Of 10" x="54.61" y="68.58" size="1.778" layer="27" display="off"/>
+<attribute name="MP" value="WS2812B" x="54.61" y="68.58" size="1.778" layer="27" display="off"/>
+<attribute name="MF" value="Adafruit Industries" x="54.61" y="68.58" size="1.778" layer="27" display="off"/>
 </element>
-<element name="D2" library="WS2812B" package="LED_WS2812B" value="WS2812B" x="-7.62" y="-26.67">
-<attribute name="PRICE" value="5.56 USD" x="-7.62" y="-26.67" size="1.778" layer="27" display="off"/>
-<attribute name="PACKAGE" value="None" x="-7.62" y="-26.67" size="1.778" layer="27" display="off"/>
-<attribute name="AVAILABILITY" value="Unavailable" x="-7.62" y="-26.67" size="1.778" layer="27" display="off"/>
-<attribute name="DESCRIPTION" value="Intelligent Control Led Integrated Light Source Pack Of 10" x="-7.62" y="-26.67" size="1.778" layer="27" display="off"/>
-<attribute name="MP" value="WS2812B" x="-7.62" y="-26.67" size="1.778" layer="27" display="off"/>
-<attribute name="MF" value="Adafruit Industries" x="-7.62" y="-26.67" size="1.778" layer="27" display="off"/>
+<element name="D2" library="WS2812B" package="LED_WS2812B" value="WS2812B" x="54.61" y="59.69">
+<attribute name="PRICE" value="5.56 USD" x="54.61" y="59.69" size="1.778" layer="27" display="off"/>
+<attribute name="PACKAGE" value="None" x="54.61" y="59.69" size="1.778" layer="27" display="off"/>
+<attribute name="AVAILABILITY" value="Unavailable" x="54.61" y="59.69" size="1.778" layer="27" display="off"/>
+<attribute name="DESCRIPTION" value="Intelligent Control Led Integrated Light Source Pack Of 10" x="54.61" y="59.69" size="1.778" layer="27" display="off"/>
+<attribute name="MP" value="WS2812B" x="54.61" y="59.69" size="1.778" layer="27" display="off"/>
+<attribute name="MF" value="Adafruit Industries" x="54.61" y="59.69" size="1.778" layer="27" display="off"/>
 </element>
-<element name="D3" library="WS2812B" package="LED_WS2812B" value="WS2812B" x="-7.62" y="-35.56">
-<attribute name="PRICE" value="5.56 USD" x="-7.62" y="-35.56" size="1.778" layer="27" display="off"/>
-<attribute name="PACKAGE" value="None" x="-7.62" y="-35.56" size="1.778" layer="27" display="off"/>
-<attribute name="AVAILABILITY" value="Unavailable" x="-7.62" y="-35.56" size="1.778" layer="27" display="off"/>
-<attribute name="DESCRIPTION" value="Intelligent Control Led Integrated Light Source Pack Of 10" x="-7.62" y="-35.56" size="1.778" layer="27" display="off"/>
-<attribute name="MP" value="WS2812B" x="-7.62" y="-35.56" size="1.778" layer="27" display="off"/>
-<attribute name="MF" value="Adafruit Industries" x="-7.62" y="-35.56" size="1.778" layer="27" display="off"/>
+<element name="D3" library="WS2812B" package="LED_WS2812B" value="WS2812B" x="54.61" y="50.8">
+<attribute name="PRICE" value="5.56 USD" x="54.61" y="50.8" size="1.778" layer="27" display="off"/>
+<attribute name="PACKAGE" value="None" x="54.61" y="50.8" size="1.778" layer="27" display="off"/>
+<attribute name="AVAILABILITY" value="Unavailable" x="54.61" y="50.8" size="1.778" layer="27" display="off"/>
+<attribute name="DESCRIPTION" value="Intelligent Control Led Integrated Light Source Pack Of 10" x="54.61" y="50.8" size="1.778" layer="27" display="off"/>
+<attribute name="MP" value="WS2812B" x="54.61" y="50.8" size="1.778" layer="27" display="off"/>
+<attribute name="MF" value="Adafruit Industries" x="54.61" y="50.8" size="1.778" layer="27" display="off"/>
 </element>
-<element name="D4" library="WS2812B" package="LED_WS2812B" value="WS2812B" x="-7.62" y="-44.45">
-<attribute name="PRICE" value="5.56 USD" x="-7.62" y="-44.45" size="1.778" layer="27" display="off"/>
-<attribute name="PACKAGE" value="None" x="-7.62" y="-44.45" size="1.778" layer="27" display="off"/>
-<attribute name="AVAILABILITY" value="Unavailable" x="-7.62" y="-44.45" size="1.778" layer="27" display="off"/>
-<attribute name="DESCRIPTION" value="Intelligent Control Led Integrated Light Source Pack Of 10" x="-7.62" y="-44.45" size="1.778" layer="27" display="off"/>
-<attribute name="MP" value="WS2812B" x="-7.62" y="-44.45" size="1.778" layer="27" display="off"/>
-<attribute name="MF" value="Adafruit Industries" x="-7.62" y="-44.45" size="1.778" layer="27" display="off"/>
+<element name="D4" library="WS2812B" package="LED_WS2812B" value="WS2812B" x="54.61" y="41.91">
+<attribute name="PRICE" value="5.56 USD" x="54.61" y="41.91" size="1.778" layer="27" display="off"/>
+<attribute name="PACKAGE" value="None" x="54.61" y="41.91" size="1.778" layer="27" display="off"/>
+<attribute name="AVAILABILITY" value="Unavailable" x="54.61" y="41.91" size="1.778" layer="27" display="off"/>
+<attribute name="DESCRIPTION" value="Intelligent Control Led Integrated Light Source Pack Of 10" x="54.61" y="41.91" size="1.778" layer="27" display="off"/>
+<attribute name="MP" value="WS2812B" x="54.61" y="41.91" size="1.778" layer="27" display="off"/>
+<attribute name="MF" value="Adafruit Industries" x="54.61" y="41.91" size="1.778" layer="27" display="off"/>
 </element>
-<element name="D5" library="WS2812B" package="LED_WS2812B" value="WS2812B" x="-7.62" y="-53.34">
-<attribute name="PRICE" value="5.56 USD" x="-7.62" y="-53.34" size="1.778" layer="27" display="off"/>
-<attribute name="PACKAGE" value="None" x="-7.62" y="-53.34" size="1.778" layer="27" display="off"/>
-<attribute name="AVAILABILITY" value="Unavailable" x="-7.62" y="-53.34" size="1.778" layer="27" display="off"/>
-<attribute name="DESCRIPTION" value="Intelligent Control Led Integrated Light Source Pack Of 10" x="-7.62" y="-53.34" size="1.778" layer="27" display="off"/>
-<attribute name="MP" value="WS2812B" x="-7.62" y="-53.34" size="1.778" layer="27" display="off"/>
-<attribute name="MF" value="Adafruit Industries" x="-7.62" y="-53.34" size="1.778" layer="27" display="off"/>
+<element name="D5" library="WS2812B" package="LED_WS2812B" value="WS2812B" x="54.61" y="33.02">
+<attribute name="PRICE" value="5.56 USD" x="54.61" y="33.02" size="1.778" layer="27" display="off"/>
+<attribute name="PACKAGE" value="None" x="54.61" y="33.02" size="1.778" layer="27" display="off"/>
+<attribute name="AVAILABILITY" value="Unavailable" x="54.61" y="33.02" size="1.778" layer="27" display="off"/>
+<attribute name="DESCRIPTION" value="Intelligent Control Led Integrated Light Source Pack Of 10" x="54.61" y="33.02" size="1.778" layer="27" display="off"/>
+<attribute name="MP" value="WS2812B" x="54.61" y="33.02" size="1.778" layer="27" display="off"/>
+<attribute name="MF" value="Adafruit Industries" x="54.61" y="33.02" size="1.778" layer="27" display="off"/>
 </element>
-<element name="D6" library="WS2812B" package="LED_WS2812B" value="WS2812B" x="-7.62" y="-62.23">
-<attribute name="PRICE" value="5.56 USD" x="-7.62" y="-62.23" size="1.778" layer="27" display="off"/>
-<attribute name="PACKAGE" value="None" x="-7.62" y="-62.23" size="1.778" layer="27" display="off"/>
-<attribute name="AVAILABILITY" value="Unavailable" x="-7.62" y="-62.23" size="1.778" layer="27" display="off"/>
-<attribute name="DESCRIPTION" value="Intelligent Control Led Integrated Light Source Pack Of 10" x="-7.62" y="-62.23" size="1.778" layer="27" display="off"/>
-<attribute name="MP" value="WS2812B" x="-7.62" y="-62.23" size="1.778" layer="27" display="off"/>
-<attribute name="MF" value="Adafruit Industries" x="-7.62" y="-62.23" size="1.778" layer="27" display="off"/>
+<element name="D6" library="WS2812B" package="LED_WS2812B" value="WS2812B" x="54.61" y="24.13">
+<attribute name="PRICE" value="5.56 USD" x="54.61" y="24.13" size="1.778" layer="27" display="off"/>
+<attribute name="PACKAGE" value="None" x="54.61" y="24.13" size="1.778" layer="27" display="off"/>
+<attribute name="AVAILABILITY" value="Unavailable" x="54.61" y="24.13" size="1.778" layer="27" display="off"/>
+<attribute name="DESCRIPTION" value="Intelligent Control Led Integrated Light Source Pack Of 10" x="54.61" y="24.13" size="1.778" layer="27" display="off"/>
+<attribute name="MP" value="WS2812B" x="54.61" y="24.13" size="1.778" layer="27" display="off"/>
+<attribute name="MF" value="Adafruit Industries" x="54.61" y="24.13" size="1.778" layer="27" display="off"/>
 </element>
-<element name="D7" library="WS2812B" package="LED_WS2812B" value="WS2812B" x="-7.62" y="-71.12">
-<attribute name="PRICE" value="5.56 USD" x="-7.62" y="-71.12" size="1.778" layer="27" display="off"/>
-<attribute name="PACKAGE" value="None" x="-7.62" y="-71.12" size="1.778" layer="27" display="off"/>
-<attribute name="AVAILABILITY" value="Unavailable" x="-7.62" y="-71.12" size="1.778" layer="27" display="off"/>
-<attribute name="DESCRIPTION" value="Intelligent Control Led Integrated Light Source Pack Of 10" x="-7.62" y="-71.12" size="1.778" layer="27" display="off"/>
-<attribute name="MP" value="WS2812B" x="-7.62" y="-71.12" size="1.778" layer="27" display="off"/>
-<attribute name="MF" value="Adafruit Industries" x="-7.62" y="-71.12" size="1.778" layer="27" display="off"/>
+<element name="D7" library="WS2812B" package="LED_WS2812B" value="WS2812B" x="54.61" y="15.24">
+<attribute name="PRICE" value="5.56 USD" x="54.61" y="15.24" size="1.778" layer="27" display="off"/>
+<attribute name="PACKAGE" value="None" x="54.61" y="15.24" size="1.778" layer="27" display="off"/>
+<attribute name="AVAILABILITY" value="Unavailable" x="54.61" y="15.24" size="1.778" layer="27" display="off"/>
+<attribute name="DESCRIPTION" value="Intelligent Control Led Integrated Light Source Pack Of 10" x="54.61" y="15.24" size="1.778" layer="27" display="off"/>
+<attribute name="MP" value="WS2812B" x="54.61" y="15.24" size="1.778" layer="27" display="off"/>
+<attribute name="MF" value="Adafruit Industries" x="54.61" y="15.24" size="1.778" layer="27" display="off"/>
 </element>
-<element name="U1" library="HumanoidLbr" package="SO-16" value="CH340G" x="-17.78" y="-69.85"/>
-<element name="X1" library="con-cypressindustries" package="32005-601" value="MINI-USB_SHIELD5P2-32005-601" x="-31.75" y="-63.5">
-<attribute name="OC_NEWARK" value="unknown" x="-31.75" y="-63.5" size="1.778" layer="27" display="off"/>
-<attribute name="MPN" value="" x="-31.75" y="-63.5" size="1.778" layer="27" display="off"/>
-<attribute name="OC_FARNELL" value="unknown" x="-31.75" y="-63.5" size="1.778" layer="27" display="off"/>
-<attribute name="MF" value="" x="-31.75" y="-63.5" size="1.778" layer="27" display="off"/>
+<element name="U1" library="HumanoidLbr" package="SO-16" value="CH340G" x="92.71" y="30.48"/>
+<element name="X1" library="con-cypressindustries" package="32005-601" value="MINI-USB_SHIELD5P2-32005-601" x="26.67" y="53.34">
+<attribute name="OC_NEWARK" value="unknown" x="26.67" y="53.34" size="1.778" layer="27" display="off"/>
+<attribute name="MPN" value="" x="26.67" y="53.34" size="1.778" layer="27" display="off"/>
+<attribute name="OC_FARNELL" value="unknown" x="26.67" y="53.34" size="1.778" layer="27" display="off"/>
+<attribute name="MF" value="" x="26.67" y="53.34" size="1.778" layer="27" display="off"/>
 </element>
-<element name="IC2" library="atmel" package="64M1" value="ATMEGA325P" x="-31.75" y="-95.25">
-<attribute name="OC_NEWARK" value="03P2025" x="-31.75" y="-95.25" size="1.778" layer="27" display="off"/>
-<attribute name="MPN" value="ATMEGA325PV-10AU" x="-31.75" y="-95.25" size="1.778" layer="27" display="off"/>
-<attribute name="OC_FARNELL" value="1636939" x="-31.75" y="-95.25" size="1.778" layer="27" display="off"/>
-<attribute name="MF" value="" x="-31.75" y="-95.25" size="1.778" layer="27" display="off"/>
+<element name="IC2" library="atmel" package="64M1" value="ATMEGA325P" x="15.24" y="19.05">
+<attribute name="OC_NEWARK" value="03P2025" x="15.24" y="19.05" size="1.778" layer="27" display="off"/>
+<attribute name="MPN" value="ATMEGA325PV-10AU" x="15.24" y="19.05" size="1.778" layer="27" display="off"/>
+<attribute name="OC_FARNELL" value="1636939" x="15.24" y="19.05" size="1.778" layer="27" display="off"/>
+<attribute name="MF" value="" x="15.24" y="19.05" size="1.778" layer="27" display="off"/>
 </element>
 </elements>
 <signals>
-<signal name="VDD">
-<contactref element="D1" pad="1"/>
-<contactref element="D2" pad="1"/>
-<contactref element="D3" pad="1"/>
-<contactref element="D4" pad="1"/>
-<contactref element="D5" pad="1"/>
-<contactref element="D6" pad="1"/>
-<contactref element="D7" pad="1"/>
-<wire x1="-10.07" y1="-60.63" x2="-10.07" y2="-69.52" width="0" layer="19" extent="1-1"/>
-<wire x1="-10.07" y1="-51.74" x2="-10.07" y2="-60.63" width="0" layer="19" extent="1-1"/>
-<wire x1="-10.07" y1="-42.85" x2="-10.07" y2="-51.74" width="0" layer="19" extent="1-1"/>
-<wire x1="-10.07" y1="-33.96" x2="-10.07" y2="-42.85" width="0" layer="19" extent="1-1"/>
-<wire x1="-10.07" y1="-25.07" x2="-10.07" y2="-33.96" width="0" layer="19" extent="1-1"/>
-<wire x1="-10.07" y1="-16.18" x2="-10.07" y2="-25.07" width="0" layer="19" extent="1-1"/>
-</signal>
 <signal name="GND">
 <contactref element="IC2" pad="22"/>
 <contactref element="IC2" pad="53"/>
 <contactref element="IC2" pad="63"/>
-<wire x1="-35" y1="-90.69" x2="-33" y2="-99.81" width="0" layer="19" extent="1-1"/>
-<wire x1="-30" y1="-90.69" x2="-35" y2="-90.69" width="0" layer="19" extent="1-1"/>
+<wire x1="11.99" y1="23.61" x2="13.99" y2="14.49" width="0" layer="19" extent="1-1"/>
+<wire x1="16.99" y1="23.61" x2="11.99" y2="23.61" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="VCC">
 <contactref element="IC2" pad="21"/>
 <contactref element="IC2" pad="52"/>
-<wire x1="-29.5" y1="-90.69" x2="-33.5" y2="-99.81" width="0" layer="19" extent="1-1"/>
+<contactref element="D7" pad="1"/>
+<contactref element="D6" pad="1"/>
+<contactref element="D5" pad="1"/>
+<contactref element="D4" pad="1"/>
+<contactref element="D3" pad="1"/>
+<contactref element="D2" pad="1"/>
+<contactref element="D1" pad="1"/>
+<wire x1="52.16" y1="61.29" x2="52.16" y2="70.18" width="0" layer="19" extent="1-1"/>
+<wire x1="52.16" y1="52.4" x2="52.16" y2="61.29" width="0" layer="19" extent="1-1"/>
+<wire x1="52.16" y1="43.51" x2="52.16" y2="52.4" width="0" layer="19" extent="1-1"/>
+<wire x1="52.16" y1="34.62" x2="52.16" y2="43.51" width="0" layer="19" extent="1-1"/>
+<wire x1="52.16" y1="25.73" x2="52.16" y2="34.62" width="0" layer="19" extent="1-1"/>
+<wire x1="52.16" y1="16.84" x2="52.16" y2="25.73" width="0" layer="19" extent="1-1"/>
+<wire x1="17.49" y1="23.61" x2="52.16" y2="25.73" width="0" layer="19" extent="1-1"/>
+<wire x1="13.49" y1="14.49" x2="17.49" y2="23.61" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="AVCC">
 <contactref element="IC2" pad="64"/>
+</signal>
+<signal name="N$1">
+<contactref element="D1" pad="2"/>
+<contactref element="D2" pad="4"/>
+<wire x1="57.06" y1="61.29" x2="52.16" y2="66.98" width="0" layer="19" extent="1-1"/>
+</signal>
+<signal name="N$2">
+<contactref element="D2" pad="2"/>
+<contactref element="D3" pad="4"/>
+<wire x1="57.06" y1="52.4" x2="52.16" y2="58.09" width="0" layer="19" extent="1-1"/>
+</signal>
+<signal name="N$3">
+<contactref element="D3" pad="2"/>
+<contactref element="D4" pad="4"/>
+<wire x1="57.06" y1="43.51" x2="52.16" y2="49.2" width="0" layer="19" extent="1-1"/>
+</signal>
+<signal name="N$4">
+<contactref element="D4" pad="2"/>
+<contactref element="D5" pad="4"/>
+<wire x1="57.06" y1="34.62" x2="52.16" y2="40.31" width="0" layer="19" extent="1-1"/>
+</signal>
+<signal name="N$5">
+<contactref element="D5" pad="2"/>
+<contactref element="D6" pad="4"/>
+<wire x1="57.06" y1="25.73" x2="52.16" y2="31.42" width="0" layer="19" extent="1-1"/>
+</signal>
+<signal name="N$6">
+<contactref element="D6" pad="2"/>
+<contactref element="D7" pad="4"/>
+<wire x1="57.06" y1="16.84" x2="52.16" y2="22.53" width="0" layer="19" extent="1-1"/>
+</signal>
+<signal name="0V">
+<contactref element="D1" pad="3"/>
+<contactref element="D2" pad="3"/>
+<contactref element="D3" pad="3"/>
+<contactref element="D4" pad="3"/>
+<contactref element="D5" pad="3"/>
+<contactref element="D6" pad="3"/>
+<contactref element="D7" pad="3"/>
+<wire x1="57.06" y1="58.09" x2="57.06" y2="66.98" width="0" layer="19" extent="1-1"/>
+<wire x1="57.06" y1="49.2" x2="57.06" y2="58.09" width="0" layer="19" extent="1-1"/>
+<wire x1="57.06" y1="40.31" x2="57.06" y2="49.2" width="0" layer="19" extent="1-1"/>
+<wire x1="57.06" y1="31.42" x2="57.06" y2="40.31" width="0" layer="19" extent="1-1"/>
+<wire x1="57.06" y1="22.53" x2="57.06" y2="31.42" width="0" layer="19" extent="1-1"/>
+<wire x1="57.06" y1="13.64" x2="57.06" y2="22.53" width="0" layer="19" extent="1-1"/>
+</signal>
+<signal name="N$7">
+<contactref element="IC2" pad="49"/>
+<contactref element="D1" pad="4"/>
+<wire x1="18.99" y1="23.61" x2="57.06" y2="70.18" width="0" layer="19" extent="1-1"/>
 </signal>
 </signals>
 </board>
