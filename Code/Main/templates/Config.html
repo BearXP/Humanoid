@@ -1,0 +1,22 @@
+{% extends "Template.html" %}
+{% block Body %}
+
+  <form id="config" method="post">
+    {% for servo in servoDb %}
+      <select id="sel-conf" name="sel-conf" onmousedown="this.value=''," 
+onchange jsShowConf(this.value);">
+        <option value='{{servo.index}}'>{{servi.index}} {{servo.limb}} 
+{{servo.name}}'</option> 
+            <input type="range"
+                   name="Servo{{ servo.index }}"
+                   id="Servo{{ servo.index }}"
+                   value="{{ servo.pos }}"
+                   min="{{ servo.min }}"
+                   max="{{ servo.max }}"
+                   step="10">
+      </select>
+    {% endfor %}
+      
+      <input type="submit" data-inline="true" value="  Submit  ">
+  </form>
+{% endblock %}
