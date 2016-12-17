@@ -1,22 +1,32 @@
 {% extends "Template.html" %}
 {% block Body %}
-
-  <form id="config" method="post">
+  <form id="servosForm" method="post">
+  <!-- Drop down menu -->
+      <select id="sel-conf"
+                  name="sel-conf"
+                  class="tablinks"
+                  onmousedown="this.value='';"
+                  onchange="openTab(event, this.value);">
+      {% for servo in servoDb %}
+          <option value="Servo{{servo.index}}">{{servo.index}}. {{servo.limb}} {{servo.name}}</option> 
+      {% endfor %}
+    </select>
+    <!-- The servos -->
     {% for servo in servoDb %}
-      <select id="sel-conf" name="sel-conf" onmousedown="this.value=''," 
-onchange jsShowConf(this.value);">
-        <option value='{{servo.index}}'>{{servi.index}} {{servo.limb}} 
-{{servo.name}}'</option> 
-            <input type="range"
-                   name="Servo{{ servo.index }}"
-                   id="Servo{{ servo.index }}"
-                   value="{{ servo.pos }}"
-                   min="{{ servo.min }}"
-                   max="{{ servo.max }}"
-                   step="10">
-      </select>
+      <div id="Servo{{ servo.index }}" class="tabcontent">
+        <h2>{{servo.index}}. {{servo.limb}} {{servo.name}}</h2>
+        <label for="Servo{{ servo.index }}Center">Center</label>
+        <input type="range"
+                     name="Servo{{ servo.index }}Center"
+                     id="Servo{{ servo.index }}Center"
+                     value="{{ servo.pos }}"
+                     min="{{ servo.min }}"
+                     max="{{ servo.max }}"
+                     step="1">
+       </div>
     {% endfor %}
       
-      <input type="submit" data-inline="true" value="  Submit  ">
+    <input type="submit" data-inline="true" value="  Submit  ">
   </form>
+  
 {% endblock %}
