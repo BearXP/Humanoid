@@ -1,5 +1,5 @@
 {% extends "Template.html" %}
-{% block Body %}
+{% block pagebody %}
   <form id="servosForm" method="post">
   <!-- Drop down menu -->
       <select id="sel-conf"
@@ -14,14 +14,33 @@
     <!-- The servos -->
     {% for servo in servoDb %}
       <div id="Servo{{ servo.index }}" class="tabcontent">
-        <h2>{{servo.index}}. {{servo.limb}} {{servo.name}}</h2>
-        <label for="Servo{{ servo.index }}Center">Center</label>
+        <h4>{{servo.index}}. {{servo.limb}} {{servo.name}}</h4>
+
+        <label for="Servo{{ servo.index }}Offset">Offset</label>
         <input type="range"
-                     name="Servo{{ servo.index }}Center"
-                     id="Servo{{ servo.index }}Center"
-                     value="{{ servo.pos }}"
-                     min="{{ servo.min }}"
-                     max="{{ servo.max }}"
+                     name="Servo{{ servo.index }}Offset"
+                     id="Servo{{ servo.index }}Offset"
+                     value="{{ servo.offset }}"
+                     min="-20"
+                     max="20"
+                     step="1">
+
+        <label for="Servo{{ servo.index }}Minimum">Minimum</label>
+        <input type="range"
+                     name="Servo{{ servo.index }}Minimum"
+                     id="Servo{{ servo.index }}Minimum"
+                     value="{{ servo.min }}"
+                     min="0"
+                     max="180"
+                     step="1">
+
+        <label for="Servo{{ servo.index }}Maximum">Maximum</label>
+        <input type="range"
+                     name="Servo{{ servo.index }}Maximum"
+                     id="Servo{{ servo.index }}Maximum"
+                     value="{{ servo.max }}"
+                     min="{{ 0 }}"
+                     max="{{ 180 }}"
                      step="1">
        </div>
     {% endfor %}
