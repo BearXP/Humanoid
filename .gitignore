@@ -1,5 +1,6 @@
 # Backup files... seriously, I sue git! #
 *.b[#]?
 *.s[#]?
+*.l[#]?
 
 # Need to learn glob syntax... #
