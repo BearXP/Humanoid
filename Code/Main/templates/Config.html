@@ -2,43 +2,45 @@
 {% block pagebody %}
   <form id="servosForm" method="post">
   <!-- Drop down menu -->
-      <select id="sel-conf"
-                  name="sel-conf"
-                  class="tablinks"
-                  onmousedown="this.value='';"
-                  onchange="openTab(event, this.value);">
-      {% for servo in servoDb %}
-          <option value="Servo{{servo.index}}">{{servo.index}}. {{servo.limb}} {{servo.name}}</option> 
+    <select id="sel-conf"
+            name="sel-conf"
+            class="tablinks"
+            onmousedown="this.value='';"
+            onchange="openTab(event, this.value);">
+      {% for servo in configDb %}
+          <option value="Servo{{servo['Id']}}">
+            {{servo['Id']}}. {{servo['limb']}} {{servo['name']}}
+          </option> 
       {% endfor %}
     </select>
-    <!-- The servos -->
-    {% for servo in servoDb %}
-      <div id="Servo{{ servo.index }}" class="tabcontent">
-        <h4>{{servo.index}}. {{servo.limb}} {{servo.name}}</h4>
+  <!-- The servos -->
+    {% for servo in configDb %}
+      <div id="Servo{{ servo['Id'] }}" class="tabcontent">
+        <h4>{{servo['Id']}}. {{servo['limb']}} {{servo['name']}}</h4>
 
-        <label for="Servo{{ servo.index }}Offset">Offset</label>
+        <label for="Servo{{ servo['Id'] }}Offset">Offset</label>
         <input type="range"
-                     name="Servo{{ servo.index }}Offset"
-                     id="Servo{{ servo.index }}Offset"
-                     value="{{ servo.offset }}"
+                     name="Servo{{ servo['Id'] }}Offset"
+                     id="Servo{{ servo['Id'] }}Offset"
+                     value="{{ servo['offset'] }}"
                      min="-20"
                      max="20"
                      step="1">
-
-        <label for="Servo{{ servo.index }}Minimum">Minimum</label>
+                     
+        <label for="Servo{{ servo['Id'] }}Minimum">Minimum</label>
         <input type="range"
-                     name="Servo{{ servo.index }}Minimum"
-                     id="Servo{{ servo.index }}Minimum"
-                     value="{{ servo.min }}"
+                     name="Servo{{ servo['Id'] }}Minimum"
+                     id="Servo{{ servo['Id'] }}Minimum"
+                     value="{{ servo['min'] }}"
                      min="0"
                      max="180"
                      step="1">
 
-        <label for="Servo{{ servo.index }}Maximum">Maximum</label>
+        <label for="Servo{{ servo['Id'] }}Maximum">Maximum</label>
         <input type="range"
-                     name="Servo{{ servo.index }}Maximum"
-                     id="Servo{{ servo.index }}Maximum"
-                     value="{{ servo.max }}"
+                     name="Servo{{ servo['Id'] }}Maximum"
+                     id="Servo{{ servo['Id'] }}Maximum"
+                     value="{{ servo['max'] }}"
                      min="{{ 0 }}"
                      max="{{ 180 }}"
                      step="1">

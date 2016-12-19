@@ -18,7 +18,9 @@ import os, time
 from flask import Flask, redirect, abort, url_for, render_template, request, g
 import socket
 # Sqlite for poses/sequences database
-import sqlite3 as sq , sys
+#from sqlite3 import dbapi2 as sqlite3
+import sqlite3
+import sys
 
 #import CHIP_IO.GPIO as GPIO
 #from pca9685_driver import Device
@@ -49,6 +51,7 @@ def get_db():
     db = getattr(g, '_database', None)
     if db is None:
         db = g._database = sqlite3.connect(DATABASE)
+        db.row_factory = sqlite3.Row
     return db
 
 @app.teardown_appcontext
@@ -59,9 +62,15 @@ def close_connection(exception):
 
 def query_db(query, args=(), one=False):
     cur = get_db().execute(query, args)
+    #cur = get_db().cursor();
+    #cur.execute(query, args)
     rv = cur.fetchall()
     cur.close()
     return (rv[0] if rv else None) if one else rv
+    
+def save_db(db, sql_string):
+    db.execute(sql_string)
+    db.commit()
 
 
 #------------------------------------------------
@@ -82,7 +91,9 @@ def update_servos():
 def index():
     if request.method == 'POST':
         update_servos()
-    return render_template('Config.html', botDb=BotDb)
+    for servo in query_db('select * from Config'):
+      print str(servo["limb"])
+    return render_template('Config.html', configDb=query_db('select * from Config'))
     
 #------------------------------------------------
 # * Setup Web Page
@@ -90,8 +101,13 @@ def index():
 @app.route("/config",methods=['GET','POST','PUT'])
 def config():
     if request.method == 'POST':
-        update_servos()
-    return render_template('Config.html', botDb=BotDb)
+        for i in range(1..19):
+            offset = request.form['Servo' + str(i) + 'Offset']
+            minimum = request.form['Servo' + str(i) + 'Min']
+            maximum = request.form['Servo' + str(i) + 'Max']
+            query_db('UPDATE Config SET offset='+offset+', min='+minimum+', max='+maximum+' WHERE Id='+i+';')
+            
+    return render_template('Config.html', configDb=query_db('select * from Config'))
 
 
 #------------------------------------------------
