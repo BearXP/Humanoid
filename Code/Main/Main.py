@@ -101,11 +101,12 @@ def index():
 @app.route("/config",methods=['GET','POST','PUT'])
 def config():
     if request.method == 'POST':
-        for i in range(1..19):
-            offset = request.form['Servo' + str(i) + 'Offset']
-            minimum = request.form['Servo' + str(i) + 'Min']
-            maximum = request.form['Servo' + str(i) + 'Max']
-            query_db('UPDATE Config SET offset='+offset+', min='+minimum+', max='+maximum+' WHERE Id='+i+';')
+        i = str(request.form['sel-conf'][5:])
+        offset = str(request.form['Servo' + i + 'Offset'])
+        minimum = str(request.form['Servo' + i + 'Minimum'])
+        maximum = str(request.form['Servo' + i + 'Maximum'])
+        s = 'UPDATE Config SET offset='+offset+', min='+minimum+', max='+maximum+' WHERE Id='+i+';'
+        save_db(get_db(), s)
             
     return render_template('Config.html', configDb=query_db('select * from Config'))
 
