@@ -91,24 +91,41 @@ def update_servos():
 def index():
     if request.method == 'POST':
         update_servos()
-    for servo in query_db('select * from Config'):
-      print str(servo["limb"])
     return render_template('Config.html', configDb=query_db('select * from Config'))
     
 #------------------------------------------------
-# * Setup Web Page
+# * Setup Config Page
 #------------------------------------------------
 @app.route("/config",methods=['GET','POST','PUT'])
 def config():
     if request.method == 'POST':
         i = str(request.form['sel-conf'][5:])
         offset = str(request.form['Servo' + i + 'Offset'])
+        direction = str(request.form['Servo' + i + 'Direction'])
         minimum = str(request.form['Servo' + i + 'Minimum'])
         maximum = str(request.form['Servo' + i + 'Maximum'])
-        s = 'UPDATE Config SET offset='+offset+', min='+minimum+', max='+maximum+' WHERE Id='+i+';'
+        s = 'UPDATE Config SET offset='+offset+ \
+                               ', direction='+direction+ \
+                               ', min='+minimum+ \
+                               ', max='+maximum+ \
+                               ' WHERE Id='+i+';'
         save_db(get_db(), s)
             
-    return render_template('Config.html', configDb=query_db('select * from Config'))
+    return render_template('Config.html',
+                           configDb=query_db('select * from Config'))
+
+
+#------------------------------------------------
+# * Setup Pose Page
+#------------------------------------------------
+@app.route("/pose",methods=['GET','POST','PUT'])
+def pose():
+    if request.method == 'POST':
+        1+1
+            
+    return render_template('Pose.html',
+                           configDb=query_db('select * from Config'),
+                           poseDb=query_db('select * from Pose order by Name Desc'))
 
 
 #------------------------------------------------

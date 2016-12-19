@@ -72,6 +72,49 @@ img {
      display:block;
      margin:0 auto;
 }
+
+/* Toast notifications */
+#snackbar {
+    visibility: hidden;
+    min-width: 250px;
+    margin-left: -125px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 16px;
+    padding: 16px;
+    position: fixed;
+    z-index: 1;
+    right: 30px;
+    bottom: 30px;
+    font-size: 17px;
+}
+
+#snackbar.show {
+    visibility: visible;
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+@-webkit-keyframes fadein {
+    from {bottom: 0; opacity: 0;} 
+    to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+    from {bottom: 30px; opacity: 1;} 
+    to {bottom: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+}
 </style>
 
 <body>
@@ -94,7 +137,9 @@ img {
   </div>
 </div>
 
+
 <script>
+/* Hide/show tabs js */
 function openTab(evt, tabName) {
     var i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("tabcontent");
@@ -109,7 +154,7 @@ function openTab(evt, tabName) {
     evt.currentTarget.className += " active";
 }
 
-
+/* Change submit to stay on same page */
 $(document).ready(function(){
     form = $('form');
 
@@ -122,11 +167,31 @@ $(document).ready(function(){
     });
 });
 
+function fnShowSnackbar() {
+    var x = document.getElementById("snackbar")
+    x.className = "show";
+    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+    
+    form = $('form');
+
+    $(form).on('submit', function() {
+        $.post($(form).attr('action'), $(this).serialize(), function(response) {
+            $('form').hide();
+        },'json');
+
+        return false;
+    });
+}
+
 // Get the element with id="defaultOpen" and click on it
-document.getElementsByClassName('tablinks')[1].click();
+//document.getElementsByClassName('tablinks')[1].click();
 
 </script>
      
 </body>
+
+{% block endOfPage %}
+{% endblock %}
+
 </html>
 

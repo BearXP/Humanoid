@@ -1,9 +1,20 @@
 {% extends "Template.html" %}
 {% block pagebody %}
   <form id="servosForm" method="post">
-  <!-- Drop down menu -->
-    <select id="sel-conf"
-            name="sel-conf"
+  <!-- Pose drop down menu -->
+    <select id="sel-pose"
+            name="sel-pose"
+            onmousedown="this.value='';"
+            onchange="openTab(event, this.value);">
+      {% for pose in poseDb %}
+        <option value="Pose{{pose['Id']}}" class="pose-list">
+          {{pose['Name']}}
+        </option>
+      {% endfor %}
+    </select>
+  <!-- Servo drop down menu -->
+    <select id="sel-servo"
+            name="sel-servo"
             class="tablinks"
             onmousedown="this.value='';"
             onchange="openTab(event, this.value);">
