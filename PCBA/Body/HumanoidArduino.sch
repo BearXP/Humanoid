@@ -4143,32 +4143,6 @@ Based on the following sources:
 &lt;/ul&gt;
  &lt;author&gt;Created by librarian@cadsoft.de&lt;/author&gt;</description>
 <packages>
-<package name="SM-1206">
-<description>SMD CHIP &lt;B&gt;INDUCTOR&lt;/B&gt;&lt;p&gt;
-body 1206</description>
-<wire x1="1.3" y1="0.7" x2="1.3" y2="0.6" width="0.2032" layer="51"/>
-<wire x1="1.3" y1="0.6" x2="1.3" y2="-0.6" width="0.2032" layer="51"/>
-<wire x1="1.3" y1="-0.6" x2="1.3" y2="-0.7" width="0.2032" layer="51"/>
-<wire x1="1.3" y1="-0.7" x2="2.1" y2="-0.7" width="0.2032" layer="51"/>
-<wire x1="2.1" y1="-0.7" x2="2.1" y2="0.7" width="0.2032" layer="51"/>
-<wire x1="2.1" y1="0.7" x2="1.3" y2="0.7" width="0.2032" layer="51"/>
-<wire x1="-2.1" y1="0.7" x2="-2.1" y2="-0.7" width="0.2032" layer="51"/>
-<wire x1="-2.1" y1="-0.7" x2="-1.3" y2="-0.7" width="0.2032" layer="51"/>
-<wire x1="-1.3" y1="-0.7" x2="-1.3" y2="-0.6" width="0.2032" layer="51"/>
-<wire x1="-1.3" y1="-0.6" x2="-1.3" y2="0.6" width="0.2032" layer="51"/>
-<wire x1="-1.3" y1="0.6" x2="-1.3" y2="0.7" width="0.2032" layer="51"/>
-<wire x1="-1.3" y1="0.7" x2="-2.1" y2="0.7" width="0.2032" layer="51"/>
-<wire x1="-1.3" y1="-0.6" x2="-0.9" y2="-0.6" width="0.2032" layer="51"/>
-<wire x1="-0.9" y1="-0.6" x2="0.9" y2="-0.6" width="0.2032" layer="21"/>
-<wire x1="0.9" y1="-0.6" x2="1.3" y2="-0.6" width="0.2032" layer="51"/>
-<wire x1="1.3" y1="0.6" x2="0.9" y2="0.6" width="0.2032" layer="51"/>
-<wire x1="0.9" y1="0.6" x2="-0.9" y2="0.6" width="0.2032" layer="21"/>
-<wire x1="-0.9" y1="0.6" x2="-1.3" y2="0.6" width="0.2032" layer="51"/>
-<smd name="1" x="-1.65" y="0" dx="1.2" dy="1.8" layer="1"/>
-<smd name="2" x="1.65" y="0" dx="1.2" dy="1.8" layer="1"/>
-<text x="-2.143" y="0.997" size="1.27" layer="25">&gt;NAME</text>
-<text x="-2.208" y="-2.308" size="1.27" layer="27">&gt;VALUE</text>
-</package>
 <package name="MS85">
 <description>SMD &lt;B&gt;POWER INDUCTOR&lt;/B&gt;&lt;p&gt;
 high current</description>
@@ -4204,29 +4178,6 @@ high current</description>
 </symbol>
 </symbols>
 <devicesets>
-<deviceset name="SM-1206" prefix="L" uservalue="yes">
-<description>&lt;b&gt;INDUCTOR&lt;/b&gt;&lt;p&gt;
-SMD chip inductor</description>
-<gates>
-<gate name="G$1" symbol="L" x="0" y="0"/>
-</gates>
-<devices>
-<device name="" package="SM-1206">
-<connects>
-<connect gate="G$1" pin="1" pad="1"/>
-<connect gate="G$1" pin="2" pad="2"/>
-</connects>
-<technologies>
-<technology name="">
-<attribute name="MF" value="" constant="no"/>
-<attribute name="MPN" value="" constant="no"/>
-<attribute name="OC_FARNELL" value="unknown" constant="no"/>
-<attribute name="OC_NEWARK" value="unknown" constant="no"/>
-</technology>
-</technologies>
-</device>
-</devices>
-</deviceset>
 <deviceset name="MS85" prefix="L" uservalue="yes">
 <description>&lt;b&gt;INDUCTOR&lt;/b&gt;&lt;p&gt;
 SMD power inductor</description>
@@ -4484,8 +4435,6 @@ Source: www.st.com, BAT60J.pdf</description>
 <part name="GND5" library="supply1" deviceset="GND" device=""/>
 <part name="U1" library="adafruit" deviceset="PCA9685" device=""/>
 <part name="U2" library="adafruit" deviceset="PCA9685" device=""/>
-<part name="FRAME2" library="frames" deviceset="A3L-LOC" device=""/>
-<part name="U3" library="adafruit" deviceset="PCA9685" device=""/>
 <part name="GND1" library="supply1" deviceset="GND" device=""/>
 <part name="P+2" library="supply1" deviceset="+5V" device=""/>
 <part name="P+4" library="supply1" deviceset="+5V" device=""/>
@@ -4601,7 +4550,6 @@ Source: www.st.com, BAT60J.pdf</description>
 <part name="GND40" library="supply1" deviceset="GND" device=""/>
 <part name="C4" library="capacitor-wima" deviceset="C" device="2,5-3" value="22u"/>
 <part name="D1" library="avago" deviceset="HSMS-285B" device=""/>
-<part name="L1" library="inductor-neosid" deviceset="SM-1206" device="" value="15uH"/>
 <part name="P+12" library="supply1" deviceset="+5V" device=""/>
 <part name="C5" library="capacitor-wima" deviceset="C" device="2,5-3" value="22u"/>
 <part name="U6" library="DFN300X300X100-11N" deviceset="MCP73213-A6SI/MF" device=""/>
@@ -4614,6 +4562,7 @@ Source: www.st.com, BAT60J.pdf</description>
 <part name="GND41" library="supply1" deviceset="GND" device=""/>
 <part name="R2" library="SparkFun-Passives" deviceset="RESISTOR" device="0805-RES" value="1K"/>
 <part name="R13" library="SparkFun-Passives" deviceset="RESISTOR" device="0805-RES" value="3K"/>
+<part name="L1" library="inductor-neosid" deviceset="MS85" device="" value="22uH"/>
 </parts>
 <sheets>
 <sheet>
@@ -4633,6 +4582,12 @@ Source: www.st.com, BAT60J.pdf</description>
 <text x="223.52" y="228.6" size="1.778" layer="91">~11.4V</text>
 <text x="198.12" y="226.06" size="1.778" layer="91">5A Schottky</text>
 <text x="114.3" y="246.38" size="0.762" layer="91">Vout=1.23*(1+R13/R2)</text>
+<text x="68.58" y="177.8" size="0.762" layer="91">0805</text>
+<text x="185.42" y="233.68" size="0.762" layer="91">Nom 15uH</text>
+<text x="195.58" y="233.68" size="0.762" layer="91">SB10100</text>
+<text x="195.58" y="236.22" size="0.762" layer="91">TO-220</text>
+<text x="193.04" y="231.14" size="0.762" layer="91">Pin3</text>
+<text x="205.74" y="231.14" size="0.762" layer="91">Pin1/Case</text>
 </plain>
 <instances>
 <instance part="J2" gate="-1" x="340.36" y="215.9" rot="MR0"/>
@@ -4784,7 +4739,6 @@ Source: www.st.com, BAT60J.pdf</description>
 <instance part="GND40" gate="1" x="208.28" y="190.5" rot="MR0"/>
 <instance part="C4" gate="G$1" x="218.44" y="200.66"/>
 <instance part="D1" gate="A" x="198.12" y="231.14"/>
-<instance part="L1" gate="G$1" x="185.42" y="231.14"/>
 <instance part="P+12" gate="1" x="370.84" y="157.48"/>
 <instance part="C5" gate="G$1" x="231.14" y="200.66"/>
 <instance part="U6" gate="G$1" x="279.4" y="205.74"/>
@@ -4797,6 +4751,7 @@ Source: www.st.com, BAT60J.pdf</description>
 <instance part="GND41" gate="1" x="101.6" y="243.84"/>
 <instance part="R2" gate="G$1" x="106.68" y="246.38" rot="R180"/>
 <instance part="R13" gate="G$1" x="129.54" y="246.38" rot="R180"/>
+<instance part="L1" gate="G$1" x="185.42" y="231.14"/>
 </instances>
 <busses>
 </busses>
@@ -6155,12 +6110,12 @@ Source: www.st.com, BAT60J.pdf</description>
 <wire x1="170.18" y1="215.9" x2="170.18" y2="210.82" width="0.1524" layer="91"/>
 <pinref part="U5" gate="G$1" pin="EN"/>
 <wire x1="170.18" y1="210.82" x2="175.26" y2="210.82" width="0.1524" layer="91"/>
-<pinref part="L1" gate="G$1" pin="1"/>
 <wire x1="172.72" y1="215.9" x2="172.72" y2="231.14" width="0.1524" layer="91"/>
 <wire x1="172.72" y1="231.14" x2="180.34" y2="231.14" width="0.1524" layer="91"/>
 <junction x="172.72" y="215.9"/>
 <pinref part="P+11" gate="1" pin="+5V"/>
 <junction x="170.18" y="215.9"/>
+<pinref part="L1" gate="G$1" pin="1"/>
 </segment>
 </net>
 <net name="N$59" class="0">
@@ -6184,12 +6139,12 @@ Source: www.st.com, BAT60J.pdf</description>
 <junction x="208.28" y="215.9"/>
 <wire x1="208.28" y1="215.9" x2="208.28" y2="226.06" width="0.1524" layer="91"/>
 <wire x1="208.28" y1="226.06" x2="193.04" y2="226.06" width="0.1524" layer="91"/>
-<pinref part="L1" gate="G$1" pin="2"/>
 <pinref part="D1" gate="A" pin="A"/>
 <wire x1="190.5" y1="231.14" x2="193.04" y2="231.14" width="0.1524" layer="91"/>
 <wire x1="193.04" y1="231.14" x2="195.58" y2="231.14" width="0.1524" layer="91"/>
 <wire x1="193.04" y1="226.06" x2="193.04" y2="231.14" width="0.1524" layer="91"/>
 <junction x="193.04" y="231.14"/>
+<pinref part="L1" gate="G$1" pin="2"/>
 </segment>
 </net>
 <net name="V-CHG" class="0">
@@ -6273,11 +6228,8 @@ Source: www.st.com, BAT60J.pdf</description>
 </sheet>
 <sheet>
 <plain>
-<text x="33.02" y="243.84" size="8.89" layer="91">HEAD PCBA</text>
 </plain>
 <instances>
-<instance part="FRAME2" gate="G$1" x="0" y="0"/>
-<instance part="U3" gate="G$1" x="91.44" y="177.8"/>
 </instances>
 <busses>
 </busses>
