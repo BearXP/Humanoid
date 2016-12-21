@@ -122,10 +122,18 @@ def config():
 def pose():
     if request.method == 'POST':
         1+1
-            
+    
+    limbs = []
+    configDb=query_db('select * from Config')
+    for servo in configDb:
+        if not servo['limb'] in limbs:
+            if not servo['limb'] == '':
+                limbs.append( servo['limb'] )
+    
     return render_template('Pose.html',
-                           configDb=query_db('select * from Config'),
-                           poseDb=query_db('select * from Pose order by Name Desc'))
+                           configDb=configDb,
+                           poseDb=query_db('select * from Pose order by Name Desc'),
+                           limbs=limbs)
 
 
 #------------------------------------------------

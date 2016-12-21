@@ -12,59 +12,39 @@
         </option>
       {% endfor %}
     </select>
-  <!-- Servo drop down menu -->
-    <select id="sel-servo"
-            name="sel-servo"
-            class="tablinks"
-            onmousedown="this.value='';"
-            onchange="openTab(event, this.value);">
-      {% for servo in configDb %}
-          <option value="Servo{{servo['Id']}}">
-            {{servo['Id']}}. {{servo['limb']}} {{servo['name']}}
-          </option> 
-      {% endfor %}
-    </select>
-  <!-- The servos -->
-    {% for servo in configDb %}
-      <div id="Servo{{ servo['Id'] }}" class="tabcontent">
-        <h4>{{servo['Id']}}. {{servo['limb']}} {{servo['name']}}</h4>
-
-        <label for="Servo{{ servo['Id'] }}Offset">Offset</label>
-        <input type="range"
-                     name="Servo{{ servo['Id'] }}Offset"
-                     id="Servo{{ servo['Id'] }}Offset"
-                     value="{{ servo['offset'] }}"
-                     min="-20"
-                     max="20"
-                     step="1">
-
-        <label for="Servo{{ servo['Id'] }}Direction">Direction</label>
-        <input type="range"
-                     name="Servo{{ servo['Id'] }}Direction"
-                     id="Servo{{ servo['Id'] }}Direction"
-                     value="{{ servo['direction'] }}"
-                     min="-1"
-                     max="1"
-                     step="2">
-                     
-        <label for="Servo{{ servo['Id'] }}Minimum">Minimum</label>
-        <input type="range"
-                     name="Servo{{ servo['Id'] }}Minimum"
-                     id="Servo{{ servo['Id'] }}Minimum"
-                     value="{{ servo['min'] }}"
-                     min="0"
-                     max="180"
-                     step="1">
-
-        <label for="Servo{{ servo['Id'] }}Maximum">Maximum</label>
-        <input type="range"
-                     name="Servo{{ servo['Id'] }}Maximum"
-                     id="Servo{{ servo['Id'] }}Maximum"
-                     value="{{ servo['max'] }}"
-                     min="{{ 0 }}"
-                     max="{{ 180 }}"
-                     step="1">
-       </div>
+  <!-- Limbsssssssssssss drop down menu -->
+    {% for pose in poseDb %}
+      <div id="Pose{{pose['Id']}}" class="tabcontent">
+        <select id="sel-limbs{{pose['Id']}}"
+                name="sel-limbs{{pose['Id']}}"
+                class="tablinks"
+                onmousedown="this.value='';"
+                onchange="openTab(event, this.value, 'tabcontent2');">
+          {% for limb in limbs %}
+            <option value="{{pose['Id']}}.{{ limb }}">
+              {{ limb }}
+            </option> 
+          {% endfor %}
+        </select>
+        
+        <!-- Show the limbs -->
+        {% for limb in limbs %}
+          <div id="{{pose['Id']}}.{{ limb }}" class="tabcontent2" style.display = "none">
+            {% for servo in configDb %}
+              {% if servo['limb'] == limb %}
+                <label for="Servo{{ servo['Id'] }}">{{ servo['name'] }}:</label>
+                <input type="range"
+                       name="Servo{{ servo['Id'] }}"
+                       id="Servo{{ servo['Id'] }}"
+                       value="90"
+                       min="{{ servo['Minimum'] }}"
+                       max="{{ servo['maximum'] }}"
+                       step="10">
+              {% endif %}
+            {% endfor %}
+          </div>
+        {% endfor %}
+      </div>
     {% endfor %}
     
     <button onclick="fnShowSnackbar()">Apply Config</button>
