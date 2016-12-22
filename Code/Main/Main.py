@@ -110,7 +110,6 @@ def config():
                                ', max='+maximum+ \
                                ' WHERE Id='+i+';'
         save_db(get_db(), s)
-            
     return render_template('Config.html',
                            configDb=query_db('select * from Config'))
 
@@ -122,14 +121,13 @@ def config():
 def pose():
     if request.method == 'POST':
         1+1
-    
     limbs = []
     configDb=query_db('select * from Config')
-    for servo in configDb:
-        if not servo['limb'] in limbs:
-            if not servo['limb'] == '':
-                limbs.append( servo['limb'] )
-    
+    # Generate a list of limbs
+    limbs = []
+    for limb in query_db("select distinct limb from Config;"):
+    	limbs.append( limb['limb'] )
+    # Show webpage
     return render_template('Pose.html',
                            configDb=configDb,
                            poseDb=query_db('select * from Pose order by Name Desc'),
