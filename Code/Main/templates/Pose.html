@@ -15,30 +15,20 @@
   <!-- Limbsssssssssssss drop down menu -->
     {% for pose in poseDb %}
       <div id="Pose{{pose['Id']}}" class="tabcontent">
-        <select id="sel-limbs{{pose['Id']}}"
-                name="sel-limbs{{pose['Id']}}"
-                class="tablinks"
-                onmousedown="this.value='';"
-                onchange="openTab(event, this.value, 'tabcontent2');">
-          {% for limb in limbs %}
-            <option value="{{pose['Id']}}.{{ limb }}">
-              {{ limb }}
-            </option> 
-          {% endfor %}
-        </select>
-        
+        <h3>{{pose['Name']}}</h3>
         <!-- Show the limbs -->
         {% for limb in limbs %}
-          <div id="{{pose['Id']}}.{{ limb }}" class="tabcontent2" style.display = "none">
+          <div id="{{pose['Id']}}.{{ limb }}">
+            <h4>{{ limb }}</h4>
             {% for servo in configDb %}
               {% if servo['limb'] == limb %}
                 <label for="Servo{{ servo['Id'] }}">{{ servo['name'] }}:</label>
                 <input type="range"
                        name="Servo{{ servo['Id'] }}"
                        id="Servo{{ servo['Id'] }}"
-                       value="90"
-                       min="{{ servo['Minimum'] }}"
-                       max="{{ servo['maximum'] }}"
+                       value="{{ pose[ 'Servo' + (pose['Id'])|string + 'Pos' ] }}"
+                       min="{{ servo[ 'min' ] }}"
+                       max="{{ servo[ 'max' ] }}"
                        step="10">
               {% endif %}
             {% endfor %}
@@ -47,7 +37,11 @@
       </div>
     {% endfor %}
     
-    <button onclick="fnShowSnackbar()">Apply Config</button>
+    <input type="submit" name="submit" value="Save Pose" onclick="fnShowSnackbar()">
+    
+    <button onclick="fnShowSnackbar()">Save</button>
+    
+    <button onclick="fnShowSnackbar()">Move</button>
     <div id="snackbar">Config saved.</div>
     
   </form>

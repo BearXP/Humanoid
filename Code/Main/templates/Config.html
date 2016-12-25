@@ -6,9 +6,9 @@
             name="sel-conf"
             class="tablinks"
             onmousedown="this.value='';"
-            onchange="openTab(event, this.value, 'tabcontent');">
+            onchange="openTab(event, this.value, "tabcontent");">
       {% for servo in configDb %}
-          <option value="Servo{{servo['Id']}}">
+          <option value="Servo{{ servo['Id'] }}">
             {{servo['Id']}}. {{servo['limb']}} {{servo['name']}}
           </option> 
       {% endfor %}
