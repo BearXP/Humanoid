@@ -15,7 +15,9 @@
 
 import os, time
 # Flash Web server
-from flask import Flask, redirect, abort, url_for, render_template, request, g
+from flask import Flask, redirect, abort, url_for, render_template, \
+                  request, g, \
+                  flash     # flash messages
 import socket
 # Sqlite for poses/sequences database
 #from sqlite3 import dbapi2 as sqlite3
@@ -23,17 +25,7 @@ import sqlite3
 import sys
 
 #import CHIP_IO.GPIO as GPIO
-#from pca9685_driver import Device
-
-#------------------------------------------------
-# * Setup Servos
-#------------------------------------------------
-
-#------------------------------------------------
-# * Setup Servo Controller
-#------------------------------------------------
-#ServoController = Device(0x40)
-#ServoController.set_pwm_frequency(60)
+from pca9685_driver import Device
 
 #------------------------------------------------
 # * Setup Web Server
@@ -71,27 +63,46 @@ def query_db(query, args=(), one=False):
 def save_db(db, sql_string):
     db.execute(sql_string)
     db.commit()
+    
+    
 
+#------------------------------------------------
+# * Setup Servos
+#------------------------------------------------
+NUM_SERVOS = 0
+SERVOS_ACTIVE = False
+#------------------------------------------------
+# * Setup Servo Controller
+#------------------------------------------------
+try:
+    ServoController = Device(0x40)
+    print(" * Running Servos ")
+    SERVOS_ACTIVE = True
+    ServoController = None
+except:
+    print(" * Servos not connected ")
 
 #------------------------------------------------
 # * Update Servos function
 #------------------------------------------------
-def update_servos():
-    for i in range (NUM_SERVOS):
-        servoDb[i]['pos'] = request.form['Servo' + str(i)]
-        pwm_val = int( 150.0 + float(servoDb[i]['pos']) * 65.0 / 18.0 )
-        print("Servo"+str(i)+": "+str(servoDb[i]['pos'])+" > "+str(pwm_val))
-        #ServoController.set_pwm(i, int(pwm_val))
-        time.sleep(0.01)
+def update_servos(servos):
+    if SERVOS_ACTIVE:
+        for i, pos in enumerate(servos):
+            cfg = query_db('SELECT * FROM Config WHERE ID=' + str(i+1))[0]
+            pin = cfg['Pin']
+            ServoController = Device( cfg['I2CAddr'] )
+            ServoController.set_pwm_frequency(60)
+            pwm_val = int( 150.0 + float(pos) * 65.0 / 18.0 )
+            print("Servo"+str(i)+" > "+str(pwm_val))
+            ServoController.set_pwm(pin, pwm_val)
+            time.sleep(0.01)
 
 #------------------------------------------------
 # * Setup Web Page
 #------------------------------------------------
 @app.route("/",methods=['GET','POST','PUT'])
 def index():
-    if request.method == 'POST':
-        update_servos()
-    return render_template('Config.html', configDb=query_db('select * from Config'))
+    return redirect(url_for('pose'))
     
 #------------------------------------------------
 # * Setup Config Page
@@ -100,16 +111,23 @@ def index():
 def config():
     if request.method == 'POST':
         i = str(request.form['sel-conf'][5:])
+        pin = str(request.form['Servo' + i + 'Pin'])
+        I2CAddr = str(request.form['Servo' + i + 'I2CAddr'])
+        print( "I2C: " + str(I2CAddr) )
         offset = str(request.form['Servo' + i + 'Offset'])
         direction = str(request.form['Servo' + i + 'Direction'])
         minimum = str(request.form['Servo' + i + 'Minimum'])
         maximum = str(request.form['Servo' + i + 'Maximum'])
-        s = 'UPDATE Config SET offset='+offset+ \
-                               ', direction='+direction+ \
-                               ', min='+minimum+ \
-                               ', max='+maximum+ \
+        s = 'UPDATE Config SET' + \
+                               ' Pin='+pin+ \
+                               ", I2CAddr='"+I2CAddr+"'" \
+                               ', Offset='+offset+ \
+                               ', Direction='+direction+ \
+                               ', Minimum='+minimum+ \
+                               ', Maximum='+maximum+ \
                                ' WHERE Id='+i+';'
         save_db(get_db(), s)
+        # flash("Hi world!")
     return render_template('Config.html',
                            configDb=query_db('select * from Config'))
 
@@ -120,20 +138,32 @@ def config():
 @app.route("/pose",methods=['GET','POST','PUT'])
 def pose():
     if request.method == 'POST':
-        print('Posted '+str(request.form['submit'] ))
-        if request.form['submit'] == 'Save Pose':
-            print('Saving')
-    limbs = []
-    configDb=query_db('select * from Config')
-    # Generate a list of limbs
-    limbs = []
-    for limb in query_db("select distinct limb from Config;"):
-    	limbs.append( limb['limb'] )
-    # Show webpage
-    return render_template('Pose.html',
-                           configDb=configDb,
-                           poseDb=query_db('select * from Pose order by Name Desc'),
-                           limbs=limbs)
+        i = str(request.form['sel-pose'])[4:]
+        servoVals = []
+        for j in range(1,19):
+            servoVals.append( str(request.form[ str(i)+'.Servo'+str(j) ]) )
+        if( request.form['submit'] == 'Move to Pose' ):
+            vals = ( [int(i) for i in servoVals] )
+            update_servos(vals)
+        elif( request.form['submit'] == 'Save Pose' ):
+            s = ['Servo%dPos=%s' % (k+1, x) for k,x in enumerate(servoVals)]
+            s = ', '.join(s)
+            s = 'UPDATE Pose SET ' + s + ' WHERE Id='+i+';'
+            save_db(get_db(), s)
+    elif request.method == 'GET':
+        limbs = []
+        configDb = query_db('select * from Config')
+        poseDb = query_db('select * from Pose order by Name Desc')
+        # Generate a list of limbs
+        limbs = []
+        for limb in query_db("select distinct limb from Config;"):
+        	limbs.append( limb['limb'] )
+        # Show webpage
+        return render_template('Pose.html',
+                               configDb=configDb,
+                               poseDb=poseDb,
+                               limbs=limbs)
+    return 'OK'
 
 
 #------------------------------------------------
@@ -141,7 +171,18 @@ def pose():
 #------------------------------------------------
 if __name__ == "__main__":
     #try:
-    print([(s.connect(('8.8.8.8', 53)), s.getsockname()[0], s.close()) for s in [socket.socket(socket.AF_INET, socket.SOCK_DGRAM)]][0][1])
-    app.run(host="0.0.0.0", debug=1)
+    with app.app_context():
+        s = 'SELECT MAX(Id) AS max_id FROM Config;'
+        NUM_SERVOS = int(query_db(s)[0]['max_id'])
+
+    s = [(s.connect(('8.8.8.8', 53)),
+          s.getsockname()[0],
+          s.close()) for s in [socket.socket(socket.AF_INET,
+                                             socket.SOCK_DGRAM)]][0][1]
+    print(' * ' + s)
+    app.run(host=str(s),
+            debug=1,
+            port=5000,
+            use_reloader=True)
     #finally:
         #GPIO.cleanup()

@@ -6,15 +6,10 @@
             name="sel-conf"
             class="tablinks"
             onmousedown="this.value='';"
-            onchange="openTab(event, this.value, "tabcontent");">
+            onchange="openTab(event, this.value, 'tabcontent');">
       {% for servo in configDb %}
-<<<<<<< HEAD
-          <option value="Servo{{servo['Id']}}">
-            {{servo['Id']}}. {{servo['Limb']}} {{servo['Name']}}
-=======
           <option value="Servo{{ servo['Id'] }}">
-            {{servo['Id']}}. {{servo['limb']}} {{servo['name']}}
->>>>>>> 78b17e6996d55aa1459b0f8358aa3eb842ffe0a3
+            {{servo['Id']}}. {{servo['Limb']}} {{servo['Name']}}
           </option> 
       {% endfor %}
     </select>
@@ -28,8 +23,14 @@
                      id="Servo{{ servo['Id'] }}Pin"
                      value="{{ servo['Pin'] }}"
                      min="0"
-                     max="18"
+                     max="16"
                      step="1">
+        
+        <label for="Servo{{ servo['Id'] }}I2CAddr">I2CAddr</label>
+        <input type="text"
+                     name="Servo{{ servo['Id'] }}I2CAddr"
+                     id="Servo{{ servo['Id'] }}I2CAddr"
+                     value="{{ servo['I2CAddr'] }}">
                      
         <label for="Servo{{ servo['Id'] }}Offset">Offset</label>
         <input type="range"

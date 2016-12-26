@@ -132,6 +132,18 @@ img {
       <li><a href="pose">Pose</a></li>
       <li><a href="sequence">Sequence</a></li>
     </ul>
+    
+    
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul class=flashes>
+        {% for message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+    
     {% block pagebody %}
     {% endblock %}
   </div>
@@ -155,6 +167,7 @@ function openTab(evt, tabName, childclassname="tabcontent") {
 }
 
 /* Change submit to stay on same page */
+/*
 $(document).ready(function(){
     form = $('form');
 
@@ -166,6 +179,7 @@ $(document).ready(function(){
         return false;
     });
 });
+*/
 
 function fnShowSnackbar() {
     var x = document.getElementById("snackbar")
@@ -184,9 +198,9 @@ function fnShowSnackbar() {
 }
 
 // Get the element with id="defaultOpen" and click on it
-//document.getElementsByClassName('tablinks')[1].click();
-  document.getElementsByClassName('tabcontent')[1].style.display = "block";
-  //document.getElementsByClassName('tabcontent2')[1].style.display = "block";
+  document.getElementsByClassName('tablinks')[1].click();
+//  document.getElementsByClassName('tabcontent')[1].style.display = "block";
+//  document.getElementsByClassName('tabcontent2')[1].style.display = "block";
 
 </script>
      

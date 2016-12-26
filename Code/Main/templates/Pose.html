@@ -21,14 +21,16 @@
           <div id="{{pose['Id']}}.{{ limb }}">
             <h4>{{ limb }}</h4>
             {% for servo in configDb %}
-              {% if servo['limb'] == limb %}
-                <label for="Servo{{ servo['Id'] }}">{{ servo['name'] }}:</label>
+              {% if servo['Limb'] == limb %}
+                {% set sName = servo['Name'] %}
+                {% set sId = servo['Id'] %}
+                <label for="{{pose['Id']}}.Servo{{ sId }}">{{ sName }}:</label>
                 <input type="range"
-                       name="Servo{{ servo['Id'] }}"
-                       id="Servo{{ servo['Id'] }}"
-                       value="{{ pose[ 'Servo' + (pose['Id'])|string + 'Pos' ] }}"
-                       min="{{ servo[ 'min' ] }}"
-                       max="{{ servo[ 'max' ] }}"
+                       name="{{pose['Id']}}.Servo{{ sId }}"
+                       id="{{pose['Id']}}.Servo{{ sId }}"
+                       value="{{ pose[ 'Servo%dPos' % sId ] }}"
+                       min="{{ servo[ 'Minimum' ] }}"
+                       max="{{ servo[ 'Maximum' ] }}"
                        step="10">
               {% endif %}
             {% endfor %}
@@ -37,11 +39,8 @@
       </div>
     {% endfor %}
     
-    <input type="submit" name="submit" value="Save Pose" onclick="fnShowSnackbar()">
-    
-    <button onclick="fnShowSnackbar()">Save</button>
-    
-    <button onclick="fnShowSnackbar()">Move</button>
+    <input type="submit" id="submit" name="submit" value="Save Pose">
+    <input type="submit" id="submit" name="submit" value="Move to Pose">
     <div id="snackbar">Config saved.</div>
     
   </form>
