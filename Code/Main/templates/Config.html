@@ -9,7 +9,7 @@
             onchange="openTab(event, this.value, 'tabcontent');">
       {% for servo in configDb %}
           <option value="Servo{{servo['Id']}}">
-            {{servo['Id']}}. {{servo['limb']}} {{servo['name']}}
+            {{servo['Id']}}. {{servo['Limb']}} {{servo['Name']}}
           </option> 
       {% endfor %}
     </select>
@@ -17,11 +17,20 @@
     {% for servo in configDb %}
       <div id="Servo{{ servo['Id'] }}" class="tabcontent">
         <h4>{{servo['Id']}}. {{servo['limb']}} {{servo['name']}}</h4>
+        <label for="Servo{{ servo['Id'] }}Pin">Pin</label>
+        <input type="range"
+                     name="Servo{{ servo['Id'] }}Pin"
+                     id="Servo{{ servo['Id'] }}Pin"
+                     value="{{ servo['Pin'] }}"
+                     min="0"
+                     max="18"
+                     step="1">
+                     
         <label for="Servo{{ servo['Id'] }}Offset">Offset</label>
         <input type="range"
                      name="Servo{{ servo['Id'] }}Offset"
                      id="Servo{{ servo['Id'] }}Offset"
-                     value="{{ servo['offset'] }}"
+                     value="{{ servo['Offset'] }}"
                      min="-20"
                      max="20"
                      step="1">
@@ -39,18 +48,18 @@
         <input type="range"
                      name="Servo{{ servo['Id'] }}Minimum"
                      id="Servo{{ servo['Id'] }}Minimum"
-                     value="{{ servo['min'] }}"
-                     min="0"
-                     max="180"
+                     value="{{ servo['Minimum'] }}"
+                     min="-10"
+                     max="190"
                      step="1">
 
         <label for="Servo{{ servo['Id'] }}Maximum">Maximum</label>
         <input type="range"
                      name="Servo{{ servo['Id'] }}Maximum"
                      id="Servo{{ servo['Id'] }}Maximum"
-                     value="{{ servo['max'] }}"
-                     min="{{ 0 }}"
-                     max="{{ 180 }}"
+                     value="{{ servo['Maximum'] }}"
+                     min="-10"
+                     max="190"
                      step="1">
        </div>
     {% endfor %}
