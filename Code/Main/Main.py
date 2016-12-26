@@ -120,7 +120,9 @@ def config():
 @app.route("/pose",methods=['GET','POST','PUT'])
 def pose():
     if request.method == 'POST':
-        1+1
+        print('Posted '+str(request.form['submit'] ))
+        if request.form['submit'] == 'Save Pose':
+            print('Saving')
     limbs = []
     configDb=query_db('select * from Config')
     # Generate a list of limbs
