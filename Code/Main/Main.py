@@ -138,22 +138,25 @@ def config():
 #------------------------------------------------
 @app.route("/pose",methods=['GET','POST','PUT'])
 def pose():
-    print( "Pose!" + request.method)
     if request.method == 'POST':
-        pprint( request.form )
-        try:
-            print( "JSData: " + str(request.form['javascript_data'] ))
-        except:
-            1+1
-        try:
-            print( "sel-pos: " + str(request.form['sel-pose']) )
-        except:
-            1+1
         i = str(request.form['sel-pose'])[4:]
         servoVals = []
         for j in range(1,19):
             servoVals.append( str(request.form[ str(i)+'.Servo'+str(j) ]) )
-        if( request.form['submit'] == 'Move to Pose' ):
+        if( 'newPoseName' in str(request.form) ):
+            sName = str( request.form[ 'newPoseName' ] )
+            sStart = 'INSERT INTO Pose '
+            sIns = '(Name, '
+            sIns += ', '.join(['Servo%dPos' % (k+1) for k in range(NUM_SERVOS)])
+            sIns += ') '
+            sVal = "VALUES(NULL, '"+sName+"', " + ', '.join(servoVals) + ');'
+            s = sStart + sVal
+            print(s)
+            save_db(get_db(), s)
+        elif( 'delPose' in str(request.form) ):
+            s = 'DELETE FROM Pose WHERE ID='+str(i)
+            save_db(get_db(), s)
+        elif( request.form['submit'] == 'Move to Pose' ):
             vals = ( [int(i) for i in servoVals] )
             update_servos(vals)
         elif( request.form['submit'] == 'Save Pose' ):

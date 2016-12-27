@@ -41,8 +41,8 @@
     {% endfor %}
     
     <input type="submit" id="submit" name="submit" value="Save Pose">
-    <input type="button"  id="submit" name="submit" value="Save as a new Pose" onclick="getTextAndPost()">
-    <input type="submit" id="submit" name="submit" value="Delete Pose">
+    <input type="button" onclick="getTextAndPost()" value="Save as a new Pose">
+    <input type="button" onclick='confirmAndPost()' value="Delete Pose">
     <input type="submit" id="submit" name="submit" value="Move to Pose">
     <div id="snackbar">Config saved.</div>
     
@@ -55,25 +55,19 @@
     function getTextAndPost() {
       var newPoseName = prompt("Enter a name for the new Pose", "RW")
       if( newPoseName != null ) {
-          //var pData = $.extend({}, $(this).serialize(), { javascript_data: newPoseName });
-          
           var pData = $("form").serialize(true);
-          console.log( pData )
-          _.merge(pData, {zmze:'Mark'})
-          console.log( pData )
-          //pData['newPosName'] = 'Mark!';
-          //pData.zmze='MarkyMark';
-          //pData.push( {aya:'lo'} );
-          
-          //var pData = $.extend({}, $("form").serialize(), { 'javascript_data': newPoseName });
+          pData += '&newPoseName='+newPoseName
+          //console.log( pData )
           $.post( "/pose", pData);
           
       }
     }
     function confirmAndPost() {
       var yn = confirm("Are you sure you want to delete this Pose?")
-      if( yn == True ){
-        //delete
+      if( yn == true ){
+          var pData = $("form").serialize(true);
+          pData += '&delPose=True'
+          $.post( "/pose", pData);
       }
     }
     // Get the element with id="defaultOpen" and click on it
