@@ -20,20 +20,23 @@
         <!-- Show the limbs -->
         {% for i in range(1,11) %}
           <div id="{{seq['Id']}}.{{ i }}">
-            {% set poseName = [] %}
-            {% for pose in poseDb %}
-              {% if pose['Id'] == seq["Pose%d" % i] %}
-                {% set _ = poseName.append(pose['Name']) %}
-              {% endif %}
-            {% endfor %}
             <p>{{i}}.</p>
-            <select id="{{seq['Id']}}.{{ i }}Pose"
-                    this.value={{poseName[0]}}>
+            <select id="{{seq['Id']}}.{{ i }}.Pose"
+                    this.value={{seq["Pose%d"%i]}}>
               <option value=null></option>
               {% for pose in poseDb %}
-                <option value={{pose['Id']}}>{{pose['Name']}}</option>
+                <option value={{pose['Id']}}
+                          {% if pose['Id'] == seq["Pose%d" % i] %}
+                            selected
+                          {% endif %}>
+                  {{pose['Name']}}
+                </option>
               {% endfor %}
             </select>
+            <input type="number"
+                        id="{{seq['Id']}}.{{ i }}.Delay"
+                        value={{seq["Delay%dms" % i]}}
+                        min="0" max="1000" step="1">
           </div>
         {% endfor %}
       </div>
