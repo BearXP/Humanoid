@@ -13,10 +13,11 @@
 #  http://flask.pocoo.org/docs/0.11/
 #=================================================
 
+from pprint import pprint
 import os, time
 # Flash Web server
 from flask import Flask, redirect, abort, url_for, render_template, \
-                  request, g, \
+                  request, json, g, \
                   flash     # flash messages
 import socket
 # Sqlite for poses/sequences database
@@ -25,7 +26,7 @@ import sqlite3
 import sys
 
 #import CHIP_IO.GPIO as GPIO
-from pca9685_driver import Device
+#from pca9685_driver import Device
 
 #------------------------------------------------
 # * Setup Web Server
@@ -137,7 +138,17 @@ def config():
 #------------------------------------------------
 @app.route("/pose",methods=['GET','POST','PUT'])
 def pose():
+    print( "Pose!" + request.method)
     if request.method == 'POST':
+        pprint( request.form )
+        try:
+            print( "JSData: " + str(request.form['javascript_data'] ))
+        except:
+            1+1
+        try:
+            print( "sel-pos: " + str(request.form['sel-pose']) )
+        except:
+            1+1
         i = str(request.form['sel-pose'])[4:]
         servoVals = []
         for j in range(1,19):

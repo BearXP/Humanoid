@@ -1,6 +1,6 @@
 {% extends "Template.html" %}
 {% block pagebody %}
-  <form id="servosForm" method="post">
+  <form id="servosForm" name="servosForm" method="post">
   <!-- Pose drop down menu -->
     <select id="sel-pose"
             name="sel-pose"
@@ -12,7 +12,7 @@
         </option>
       {% endfor %}
     </select>
-  <!-- Limbsssssssssssss drop down menu -->
+  <!-- All pf the poses -->
     {% for pose in poseDb %}
       <div id="Pose{{pose['Id']}}" class="tabcontent">
         <h3>{{pose['Name']}}</h3>
@@ -20,6 +20,7 @@
         {% for limb in limbs %}
           <div id="{{pose['Id']}}.{{ limb }}">
             <h4>{{ limb }}</h4>
+            <!-- Show the servos in the limb category -->
             {% for servo in configDb %}
               {% if servo['Limb'] == limb %}
                 {% set sName = servo['Name'] %}
@@ -40,6 +41,8 @@
     {% endfor %}
     
     <input type="submit" id="submit" name="submit" value="Save Pose">
+    <input type="button"  id="submit" name="submit" value="Save as a new Pose" onclick="getTextAndPost()">
+    <input type="submit" id="submit" name="submit" value="Delete Pose">
     <input type="submit" id="submit" name="submit" value="Move to Pose">
     <div id="snackbar">Config saved.</div>
     
@@ -49,11 +52,35 @@
 
 {% block endOfPage %}
   <script>
+    function getTextAndPost() {
+      var newPoseName = prompt("Enter a name for the new Pose", "RW")
+      if( newPoseName != null ) {
+          //var pData = $.extend({}, $(this).serialize(), { javascript_data: newPoseName });
+          
+          var pData = $("form").serialize(true);
+          console.log( pData )
+          _.merge(pData, {zmze:'Mark'})
+          console.log( pData )
+          //pData['newPosName'] = 'Mark!';
+          //pData.zmze='MarkyMark';
+          //pData.push( {aya:'lo'} );
+          
+          //var pData = $.extend({}, $("form").serialize(), { 'javascript_data': newPoseName });
+          $.post( "/pose", pData);
+          
+      }
+    }
+    function confirmAndPost() {
+      var yn = confirm("Are you sure you want to delete this Pose?")
+      if( yn == True ){
+        //delete
+      }
+    }
     // Get the element with id="defaultOpen" and click on it
     //openTab("Servo1");
     // document.getElementById("Servo1").style.display = "block";
     //document.getElementById('sel-conf').click();
     
-    document.getElementsByClassName('tablinks')[1].click();
+    document.getElementsByClassName('pose-list')[1].click();
   </script>
 {% endblock %}
