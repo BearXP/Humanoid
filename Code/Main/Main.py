@@ -104,7 +104,7 @@ def update_servos(servos):
 @app.route("/",methods=['GET','POST','PUT'])
 def index():
     return redirect(url_for('pose'))
-    
+
 #------------------------------------------------
 # * Setup Config Page
 #------------------------------------------------
@@ -167,7 +167,7 @@ def pose():
     elif request.method == 'GET':
         limbs = []
         configDb = query_db('select * from Config')
-        poseDb = query_db('select * from Pose order by Name Desc')
+        poseDb = query_db('select * from Pose order by Name Asc')
         # Generate a list of limbs
         limbs = []
         for limb in query_db("select distinct limb from Config;"):
@@ -179,6 +179,16 @@ def pose():
                                limbs=limbs)
     return 'OK'
 
+#------------------------------------------------
+# * Setup Sequence Page
+#------------------------------------------------
+@app.route("/sequence",methods=['GET','POST','PUT'])
+def seq():
+    if request.method == 'GET':
+        poseDb = query_db('select * from Pose order by Name Asc')
+        seqDb = query_db('select * from Sequence order by Name Asc')
+        return render_template('Sequence.html',
+                           poseDb=poseDb, seqDb=seqDb)
 
 #------------------------------------------------
 # * Main Processing

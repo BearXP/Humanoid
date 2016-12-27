@@ -1,0 +1,49 @@
+{% extends "Template.html" %}
+{% block pagebody %}
+  <form id="servosForm" method="post">
+  <!-- Sequence drop down menu -->
+    <select id="sel-seq"
+            name="sel-seq"
+            class="tablinks"
+            onmousedown="this.value='';"
+            onchange="openTab(event, this.value);">
+      {% for seq in seqDb %}
+        <option value="Seq{{seq['Id']}}" class="seq-item">
+          {{seq['Name']}}
+        </option>
+      {% endfor %}
+    </select>
+  <!-- List each pose in the sequence -->
+    {% for seq in seqDb %}
+      <div id="Seq{{seq['Id']}}" class="tabcontent">
+        <h3>{{seq['Name']}}</h3>
+        <!-- Show the limbs -->
+        {% for i in range(1,11) %}
+          <div id="{{seq['Id']}}.{{ i }}">
+            {% set poseName = [] %}
+            {% for pose in poseDb %}
+              {% if pose['Id'] == seq["Pose%d" % i] %}
+                {% set _ = poseName.append(pose['Name']) %}
+              {% endif %}
+            {% endfor %}
+            <p>{{i}}.</p>
+            <select id="{{seq['Id']}}.{{ i }}Pose"
+                    this.value={{poseName[0]}}>
+              <option value=null></option>
+              {% for pose in poseDb %}
+                <option value={{pose['Id']}}>{{pose['Name']}}</option>
+              {% endfor %}
+            </select>
+          </div>
+        {% endfor %}
+      </div>
+    {% endfor %}
+    
+    <input type="submit" id="submit" name="submit" value="Save Pose">
+    <input type="submit" id="submit" name="submit" value="Move to Pose">
+    <div id="snackbar">Config saved.</div>
+    
+  </form>
+  
+{% endblock %}
+

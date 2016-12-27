@@ -6,7 +6,7 @@
             name="sel-conf"
             class="tablinks"
             onmousedown="this.value='';"
-            onchange="openTab(event, this.value, 'tabcontent');">
+            onchange="openTab(event, this.value);">
       {% for servo in configDb %}
           <option value="Servo{{ servo['Id'] }}">
             {{servo['Id']}}. {{servo['Limb']}} {{servo['Name']}}
@@ -77,11 +77,3 @@
   
 {% endblock %}
 
-{% block endOfPage %}
-  <script>
-    // Get the element with id="defaultOpen" and click on it
-    //openTab("Servo1");
-    document.getElementById("Servo1").style.display = "block";
-    //document.getElementById('sel-conf').click();
-  </script>
-{% endblock %}

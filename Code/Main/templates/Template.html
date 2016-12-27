@@ -152,9 +152,10 @@ img {
 
 <script>
 /* Hide/show tabs js */
-function openTab(evt, tabName, childclassname="tabcontent") {
+function openTab(evt, tabName) {
+    console.log( tabName )
     var i, tabcontent, tablinks;
-    tabcontent = document.getElementsByClassName(childclassname);
+    tabcontent = document.getElementsByClassName("tabcontent");
     for (i = 0; i < tabcontent.length; i++) {
         tabcontent[i].style.display = "none";
     }
@@ -197,10 +198,11 @@ function fnShowSnackbar() {
     });
 }
 
-// Get the element with id="defaultOpen" and click on it
-  document.getElementsByClassName('tablinks')[1].click();
-//  document.getElementsByClassName('tabcontent')[1].style.display = "block";
-//  document.getElementsByClassName('tabcontent2')[1].style.display = "block";
+//document.getElementsByClassName("pose-list")[0].click()
+$(document).ready(function(){
+    document.getElementsByClassName("tabcontent")[0].style.display = "block"
+});
+
 
 </script>
      

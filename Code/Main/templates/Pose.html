@@ -4,6 +4,7 @@
   <!-- Pose drop down menu -->
     <select id="sel-pose"
             name="sel-pose"
+            class="tablinks"
             onmousedown="this.value='';"
             onchange="openTab(event, this.value);">
       {% for pose in poseDb %}
@@ -70,11 +71,10 @@
           $.post( "/pose", pData);
       }
     }
-    // Get the element with id="defaultOpen" and click on it
-    //openTab("Servo1");
-    // document.getElementById("Servo1").style.display = "block";
-    //document.getElementById('sel-conf').click();
-    
-    document.getElementsByClassName('pose-list')[1].click();
+    //$("#sel-pose option:first").attr('selected','selected');
+    //console.log( document.getElementsByClassName("pose-list")[0] )
+    //document.getElementsByClassName("pose-list")[0].click()
+
+
   </script>
 {% endblock %}
