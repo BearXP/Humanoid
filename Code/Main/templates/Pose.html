@@ -1,21 +1,25 @@
 {% extends "Template.html" %}
 {% block pagebody %}
-  <form id="servosForm" name="servosForm" method="post">
+  <form id="servosForm" name="servosForm" method="post" autocomplete="off">
   <!-- Pose drop down menu -->
     <select id="sel-pose"
             name="sel-pose"
             class="tablinks"
             onmousedown="this.value='';"
-            onchange="openTab(event, this.value);">
+            <onchange="openTab(event, this.value);">
       {% for pose in poseDb %}
-        <option value="Pose{{pose['Id']}}" class="pose-list">
+        <option value="Pose{{pose['Id']}}" class="pose-list"
+        {% if pose['Id'] == poseDb|length %}selected{% endif %}>
           {{pose['Name']}}
         </option>
       {% endfor %}
     </select>
-  <!-- All pf the poses -->
+  <!-- All of the poses -->
     {% for pose in poseDb %}
-      <div id="Pose{{pose['Id']}}" class="tabcontent">
+      <div id="Pose{{pose['Id']}}" name="{{pose['Name']}}" class="tabcontent"
+      {% if pose['Id'] == poseDb|length %} style="display: block;"
+      {% else %}                           style="none;"
+      {% endif %}>
         <h3>{{pose['Name']}}</h3>
         <!-- Show the limbs -->
         {% for limb in limbs %}
@@ -40,41 +44,13 @@
         {% endfor %}
       </div>
     {% endfor %}
-    
+    <!-- Buttons! -->
     <input type="submit" id="submit" name="submit" value="Save Pose">
-    <input type="button" onclick="getTextAndPost()" value="Save as a new Pose">
-    <input type="button" onclick='confirmAndPost()' value="Delete Pose">
     <input type="submit" id="submit" name="submit" value="Move to Pose">
+    <input type="button" onclick="getTextAndPost('pose')"
+           value="Save as a new Pose">
+    <input type="button" onclick="confirmAndPost('pose')"
+           value="Delete Pose">
     <div id="snackbar">Config saved.</div>
-    
   </form>
-  
-{% endblock %}
-
-{% block endOfPage %}
-  <script>
-    function getTextAndPost() {
-      var newPoseName = prompt("Enter a name for the new Pose", "RW")
-      if( newPoseName != null ) {
-          var pData = $("form").serialize(true);
-          pData += '&newPoseName='+newPoseName
-          //console.log( pData )
-          $.post( "/pose", pData);
-          
-      }
-    }
-    function confirmAndPost() {
-      var yn = confirm("Are you sure you want to delete this Pose?")
-      if( yn == true ){
-          var pData = $("form").serialize(true);
-          pData += '&delPose=True'
-          $.post( "/pose", pData);
-      }
-    }
-    //$("#sel-pose option:first").attr('selected','selected');
-    //console.log( document.getElementsByClassName("pose-list")[0] )
-    //document.getElementsByClassName("pose-list")[0].click()
-
-
-  </script>
 {% endblock %}

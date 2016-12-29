@@ -134,17 +134,19 @@ def config():
 
 
 #------------------------------------------------
-# * Setup Pose Page
+# * Setup POSE Page
 #------------------------------------------------
 @app.route("/pose",methods=['GET','POST','PUT'])
 def pose():
     if request.method == 'POST':
+        # Start collecting data from input form.
         i = str(request.form['sel-pose'])[4:]
         servoVals = []
         for j in range(1,19):
             servoVals.append( str(request.form[ str(i)+'.Servo'+str(j) ]) )
-        if( 'newPoseName' in str(request.form) ):
-            sName = str( request.form[ 'newPoseName' ] )
+        # SAVEAS NEW POSE
+        if( 'newName' in str(request.form) ):
+            sName = str( request.form[ 'newName' ] )
             sStart = 'INSERT INTO Pose '
             sIns = '(Name, '
             sIns += ', '.join(['Servo%dPos' % (k+1) for k in range(NUM_SERVOS)])
@@ -153,12 +155,15 @@ def pose():
             s = sStart + sVal
             print(s)
             save_db(get_db(), s)
-        elif( 'delPose' in str(request.form) ):
+        # DELETE POSE
+        elif( 'delName' in str(request.form) ):
             s = 'DELETE FROM Pose WHERE ID='+str(i)
             save_db(get_db(), s)
+        # EXECUTE POSE
         elif( request.form['submit'] == 'Move to Pose' ):
             vals = ( [int(i) for i in servoVals] )
             update_servos(vals)
+        # SAVE POSE
         elif( request.form['submit'] == 'Save Pose' ):
             s = ['Servo%dPos=%s' % (k+1, x) for k,x in enumerate(servoVals)]
             s = ', '.join(s)
@@ -180,30 +185,48 @@ def pose():
     return 'OK'
 
 #------------------------------------------------
-# * Setup Sequence Page
+# * Setup SEQUENCE Page
 #------------------------------------------------
 @app.route("/sequence",methods=['GET','POST','PUT'])
 def seq():
-    if request.method == 'GET':
+    if request.method == 'POST':
+        i = str(request.form['sel-seq'])[3:]
+        print("Updating sequence #%d" % i)
+        poseIds = []
+        poseDelays = []
+        for j in range(1,11):
+            poseIds.append( int(request.form[ "%d.%d.Pose" % (i,j) ]) )
+            poseDelays.append( int(request.form[ "%d.%d.Delay" % (i,j) ]) )
+        # SAVE SEQUENCE
+        if( request.form['submit'] == 'Save Sequence' ):
+            s1 = ['Pose%d=%d' % (k+1, x) for k,x in enumerate(poseIds)]
+            s2 = ['Delay%dms=%d' % (k+1, x) for k,x in enumerate(poseDelays)]
+            s = ', '.join(s1 + s2)
+            s = 'UPDATE Sequence SET ' + s + ' WHERE Id='+i+';'
+            save_db(get_db(), s)
+    elif request.method == 'GET':
         poseDb = query_db('select * from Pose order by Name Asc')
         seqDb = query_db('select * from Sequence order by Name Asc')
         return render_template('Sequence.html',
-                           poseDb=poseDb, seqDb=seqDb)
+                               poseDb=poseDb,
+                               seqDb=seqDb)
 
 #------------------------------------------------
-# * Main Processing
+# * MAIN Processing
 #------------------------------------------------
 if __name__ == "__main__":
     #try:
+    #  Get the NUM_SERVOS
     with app.app_context():
         s = 'SELECT MAX(Id) AS max_id FROM Config;'
         NUM_SERVOS = int(query_db(s)[0]['max_id'])
-
+    # Report the local IP address so external PC's can find me and connect
     s = [(s.connect(('8.8.8.8', 53)),
           s.getsockname()[0],
           s.close()) for s in [socket.socket(socket.AF_INET,
                                              socket.SOCK_DGRAM)]][0][1]
     print(' * ' + s)
+    # Run the web server
     app.run(host=str(s),
             debug=1,
             port=5000,

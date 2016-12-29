@@ -153,7 +153,6 @@ img {
 <script>
 /* Hide/show tabs js */
 function openTab(evt, tabName) {
-    console.log( tabName )
     var i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("tabcontent");
     for (i = 0; i < tabcontent.length; i++) {
@@ -199,11 +198,37 @@ function fnShowSnackbar() {
 }
 
 //document.getElementsByClassName("pose-list")[0].click()
-$(document).ready(function(){
-    document.getElementsByClassName("tabcontent")[0].style.display = "block"
-});
+//$(document).ready(function(){
+//    document.getElementsByClassName("tabcontent")[0].style.display = "block"
+//});
 
 
+    function getTextAndPost(sType) {
+      // Get the old name
+      var oldname = "Mark the Great"
+      tabcontent = document.getElementsByClassName("tabcontent");
+      for( i = 0; i < tabcontent.length; i++ ) {
+          if( tabcontent[i].style.display == "block" ){
+              oldname = tabcontent[i].getAttribute("name")
+          }
+      }
+      var newName = prompt("Enter a name for the new " + sType + ":", oldname)
+      if( newName != null ) {
+          var pData = $("form").serialize(true);
+          pData += '&newName='+newName
+          //console.log( pData )
+          $.post( "/"+sType, pData);
+          
+      }
+    }
+    function confirmAndPost(sType) {
+      var yn = confirm("Are you sure you want to delete this "+sType+"?")
+      if( yn == true ){
+          var pData = $("form").serialize(true);
+          pData += '&delName=True'
+          $.post( "/"+sType, pData);
+      }
+    }
 </script>
      
 </body>
