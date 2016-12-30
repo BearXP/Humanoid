@@ -183,6 +183,8 @@ def pose():
         limbs = []
         configDb = query_db('select * from Config')
         poseDb = query_db('select * from Pose order by Name Asc')
+        s = 'SELECT MAX(Id) AS max_id FROM Pose;'
+        maxPoseId = int(query_db(s)[0]['max_id'])
         # Generate a list of limbs
         limbs = []
         for limb in query_db("select distinct limb from Config;"):
@@ -191,6 +193,7 @@ def pose():
         return render_template('Pose.html',
                                configDb=configDb,
                                poseDb=poseDb,
+                               maxPoseId=maxPoseId,
                                limbs=limbs)
     return 'OK'
 
@@ -243,8 +246,11 @@ def seq():
     elif request.method == 'GET':
         poseDb = query_db('select * from Pose order by Name Asc')
         seqDb = query_db('select * from Sequence order by Name Asc')
+        s = 'SELECT MAX(Id) AS max_id FROM Sequence;'
+        maxSeqId = int(query_db(s)[0]['max_id'])
         return render_template('Sequence.html',
                                poseDb=poseDb,
+                               maxSeqId=maxSeqId,
                                seqDb=seqDb)
 
 #------------------------------------------------

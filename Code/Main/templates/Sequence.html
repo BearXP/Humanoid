@@ -9,7 +9,7 @@
             onchange="openTab(event, this.value);">
       {% for seq in seqDb %}
         <option value="Seq{{seq['Id']}}" class="seq-item"
-        {% if seq['Id'] == seqDb|length %}selected{% endif %}>
+        {% if seq['Id'] == maxSeqId %}selected{% endif %}>
           {{seq['Name']}}
         </option>
       {% endfor %}
@@ -17,7 +17,7 @@
   <!-- List each sequence -->
     {% for seq in seqDb %}
       <div id="Seq{{seq['Id']}}" name="{{seq['Name']}}" class="tabcontent"
-      {% if seq['Id'] == seqDb|length %} style="display: block;"
+      {% if seq['Id'] == maxSeqId %} style="display: block;"
       {% else %}                         style="none;"
       {% endif %}>
         <h3>{{seq['Name']}}</h3>
@@ -25,6 +25,7 @@
         {% for i in range(1,11) %}
           <div id="{{seq['Id']}}.{{ i }}">
             <p>{{i}}.</p>
+            <!-- Get PoseId -->
             <select id="{{seq['Id']}}.{{ i }}.Pose"
                     name="{{seq['Id']}}.{{ i }}.Pose"
                     this.value={{seq["Pose%d"%i]}}>
@@ -38,11 +39,12 @@
                 </option>
               {% endfor %}
             </select>
+            <!-- get DelayTimeMs -->
             <input type="number"
                         id="{{seq['Id']}}.{{ i }}.Delay"
                         name="{{seq['Id']}}.{{ i }}.Delay"
                         value={{seq["Delay%dms" % i]}}
-                        min="0" max="1000" step="1">
+                        min="0" max="5000" step="1">
           </div>
         {% endfor %}
       </div>

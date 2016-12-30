@@ -6,10 +6,10 @@
             name="sel-pose"
             class="tablinks"
             onmousedown="this.value='';"
-            <onchange="openTab(event, this.value);">
+            onchange="openTab(event, this.value);"
       {% for pose in poseDb %}
         <option value="Pose{{pose['Id']}}" class="pose-list"
-        {% if pose['Id'] == poseDb|length %}selected{% endif %}>
+        {% if pose['Id'] == maxPoseId %}selected{% endif %}>
           {{pose['Name']}}
         </option>
       {% endfor %}
@@ -17,7 +17,7 @@
   <!-- List each poses -->
     {% for pose in poseDb %}
       <div id="Pose{{pose['Id']}}" name="{{pose['Name']}}" class="tabcontent"
-      {% if pose['Id'] == poseDb|length %} style="display: block;"
+      {% if pose['Id'] == maxPoseId %} style="display: block;"
       {% else %}                           style="none;"
       {% endif %}>
         <h3>{{pose['Name']}}</h3>
