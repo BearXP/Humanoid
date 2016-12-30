@@ -26,6 +26,7 @@
           <div id="{{seq['Id']}}.{{ i }}">
             <p>{{i}}.</p>
             <select id="{{seq['Id']}}.{{ i }}.Pose"
+                    name="{{seq['Id']}}.{{ i }}.Pose"
                     this.value={{seq["Pose%d"%i]}}>
               <option value=null></option>
               {% for pose in poseDb %}
@@ -39,13 +40,14 @@
             </select>
             <input type="number"
                         id="{{seq['Id']}}.{{ i }}.Delay"
+                        name="{{seq['Id']}}.{{ i }}.Delay"
                         value={{seq["Delay%dms" % i]}}
                         min="0" max="1000" step="1">
           </div>
         {% endfor %}
       </div>
     {% endfor %}
-    
+    <!-- Buttons! -->
     <input type="submit" id="submit" name="submit" value="Save Sequence">
     <input type="submit" id="submit" name="submit" value="Execute Sequence">
     <input type="button" onclick="getTextAndPost('sequence')"
@@ -53,8 +55,5 @@
     <input type="button" onclick='confirmAndPost('sequence')'
            value="Delete Sequence">
     <div id="snackbar">Config saved.</div>
-    
   </form>
-  
 {% endblock %}
-

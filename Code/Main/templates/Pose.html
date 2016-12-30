@@ -14,7 +14,7 @@
         </option>
       {% endfor %}
     </select>
-  <!-- All of the poses -->
+  <!-- List each poses -->
     {% for pose in poseDb %}
       <div id="Pose{{pose['Id']}}" name="{{pose['Name']}}" class="tabcontent"
       {% if pose['Id'] == poseDb|length %} style="display: block;"
@@ -38,6 +38,7 @@
                        min="{{ servo[ 'Minimum' ] }}"
                        max="{{ servo[ 'Maximum' ] }}"
                        step="10">
+                       
               {% endif %}
             {% endfor %}
           </div>

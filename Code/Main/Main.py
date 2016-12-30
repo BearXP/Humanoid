@@ -99,6 +99,16 @@ def update_servos(servos):
             time.sleep(0.01)
 
 #------------------------------------------------
+# * poseDb -> servos List
+#------------------------------------------------
+def poseDbToList(dbRow):
+    out = []
+    print( dbRow )
+    for i in range(NUM_SERVOS):
+      out.append(dbRow['Servo%dPos' % (i+1)])
+    return out
+
+#------------------------------------------------
 # * Setup Web Page
 #------------------------------------------------
 @app.route("/",methods=['GET','POST','PUT'])
@@ -153,7 +163,6 @@ def pose():
             sIns += ') '
             sVal = "VALUES(NULL, '"+sName+"', " + ', '.join(servoVals) + ');'
             s = sStart + sVal
-            print(s)
             save_db(get_db(), s)
         # DELETE POSE
         elif( 'delName' in str(request.form) ):
@@ -169,6 +178,7 @@ def pose():
             s = ', '.join(s)
             s = 'UPDATE Pose SET ' + s + ' WHERE Id='+i+';'
             save_db(get_db(), s)
+        return redirect(url_for('pose'))
     elif request.method == 'GET':
         limbs = []
         configDb = query_db('select * from Config')
@@ -190,20 +200,46 @@ def pose():
 @app.route("/sequence",methods=['GET','POST','PUT'])
 def seq():
     if request.method == 'POST':
-        i = str(request.form['sel-seq'])[3:]
-        print("Updating sequence #%d" % i)
+        # Start collecting data from input form.
+        i = int(str(request.form['sel-seq'])[3:])
         poseIds = []
         poseDelays = []
         for j in range(1,11):
-            poseIds.append( int(request.form[ "%d.%d.Pose" % (i,j) ]) )
-            poseDelays.append( int(request.form[ "%d.%d.Delay" % (i,j) ]) )
+            poseId = request.form[ "%d.%d.Pose" % (i,j) ]
+            if( poseId in ['null', ''] ): poseId = -1
+            poseIds.append( int(poseId) )
+            poseDelay = request.form[ "%d.%d.Delay" % (i,j) ]
+            if( poseDelay in ['null', ''] ): poseDelay = -1
+            poseDelays.append( int(poseDelay) )
+        # SAVEAS NEW POSE
+        if( 'newName' in str(request.form) ):
+            sName = str( request.form[ 'newName' ] )
+            sStart = 'INSERT INTO Sequence '
+            sIns = '(Name, '
+            sIns += ', '.join(['Servo%dPos' % (k+1) for k in range(NUM_SERVOS)])
+            sIns += ') '
+            sVal = "VALUES(NULL, '"+sName+"', " + ', '.join(servoVals) + ');'
+            s = sStart + sVal
+            save_db(get_db(), s)
+        # DELETE SEQUENCE
+        elif( 'delName' in str(request.form) ):
+            s = 'DELETE FROM Sequence WHERE ID='+str(i)
+            save_db(get_db(), s)
         # SAVE SEQUENCE
-        if( request.form['submit'] == 'Save Sequence' ):
+        elif( request.form['submit'] == 'Save Sequence' ):
             s1 = ['Pose%d=%d' % (k+1, x) for k,x in enumerate(poseIds)]
             s2 = ['Delay%dms=%d' % (k+1, x) for k,x in enumerate(poseDelays)]
             s = ', '.join(s1 + s2)
-            s = 'UPDATE Sequence SET ' + s + ' WHERE Id='+i+';'
+            s = 'UPDATE Sequence SET ' + s + ' WHERE Id='+str(i)+';'
             save_db(get_db(), s)
+        # EXECUTE SEQUENCE
+        elif( request.form['submit'] == 'Execute Sequence' ):
+            for i in range(len(poseIds)):
+                if( poseIds[i] != -1 and poseDelays[i] != -1 ):
+                    pose = query_db('select * from Pose where Id=%d' % poseIds[i])[0]
+                    update_servos(poseDbToList(pose))
+                    time.sleep(poseDelays[i]/1000.0)
+        return redirect(url_for('seq'))
     elif request.method == 'GET':
         poseDb = query_db('select * from Pose order by Name Asc')
         seqDb = query_db('select * from Sequence order by Name Asc')
