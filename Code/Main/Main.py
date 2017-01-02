@@ -55,8 +55,6 @@ def close_connection(exception):
 
 def query_db(query, args=(), one=False):
     cur = get_db().execute(query, args)
-    #cur = get_db().cursor();
-    #cur.execute(query, args)
     rv = cur.fetchall()
     cur.close()
     return (rv[0] if rv else None) if one else rv
@@ -158,9 +156,6 @@ def pose():
         if( 'newName' in str(request.form) ):
             sName = str( request.form[ 'newName' ] )
             sStart = 'INSERT INTO Pose '
-            sIns = '(Name, '
-            sIns += ', '.join(['Servo%dPos' % (k+1) for k in range(NUM_SERVOS)])
-            sIns += ') '
             sVal = "VALUES(NULL, '"+sName+"', " + ', '.join(servoVals) + ');'
             s = sStart + sVal
             save_db(get_db(), s)
@@ -214,14 +209,14 @@ def seq():
             poseDelay = request.form[ "%d.%d.Delay" % (i,j) ]
             if( poseDelay in ['null', ''] ): poseDelay = -1
             poseDelays.append( int(poseDelay) )
-        # SAVEAS NEW POSE
+        # SAVEAS NEW SEEQUENCE
         if( 'newName' in str(request.form) ):
             sName = str( request.form[ 'newName' ] )
-            sStart = 'INSERT INTO Sequence '
-            sIns = '(Name, '
-            sIns += ', '.join(['Servo%dPos' % (k+1) for k in range(NUM_SERVOS)])
-            sIns += ') '
-            sVal = "VALUES(NULL, '"+sName+"', " + ', '.join(servoVals) + ');'
+            sVals = poseIds + poseDelays
+            sVals[::2] = poseIds
+            sVals[1::2] = poseDelays
+            sVals = ", ".join(sVals)
+            sVal = "INSERT INTO Sequence VALUES(NULL, "+sName+", " + sVals + ");"
             s = sStart + sVal
             save_db(get_db(), s)
         # DELETE SEQUENCE
