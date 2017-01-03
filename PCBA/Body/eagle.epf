@@ -370,10 +370,10 @@ UsedLibrary="/home/mark/EagleLbr/SparkFun-Eagle-Libraries/User-Submitted.lbr"
 
 [Win_1]
 Type="Control Panel"
-Loc="65 24 601 547"
+Loc="123 95 777 442"
 State=2
 Number=0
 
 [Desktop]
-Screen="1680 1050"
+Screen="1920 1200"
 Window="Win_1"
