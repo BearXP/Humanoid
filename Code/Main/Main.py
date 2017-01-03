@@ -212,12 +212,14 @@ def seq():
         # SAVEAS NEW SEEQUENCE
         if( 'newName' in str(request.form) ):
             sName = str( request.form[ 'newName' ] )
-            sVals = poseIds + poseDelays
-            sVals[::2] = poseIds
-            sVals[1::2] = poseDelays
-            sVals = ", ".join(sVals)
-            sVal = "INSERT INTO Sequence VALUES(NULL, "+sName+", " + sVals + ");"
-            s = sStart + sVal
+            s = poseIds + poseDelays
+            s[::2] = poseIds
+            s[1::2] = poseDelays
+            s = s + [0] * (64-len(s))
+            s = ["%d" % i for i in s]
+            s = ", ".join(s)
+            s = "INSERT INTO Sequence VALUES(NULL, '"+sName+"', " + s + ");"
+            print("Running SQL String: %s" % s )
             save_db(get_db(), s)
         # DELETE SEQUENCE
         elif( 'delName' in str(request.form) ):
