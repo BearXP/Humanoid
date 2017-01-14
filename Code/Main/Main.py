@@ -13,6 +13,8 @@
 #  http://flask.pocoo.org/docs/0.11/
 #=================================================
 
+#DEFINE DEBUG
+
 from pprint import pprint
 import os, time
 # Flash Web server
@@ -26,7 +28,7 @@ import sqlite3
 import sys
 
 #import CHIP_IO.GPIO as GPIO
-#from pca9685_driver import Device
+from pca9685_driver import Device
 
 #------------------------------------------------
 # * Setup Web Server
@@ -85,14 +87,23 @@ except:
 # * Update Servos function
 #------------------------------------------------
 def update_servos(servos):
+    print(" -> Updating servos")
     if SERVOS_ACTIVE:
+        print(" -> Looping through servos")
         for i, pos in enumerate(servos):
             cfg = query_db('SELECT * FROM Config WHERE ID=' + str(i+1))[0]
             pin = cfg['Pin']
-            ServoController = Device( cfg['I2CAddr'] )
-            ServoController.set_pwm_frequency(60)
-            pwm_val = int( 150.0 + float(pos) * 65.0 / 18.0 )
-            print("Servo"+str(i)+" > "+str(pwm_val))
+            ServoController = Device( int(cfg['I2CAddr'], 0) )
+            ServoController.set_pwm_frequency(int(60))
+            cal_pos = 90 + cfg['Direction']*(pos-90) + cfg['Offset']
+            pwm_val = int( 150.0 + float(cal_pos) * 65.0 / 18.0 )
+            print("Servo: %2d, %9s-%16s\tPin: %d\tI2CAddr: %s\tPos: %d" % \
+                (i+1,
+                 cfg['limb'],
+                 cfg['name'],
+                 cfg['pin'],
+                 cfg['I2CAddr'],
+                 pwm_val ))
             ServoController.set_pwm(pin, pwm_val)
             time.sleep(0.01)
 
@@ -135,6 +146,7 @@ def config():
                                ', Minimum='+minimum+ \
                                ', Maximum='+maximum+ \
                                ' WHERE Id='+i+';'
+        print(" -> SQ Executing: %s" % s)
         save_db(get_db(), s)
         # flash("Hi world!")
     return render_template('Config.html',
