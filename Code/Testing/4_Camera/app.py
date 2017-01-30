@@ -1,14 +1,8 @@
 #!/usr/bin/env python
 from flask import Flask, render_template, Response
-
-# emulated camera
-from camera import Camera
-
-# Raspberry Pi camera module (requires picamera package)
-#from camera_pi import Camera
+import os
 
 app = Flask(__name__)
-
 
 @app.route('/')
 def index():
@@ -16,10 +10,11 @@ def index():
     return render_template('index.html')
 
 
-def gen(camera):
+def gen(camera_id):
     """Video streaming generator function."""
     while True:
-        frame = camera.get_frame()
+        os.system("uvccapture -v -m -oPic.jpg")
+        frame = open('Pic.jpg', 'rb').read()
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
@@ -27,7 +22,7 @@ def gen(camera):
 @app.route('/video_feed')
 def video_feed():
     """Video streaming route. Put this in the src attribute of an img tag."""
-    return Response(gen(Camera()),
+    return Response(gen(1),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
 
