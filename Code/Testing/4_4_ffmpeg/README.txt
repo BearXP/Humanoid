@@ -1,0 +1,1 @@
+http://arduinostuff.blogspot.com.au/2011/05/how-to-set-up-webcam-stream-in-ubuntu.html

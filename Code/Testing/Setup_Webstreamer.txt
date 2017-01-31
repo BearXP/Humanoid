@@ -1,0 +1,7 @@
+https://pypi.python.org/pypi/webcam-streamer/1.0.5
+
+python -m pip install --upgrade pip
+python -m pip install webcam-streamer
+python -m pip install gevent
+python -m pip install opencv-python
+python -m pip install 
