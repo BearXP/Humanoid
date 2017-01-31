@@ -1,0 +1,8 @@
+
+sudo pip install webcam-streamer
+pip install greenlet
+sudo pip install gevent
+sudo pip install gevent-socketio
+
+terminal > webcam-streamer
+firefox  > 0.0.0.0:5000
