@@ -1,0 +1,96 @@
+#=====================================
+# ** VLC Player
+#=====================================
+http://xmodulo.com/live-stream-video-webcam-linux.html
+  cvlc v4l2:///dev/video0 :v4l2-standard= :input-slave=alsa://hw:0,0 :live-caching=300 :sout="#transcode{vcodec=WMV2,vb=800,scale=1,acodec=wma2,ab=128,channels=2,samplerate=44100}:http{dst=:8080/stream.wmv}" 
+
+https://ubuntuforums.org/showthread.php?t=1859089
+
+https://wiki.videolan.org/VLC_HowTo/Stream_to_a_website/
+  vb=xx Video Bandwidth.    This parameter in effect sets the target bandwidth
+                            of the output video stream and hence the compression
+                            required. The more compression the lower the video quality.
+  
+  ab=xx Audio Bandwidth.    As above, but relates to audio.
+  
+  fps=xx Frames Per Second. The more fps, then the smoother the moving image,
+                            however, this uses more bandwidth and compression.
+                            So lower fps will give better quality for given
+                            bandwidth.
+  
+  width=xx & height=xx      Determines the aspect ratio and the size of the
+                            image in pixels. The larger the image, the better
+                            the definition, but will require more cpu power
+                            and bandwidth. The smaller the image the less
+                            compression and bandwidth needed to stream.
+  
+  deinterlace=<option or none=default>
+                            This command useful if you are using an interlaced source.
+                            Eg. An NTSC or PAL source
+  
+  scale=xx                  determines the output size relative to source size applied
+                            to width/height ratio. So scale=0.5 will half original
+                             width/height in pixels. Or in this case 25% of the original 
+                             pixel area. 
+
+
+cvlc v4l2:///dev/video0  :v4l2-standard= 
+                         :input-slave=alsa://hw:0,0
+                         :live-caching=300
+                         :noaudio                                   <!-- CHECK THIS OUT
+                         :sout="#transcode{vcodec=WMV2,
+                                           vb=320,
+                                           fps=30,
+                                           scale=1,
+                                           acodec=wma2,
+                                           ab=0,
+                                           channels=0,
+                                           samplerate=0
+                                          }
+                         :http{dst=:8080/stream.wmv}" 
+
+
+
+
+
+#=====================================
+# ** Website:
+#=====================================
+
+<object id='mediaPlayer' width="320" height="285" 
+    classid='CLSID:22d6f312-b0f6-11d0-94ab-0080c74c7e95' 
+    codebase='http://activex.microsoft.com/activex/controls/mplayer/en/nsmp2inf.cab#Version=5,1,52,701'
+    standby='Loading Microsoft Windows Media Player components...' type='application/x-oleobject'>
+    <param name='fileName' value="http://www.ladieda.com/mymovie.wmv">
+    <param name='animationatStart' value='true'>
+    <param name='transparentatStart' value='true'>
+    <param name='autoStart' value="false">
+    <param name='showControls' value="true">
+    <param name='loop' value="true">
+    <embed type='application/x-mplayer2'
+        pluginspage='http://microsoft.com/windows/mediaplayer/en/download/'
+        id='mediaPlayer' name='mediaPlayer' displaysize='4' autosize='-1' 
+        bgcolor='darkblue' showcontrols="true" showtracker='-1' 
+        showdisplay='0' showstatusbar='-1' videoborder3d='-1' width="320" height="285"
+        src="http://www.ladieda.com/mymovie.wmv" autostart="true" designtimesp='5311' loop="true">
+    </embed>
+</object>
+
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head><title></title>
+<title>This Flash Streaming from VLC video</title>
+<script src="flowplayer-3.1.4.min.js"></script><meta content="text/html; charset=ISO-8859-1" http-equiv="content-type">
+</head>
+<body>
+<big style="font-weight: bold;">Flowplayer test file local</big><br>
+<br>
+<br>
+<br>
+< See Flowplayer documentation and note below for this line>
+</a>
+<script language="JavaScript"> flowplayer("player", "flowplayer-3.1.4.swf"); </script>
+<p><br>
+</body></html>
