@@ -103,7 +103,7 @@ def update_servos(servos):
                  cfg['name'],
                  cfg['pin'],
                  cfg['I2CAddr'],
-                 pwm_val ))
+                 cal_pos ))
             ServoController.set_pwm(pin, pwm_val)
             time.sleep(0.01)
 
