@@ -169,7 +169,7 @@ def pose():
         # Start collecting data from input form.
         print 'POSE POSTING: %s' % request.form 
         i = str(request.form['sel-pose'])[4:]
-        print 'Pose: %d' % i
+        print 'Pose: %s' % i
         servoVals = []
         for j in range(1,19):
             servoVals.append( str(request.form[ str(i)+'.Servo'+str(j) ]) )
