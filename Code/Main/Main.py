@@ -28,8 +28,11 @@ import sqlite3
 import sys
 
 #import CHIP_IO.GPIO as GPIO
-from pca9685_driver import Device
-
+try:
+    from pca9685_driver import Device
+except:
+    1+1
+    
 #------------------------------------------------
 # * Setup Web Server
 #------------------------------------------------
@@ -88,24 +91,26 @@ except:
 #------------------------------------------------
 def update_servos(servos):
     print(" -> Updating servos")
-    if SERVOS_ACTIVE:
-        print(" -> Looping through servos")
-        for i, pos in enumerate(servos):
-            cfg = query_db('SELECT * FROM Config WHERE ID=' + str(i+1))[0]
-            pin = cfg['Pin']
+    print(" -> Looping through servos")
+    for i, pos in enumerate(servos):
+        cfg = query_db('SELECT * FROM Config WHERE ID=' + str(i+1))[0]
+        pin = cfg['Pin']
+        cal_pos = 90 + cfg['Direction']*(pos-90) + cfg['Offset']
+        pwm_val = int( 150.0 + float(cal_pos) * 65.0 / 18.0 )
+        print("Servo:%2d, %9s-%16s Pn:%2d I2C:%s Pos:%3d>%3d>%3d" % \
+            (i+1,
+             cfg['limb'],
+             cfg['name'],
+             cfg['pin'],
+             cfg['I2CAddr'],
+             pos,
+             cal_pos,
+             pwm_val   ))
+        if SERVOS_ACTIVE:
+            ServoController.set_pwm(pin, pwm_val)
             ServoController = Device( int(cfg['I2CAddr'], 0) )
             ServoController.set_pwm_frequency(int(60))
-            cal_pos = 90 + cfg['Direction']*(pos-90) + cfg['Offset']
-            pwm_val = int( 150.0 + float(cal_pos) * 65.0 / 18.0 )
-            print("Servo: %2d, %9s-%16s\tPin: %d\tI2CAddr: %s\tPos: %d" % \
-                (i+1,
-                 cfg['limb'],
-                 cfg['name'],
-                 cfg['pin'],
-                 cfg['I2CAddr'],
-                 cal_pos ))
-            ServoController.set_pwm(pin, pwm_val)
-            time.sleep(0.01)
+        time.sleep(0.01)
 
 #------------------------------------------------
 # * poseDb -> servos List
@@ -148,9 +153,11 @@ def config():
                                ' WHERE Id='+i+';'
         print(" -> SQ Executing: %s" % s)
         save_db(get_db(), s)
+        return redirect(url_for('config'))
         # flash("Hi world!")
-    return render_template('Config.html',
-                           configDb=query_db('select * from Config'))
+    elif request.method == 'GET':
+        return render_template('Config.html',
+                               configDb=query_db('select * from Config'))
 
 
 #------------------------------------------------
@@ -160,7 +167,9 @@ def config():
 def pose():
     if request.method == 'POST':
         # Start collecting data from input form.
+        print 'POSE POSTING: %s' % request.form 
         i = str(request.form['sel-pose'])[4:]
+        print 'Pose: %d' % i
         servoVals = []
         for j in range(1,19):
             servoVals.append( str(request.form[ str(i)+'.Servo'+str(j) ]) )
@@ -195,20 +204,20 @@ def pose():
         # Generate a list of limbs
         limbs = []
         for limb in query_db("select distinct limb from Config;"):
-        	limbs.append( limb['limb'] )
+            limbs.append( limb['limb'] )
         # Show webpage
+        print "GETTING POSE"
         return render_template('Pose.html',
                                configDb=configDb,
                                poseDb=poseDb,
                                maxPoseId=maxPoseId,
                                limbs=limbs)
-    return 'OK'
 
 #------------------------------------------------
 # * Setup SEQUENCE Page
 #------------------------------------------------
 @app.route("/sequence",methods=['GET','POST','PUT'])
-def seq():
+def sequence():
     if request.method == 'POST':
         # Start collecting data from input form.
         i = int(str(request.form['sel-seq'])[3:])
@@ -236,6 +245,7 @@ def seq():
         # DELETE SEQUENCE
         elif( 'delName' in str(request.form) ):
             s = 'DELETE FROM Sequence WHERE ID='+str(i)
+            print("Running SQL String: %s" % s )
             save_db(get_db(), s)
         # SAVE SEQUENCE
         elif( request.form['submit'] == 'Save Sequence' ):
@@ -243,6 +253,7 @@ def seq():
             s2 = ['Delay%dms=%d' % (k+1, x) for k,x in enumerate(poseDelays)]
             s = ', '.join(s1 + s2)
             s = 'UPDATE Sequence SET ' + s + ' WHERE Id='+str(i)+';'
+            print("Running SQL String: %s" % s )
             save_db(get_db(), s)
         # EXECUTE SEQUENCE
         elif( request.form['submit'] == 'Execute Sequence' ):
@@ -251,7 +262,8 @@ def seq():
                     pose = query_db('select * from Pose where Id=%d' % poseIds[i])[0]
                     update_servos(poseDbToList(pose))
                     time.sleep(poseDelays[i]/1000.0)
-        return redirect(url_for('seq'))
+            return
+        return redirect(url_for('sequence'))
     elif request.method == 'GET':
         poseDb = query_db('select * from Pose order by Name Asc')
         seqDb = query_db('select * from Sequence order by Name Asc')
