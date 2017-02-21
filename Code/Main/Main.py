@@ -222,7 +222,7 @@ def config():
         #return redirect(url_for('config'))
         # flash("Hi world!")
     #elif request.method == 'GET':
-        return render_template('Config.html',
+    return render_template('Config.html',
                                configDb=query_db('select * from Config'),
                                async_mode=socketio.async_mode)
 
