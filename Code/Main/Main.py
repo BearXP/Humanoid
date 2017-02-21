@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 #=================================================
 # ** Main
 #------------------------------------------------
@@ -20,25 +21,58 @@ import os, time
 # Flash Web server
 from flask import Flask, redirect, abort, url_for, render_template, \
                   request, json, g, \
+                  session, \
                   flash     # flash messages
+# Asynchronous webpage stuff
+from flask_socketio import SocketIO, emit, join_room, leave_room, \
+    close_room, rooms, disconnect
 import socket
 # Sqlite for poses/sequences database
-#from sqlite3 import dbapi2 as sqlite3
 import sqlite3
 import sys
 
-#import CHIP_IO.GPIO as GPIO
+#------------------------------------------------
+# * Setup Servos
+#------------------------------------------------
+NUM_SERVOS = 0
+SERVOS_ACTIVE = False
+#------------------------------------------------
+# * Setup Servo Controller
+#------------------------------------------------
 try:
+    #import CHIP_IO.GPIO as GPIO
     from pca9685_driver import Device
+    ServoController = Device(0x40)
+    print(" * Running Servos ")
+    SERVOS_ACTIVE = True
+    ServoController = None
 except:
-    1+1
+    print(" * Servos not connected ")
     
 #------------------------------------------------
 # * Setup Web Server
 #------------------------------------------------
+# Set this variable to "threading", "eventlet" or "gevent" to test the
+# different async modes, or leave it set to None for the application to choose
+# the best option based on installed packages.
+async_mode = None
+
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'secret!'
 # create config variable, which acts like a dicto
-app.config.from_object(__name__)
+#app.config.from_object(__name__)
+socketio = SocketIO(app, async_mode=async_mode)
+#thread = None
+
+#def background_thread():
+#    """Example of how to send server generated events to clients."""
+#    count = 0
+#    while True:
+#        socketio.sleep(10)
+#        count += 1
+#        socketio.emit('my_response',
+#                      {'data': 'Server generated event', 'count': count},
+#                      namespace='/test')
 
 #------------------------------------------------
 # * Setup SQL database
@@ -67,50 +101,48 @@ def query_db(query, args=(), one=False):
 def save_db(db, sql_string):
     db.execute(sql_string)
     db.commit()
-    
-    
 
 #------------------------------------------------
-# * Setup Servos
+# *  ___       __    _   _          _      _          ___                     
+# * |   \ ___ / _|  | | | |_ __  __| |__ _| |_ ___   / __| ___ _ ___ _____
+# * | |) / -_)  _|  | |_| | '_ \/ _` / _` |  _/ -_)  \__ \/ -_) '_\ V / _ \
+# * |___/\___|_|     \___/| .__/\__,_\__,_|\__\___|  |___/\___|_|  \_/\___/
+# *                       |_|
 #------------------------------------------------
-NUM_SERVOS = 0
-SERVOS_ACTIVE = False
-#------------------------------------------------
-# * Setup Servo Controller
-#------------------------------------------------
-try:
-    ServoController = Device(0x40)
-    print(" * Running Servos ")
-    SERVOS_ACTIVE = True
-    ServoController = None
-except:
-    print(" * Servos not connected ")
+
+def update_servo(index, pos):
+    cfg = query_db('SELECT * FROM Config WHERE ID=' + str(index))[0]
+    pin = cfg['Pin']
+    cal_pos = 90 + cfg['Direction']*(pos-90) + cfg['Offset']
+    pwm_val = int( 150.0 + float(cal_pos) * 65.0 / 18.0 )
+    print("Servo:%2d, %9s-%16s Pn:%2d I2C:%s Pos:%3d>%3d>%3d" % \
+        (index,
+         cfg['limb'],
+         cfg['name'],
+         cfg['pin'],
+         cfg['I2CAddr'],
+         pos,
+         cal_pos,
+         pwm_val   ))
+    if SERVOS_ACTIVE:
+        ServoController = Device( int(cfg['I2CAddr'], 0) )
+        ServoController.set_pwm(pin, pwm_val)
+        ServoController.set_pwm_frequency(int(60))
+        ServoController = None
 
 #------------------------------------------------
-# * Update Servos function
+# *  ___       __    _   _          _      _          ___                     
+# * |   \ ___ / _|  | | | |_ __  __| |__ _| |_ ___   / __| ___ _ ___ _____ ___
+# * | |) / -_)  _|  | |_| | '_ \/ _` / _` |  _/ -_)  \__ \/ -_) '_\ V / _ (_-<
+# * |___/\___|_|     \___/| .__/\__,_\__,_|\__\___|  |___/\___|_|  \_/\___/__/
+# *                       |_|
 #------------------------------------------------
+
 def update_servos(servos):
     print(" -> Updating servos")
-    print(" -> Looping through servos")
     for i, pos in enumerate(servos):
-        cfg = query_db('SELECT * FROM Config WHERE ID=' + str(i+1))[0]
-        pin = cfg['Pin']
-        cal_pos = 90 + cfg['Direction']*(pos-90) + cfg['Offset']
-        pwm_val = int( 150.0 + float(cal_pos) * 65.0 / 18.0 )
-        print("Servo:%2d, %9s-%16s Pn:%2d I2C:%s Pos:%3d>%3d>%3d" % \
-            (i+1,
-             cfg['limb'],
-             cfg['name'],
-             cfg['pin'],
-             cfg['I2CAddr'],
-             pos,
-             cal_pos,
-             pwm_val   ))
-        if SERVOS_ACTIVE:
-            ServoController.set_pwm(pin, pwm_val)
-            ServoController = Device( int(cfg['I2CAddr'], 0) )
-            ServoController.set_pwm_frequency(int(60))
-        time.sleep(0.01)
+        update_servo(i+1, pos)
+        time.sleep(0.001)
 
 #------------------------------------------------
 # * poseDb -> servos List
@@ -122,46 +154,84 @@ def poseDbToList(dbRow):
       out.append(dbRow['Servo%dPos' % (i+1)])
     return out
 
+
 #------------------------------------------------
-# * Setup Web Page
+# * SocketIO Connect
+#------------------------------------------------
+@socketio.on('connect', namespace='/test')
+def test_connect():
+    #global thread
+    #if thread is None:
+    #    thread = socketio.start_background_task(target=background_thread)
+    emit('my_response', {'data': 'Connected', 'count': 0})
+
+
+@socketio.on('my_event', namespace='/test')
+def test_message(message):
+    session['receive_count'] = session.get('receive_count', 0) + 1
+    emit('my_response',
+         {'data': message['data'], 'count': session['receive_count']})
+
+#------------------------------------------------
+# *  ___      _                _  _                  ___               
+# * / __| ___| |_ _  _ _ __   | || |___ _ __  ___   | _ \__ _ __ _ ___ 
+# * \__ \/ -_)  _| || | '_ \  | __ / _ \ '  \/ -_)  |  _/ _` / _` / -_)
+# * |___/\___|\__|\_,_| .__/  |_||_\___/_|_|_\___|  |_| \__,_\__, \___|
+# *                   |_|                                    |___/     
 #------------------------------------------------
 @app.route("/",methods=['GET','POST','PUT'])
 def index():
     return redirect(url_for('pose'))
 
 #------------------------------------------------
-# * Setup Config Page
+# *  ___      _                 ___           __ _         ___               
+# * / __| ___| |_ _  _ _ __    / __|___ _ _  / _(_)__ _   | _ \__ _ __ _ ___ 
+# * \__ \/ -_)  _| || | '_ \  | (__/ _ \ ' \|  _| / _` |  |  _/ _` / _` / -_)
+# * |___/\___|\__|\_,_| .__/   \___\___/_||_|_| |_\__, |  |_| \__,_\__, \___|
+# *                   |_|                         |___/            |___/      
 #------------------------------------------------
 @app.route("/config",methods=['GET','POST','PUT'])
 def config():
     if request.method == 'POST':
+        # Get the index of the servo being inspected
         i = str(request.form['sel-conf'][5:])
-        pin = str(request.form['Servo' + i + 'Pin'])
-        I2CAddr = str(request.form['Servo' + i + 'I2CAddr'])
-        print( "I2C: " + str(I2CAddr) )
-        offset = str(request.form['Servo' + i + 'Offset'])
-        direction = str(request.form['Servo' + i + 'Direction'])
-        minimum = str(request.form['Servo' + i + 'Minimum'])
-        maximum = str(request.form['Servo' + i + 'Maximum'])
-        s = 'UPDATE Config SET' + \
-                               ' Pin='+pin+ \
-                               ", I2CAddr='"+I2CAddr+"'" \
-                               ', Offset='+offset+ \
-                               ', Direction='+direction+ \
-                               ', Minimum='+minimum+ \
-                               ', Maximum='+maximum+ \
-                               ' WHERE Id='+i+';'
-        print(" -> SQ Executing: %s" % s)
-        save_db(get_db(), s)
-        return redirect(url_for('config'))
+        # APPLY CONFIG
+        if( 'ApplyConfig' in str(request.form) ):
+            pin       = str(request.form['Servo' + i + 'Pin'])
+            I2CAddr   = str(request.form['Servo' + i + 'I2CAddr'])
+            offset    = str(request.form['Servo' + i + 'Offset'])
+            direction = str(request.form['Servo' + i + 'Direction'])
+            minimum   = str(request.form['Servo' + i + 'Minimum'])
+            maximum   = str(request.form['Servo' + i + 'Maximum'])
+            s = 'UPDATE Config SET' + \
+                                   ' Pin='+pin+ \
+                                   ", I2CAddr='"+I2CAddr+"'" \
+                                   ', Offset='+offset+ \
+                                   ', Direction='+direction+ \
+                                   ', Minimum='+minimum+ \
+                                   ', Maximum='+maximum+ \
+                                   ' WHERE Id='+i+';'
+            print(" -> Servo %s: SQ Executing: %s" % (i, s) )
+            save_db(get_db(), s)
+        # MOVE TO POS
+        elif( 'MoveToPos' in str(request.form) ):
+            pos = str(request.form['Servo' + i + 'Pos'])
+            #print " > Updating servo %s > %s" % (i, pos)
+            update_servo( int(i), int(pos) )
+            #print ''
+        #return redirect(url_for('config'))
         # flash("Hi world!")
-    elif request.method == 'GET':
+    #elif request.method == 'GET':
         return render_template('Config.html',
-                               configDb=query_db('select * from Config'))
-
+                               configDb=query_db('select * from Config'),
+                               async_mode=socketio.async_mode)
 
 #------------------------------------------------
-# * Setup POSE Page
+# *  ___      _                ___                ___               
+# * / __| ___| |_ _  _ _ __   | _ \___ ___ ___   | _ \__ _ __ _ ___ 
+# * \__ \/ -_)  _| || | '_ \  |  _/ _ (_-</ -_)  |  _/ _` / _` / -_)
+# * |___/\___|\__|\_,_| .__/  |_| \___/__/\___|  |_| \__,_\__, \___|
+# *                   |_|                                 |___/     
 #------------------------------------------------
 @app.route("/pose",methods=['GET','POST','PUT'])
 def pose():
@@ -214,7 +284,11 @@ def pose():
                                limbs=limbs)
 
 #------------------------------------------------
-# * Setup SEQUENCE Page
+# *  ___      _                ___                                   ___               
+# * / __| ___| |_ _  _ _ __   / __| ___ __ _ _  _ ___ _ _  __ ___   | _ \__ _ __ _ ___ 
+# * \__ \/ -_)  _| || | '_ \  \__ \/ -_) _` | || / -_) ' \/ _/ -_)  |  _/ _` / _` / -_)
+# * |___/\___|\__|\_,_| .__/  |___/\___\__, |\_,_\___|_||_\__\___|  |_| \__,_\__, \___|
+# *                   |_|                 |_|                                |___/     
 #------------------------------------------------
 @app.route("/sequence",methods=['GET','POST','PUT'])
 def sequence():
@@ -275,24 +349,31 @@ def sequence():
                                seqDb=seqDb)
 
 #------------------------------------------------
-# * MAIN Processing
+# *  __  __      _         ___                       _           
+# * |  \/  |__ _(_)_ _    | _ \_ _ ___  __ ___ _____(_)_ _  __ _ 
+# * | |\/| / _` | | ' \   |  _/ '_/ _ \/ _/ -_|_-<_-< | ' \/ _` |
+# * |_|  |_\__,_|_|_||_|  |_| |_| \___/\__\___/__/__/_|_||_\__, |
+# *                                                        |___/ 
 #------------------------------------------------
 if __name__ == "__main__":
-    #try:
-    #  Get the NUM_SERVOS
-    with app.app_context():
-        s = 'SELECT MAX(Id) AS max_id FROM Config;'
-        NUM_SERVOS = int(query_db(s)[0]['max_id'])
-    # Report the local IP address so external PC's can find me and connect
-    s = [(s.connect(('8.8.8.8', 53)),
-          s.getsockname()[0],
-          s.close()) for s in [socket.socket(socket.AF_INET,
-                                             socket.SOCK_DGRAM)]][0][1]
-    print(' * ' + s)
-    # Run the web server
-    app.run(host=str(s),
-            debug=1,
-            port=5000,
-            use_reloader=True)
-    #finally:
+    try:
+        #  Get the NUM_SERVOS
+        with app.app_context():
+            s = 'SELECT MAX(Id) AS max_id FROM Config;'
+            NUM_SERVOS = int(query_db(s)[0]['max_id'])
+        # Report the local IP address so external PC's can find me and connect
+        s = [(s.connect(('8.8.8.8', 53)),
+              s.getsockname()[0],
+              s.close()) for s in [socket.socket(socket.AF_INET,
+                                                 socket.SOCK_DGRAM)]][0][1]
+        print(' * ' + s)
+        socketio.run(app,
+                     host=str(s),
+                     debug=True,
+                     port=5000,
+                     use_reloader=True)
+    finally:
         #GPIO.cleanup()
+        #disconnect()
+        #thread.stop_background_task()
+        1+1

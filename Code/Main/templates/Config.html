@@ -1,4 +1,13 @@
 {% extends "Template.html" %}
+
+{% block socketScripts %}
+    $('form#emit').submit(function(event) {
+        socket.emit('my_event', {data: $('#emit_data').val()});
+        return false;
+    });
+{% endblock %}
+
+
 {% block pagebody %}
   <form id="servosForm" method="post">
   <!-- Drop down menu -->
@@ -67,6 +76,15 @@
                      min="-10"
                      max="190"
                      step="1">
+
+        <label for="Servo{{ servo['Id'] }}Pos">Position</label>
+        <input type="range"
+                     name="Servo{{ servo['Id'] }}Pos"
+                     id="Servo{{ servo['Id'] }}Pos"
+                     value="{{ servo['Pos'] }}"
+                     min="{{ servo['Minimum'] }}"
+                     max="{{ servo['Maximum'] }}"
+                     step="10">
        </div>
     {% endfor %}
     
@@ -74,7 +92,8 @@
          <div id="snackbar">Config saved.</div>
     -->
 	
-	<input type="submit" id-"submit" name="submit" value="Apply Config">
+	<input type="submit" id="ApplyConfig" name="ApplyConfig" value="Apply Config">
+	<input type="submit" id="MoveToPos" name="MoveToPos" value="Move To Pos">
     
   </form>
   
