@@ -1,247 +1,244 @@
 <!DOCTYPE html>
 <html>
+    <!-- Slider source:                                                        -->
+    <!--   http://www.w3schools.com/jquerymobile/jquerymobile_form_sliders.asp -->
+    <!-- Tabs source                                                           -->
+    <!--   http://www.w3schools.com/howto/howto_js_tabs.asp                    -->
+    <head>
+        <title>Flask-SocketIO Test</title>
+        <!-- Delete cache -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="cache-control"
+              content="no-cache, must-revalidate, post-check=0, pre-check=0">
+        <meta http-equiv="expires" content="Sat, 31 Oct 2014 00:00:00 GMT">
+        <meta http-equiv="pragma" content="no-cache">
+        <link rel="stylesheet"
+              href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+        <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+        <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js">
+              </script>
+        <!-- Favicon (doesn't work) -->
+        <!-- Sockets -->
+        <script type="text/javascript"
+                src="//code.jquery.com/jquery-1.4.2.min.js">
+                </script>
+        <script type="text/javascript"
+                src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.5/socket.io.min.js">
+                </script>
+        <script type="text/javascript" charset="utf-8">
+            $(document).ready(function() {
+                var socket = io.connect(location.protocol +
+                                        '//' + document.domain +
+                                        ':' + location.port + '/conf');
+                // Handlers for the emit form
+                $('form#emit').submit(function(event) {
+                    console.log( 'Emitting' )
+                    socket.emit('my_event', {data: $('#emit_data').val()});
+                    return false;
+                });
+                {% block socketScripts %}
+                {% endblock %}
+        </script>
+    </head>
+    <style>
+        body {
+            font-family: "Lato", sans-serif;
+            font-size: 12px;
+        }
 
-<!-- Slider source:                                                        -->
-<!--   http://www.w3schools.com/jquerymobile/jquerymobile_form_sliders.asp -->
-<!-- Tabs source                                                           -->
-<!--   http://www.w3schools.com/howto/howto_js_tabs.asp                    -->
+        label {
+            font-family: "Lato", sans-serif;
+            font-size: 12px;
+        }
 
-<head>
-<!-- Delete cache -->
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="cache-control" content="no-cache, must-revalidate, post-check=0, pre-check=0">
-<meta http-equiv="expires" content="Sat, 31 Oct 2014 00:00:00 GMT">
-<meta http-equiv="pragma" content="no-cache">
-<link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
-<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-<script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
-<!-- Favicon (doesn't work) -->
-<link rel="shortcut icon" href="favicon.ico"/>
-<link rel="icon" href="favicon.ico"/>
-</head>
+        ul.tab {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            border: 1px solid #ccc;
+            background-color: #f1f1f1;
+        }
 
-<style>
-body {
-    font-family: "Lato", sans-serif;
-    font-size: 12px;
-}
+        /* Float the list items side by side */
+        ul.tab li {float: left;}
 
-label {
-    font-family: "Lato", sans-serif;
-    font-size: 12px;
-}
+        /* Style the links inside the list items */
+        ul.tab li a {
+            display: inline-block;
+            color: black;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            transition: 0.3s;
+            font-size: 12px;
+        }
 
-ul.tab {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    border: 1px solid #ccc;
-    background-color: #f1f1f1;
-}
+        /* Change background color of links on hover */
+        ul.tab li a:hover {
+            background-color: #ddd;
+        }
 
-/* Float the list items side by side */
-ul.tab li {float: left;}
+        /* Create an active/current tablink class */
+        ul.tab li a:focus, .active {
+            background-color: #ccc;
+        }
 
-/* Style the links inside the list items */
-ul.tab li a {
-    display: inline-block;
-    color: black;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    transition: 0.3s;
-    font-size: 12px;
-}
-
-/* Change background color of links on hover */
-ul.tab li a:hover {
-    background-color: #ddd;
-}
-
-/* Create an active/current tablink class */
-ul.tab li a:focus, .active {
-    background-color: #ccc;
-}
-
-/* Style the tab content */
-.tabcontent {
-    display: none;
-    padding: 6px 12px;
-    border: 1px solid #ccc;
-    border-top: none;
-}
+        /* Style the tab content */
+        .tabcontent {
+            display: none;
+            padding: 6px 12px;
+            border: 1px solid #ccc;
+            border-top: none;
+        }
 
 
-/* Style the images */
-img {
-     width:75%;
-     display:block;
-     margin:0 auto;
-}
+        /* Style the images */
+        img {
+             width:75%;
+             display:block;
+             margin:0 auto;
+        }
 
-/* Toast notifications */
-#snackbar {
-    visibility: hidden;
-    min-width: 250px;
-    margin-left: -125px;
-    background-color: #333;
-    color: #fff;
-    text-align: center;
-    border-radius: 16px;
-    padding: 16px;
-    position: fixed;
-    z-index: 1;
-    right: 30px;
-    bottom: 30px;
-    font-size: 17px;
-}
+        /* Toast notifications */
+        #snackbar {
+            visibility: hidden;
+            min-width: 250px;
+            margin-left: -125px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 16px;
+            padding: 16px;
+            position: fixed;
+            z-index: 1;
+            right: 30px;
+            bottom: 30px;
+            font-size: 17px;
+        }
 
-#snackbar.show {
-    visibility: visible;
-    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
-    animation: fadein 0.5s, fadeout 0.5s 2.5s;
-}
+        #snackbar.show {
+            visibility: visible;
+            -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+            animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        }
 
-@-webkit-keyframes fadein {
-    from {bottom: 0; opacity: 0;} 
-    to {bottom: 30px; opacity: 1;}
-}
+        @-webkit-keyframes fadein {
+            from {bottom: 0; opacity: 0;} 
+            to {bottom: 30px; opacity: 1;}
+        }
 
-@keyframes fadein {
-    from {bottom: 0; opacity: 0;}
-    to {bottom: 30px; opacity: 1;}
-}
+        @keyframes fadein {
+            from {bottom: 0; opacity: 0;}
+            to {bottom: 30px; opacity: 1;}
+        }
 
-@-webkit-keyframes fadeout {
-    from {bottom: 30px; opacity: 1;} 
-    to {bottom: 0; opacity: 0;}
-}
+        @-webkit-keyframes fadeout {
+            from {bottom: 30px; opacity: 1;} 
+            to {bottom: 0; opacity: 0;}
+        }
 
-@keyframes fadeout {
-    from {bottom: 30px; opacity: 1;}
-    to {bottom: 0; opacity: 0;}
-}
-</style>
+        @keyframes fadeout {
+            from {bottom: 30px; opacity: 1;}
+            to {bottom: 0; opacity: 0;}
+        }
+    </style>
 
-<body>
+    <body>
+        <div data-role="page">
+          <!-- Title text -->
+          <div data-role="header">
+            <h1>Robobot</h1>
+          </div>
+          <!-- Load robobot image -->
+          <img src="https://cad.onshape.com/api/thumbnails/d/673e2068db18134e20d03cef/w/27f3b55c71efa25a17beb110/s/300x170?t=1480638183871">
+          <!-- Tabs -->
+          <div data-role="main" class="ui-content">
+            <ul class="tab">
+              <li><a href="config">Config</a></li>
+              <li><a href="pose">Pose</a></li>
+              <li><a href="sequence">Sequence</a></li>
+            </ul>
+            <!-- Pop-up Messages -->
+            <!-- (Not implemented in py) -->
+            {% with messages = get_flashed_messages() %}
+              {% if messages %}
+                <ul class=flashes>
+                {% for message in messages %}
+                  <li>{{ message }}</li>
+                {% endfor %}
+                </ul>
+              {% endif %}
+            {% endwith %}
+            <!-- Run page block -->
+            {% block pagebody %}
+            {% endblock %}
+          </div>
+        </div>
 
-<div data-role="page">
-  <div data-role="header">
-    <h1>Robobot</h1>
-  </div>
+        <script>
+            /* Hide/show tabs js */
+            function openTab(evt, tabName) {
+                var i, tabcontent, tablinks;
+                tabcontent = document.getElementsByClassName("tabcontent");
+                for (i = 0; i < tabcontent.length; i++) {
+                    tabcontent[i].style.display = "none";
+                }
+                tablinks = document.getElementsByClassName("tablinks");
+                for (i = 0; i < tablinks.length; i++) {
+                    tablinks[i].className = tablinks[i].className.replace(" active", "");
+                }
+                document.getElementById(tabName).style.display = "block";
+                evt.currentTarget.className += " active";
+            }
 
-  <img src="https://cad.onshape.com/api/thumbnails/d/673e2068db18134e20d03cef/w/27f3b55c71efa25a17beb110/s/300x170?t=1480638183871">
+            function fnShowSnackbar() {
+                var x = document.getElementById("snackbar")
+                x.className = "show";
+                setTimeout(function(){
+                    x.className = x.className.replace("show", "");
+                }, 3000);
+                
+                form = $('form');
 
-  <div data-role="main" class="ui-content">
-    <ul class="tab">
-      <li><a href="config">Config</a></li>
-      <li><a href="pose">Pose</a></li>
-      <li><a href="sequence">Sequence</a></li>
-    </ul>
-    
-    
-    {% with messages = get_flashed_messages() %}
-      {% if messages %}
-        <ul class=flashes>
-        {% for message in messages %}
-          <li>{{ message }}</li>
-        {% endfor %}
-        </ul>
-      {% endif %}
-    {% endwith %}
-    
-    {% block pagebody %}
+                $(form).on('submit', function() {
+                    $.post($(form).attr('action'),
+                           $(this).serialize(),
+                           function(response) {
+                               $('form').hide();
+                           },'json');
+                    return false;
+                });
+            }
+            function getTextAndPost(sType) {
+              // Get the old name
+              var oldname = "Mark the Great"
+              tabcontent = document.getElementsByClassName("tabcontent");
+              for( i = 0; i < tabcontent.length; i++ ) {
+                  if( tabcontent[i].style.display == "block" ){
+                      oldname = tabcontent[i].getAttribute("name")
+                  }
+              }
+              var newName = prompt("Enter a name for the new " + sType + ":", oldname)
+              if( newName != null ) {
+                  var pData = $("form").serialize(true);
+                  pData += '&newName='+newName
+                  //console.log( pData )
+                  $.post( "/"+sType, pData);
+                  
+              }
+            }
+            function confirmAndPost(sType) {
+              var yn = confirm("Are you sure you want to delete this "+sType+"?")
+              if( yn == true ){
+                  var pData = $("form").serialize(true);
+                  pData += '&delName=True'
+                  $.post( "/"+sType, pData);
+              }
+            }
+        </script>
+    </body>
+    {% block endOfPage %}
     {% endblock %}
-  </div>
-</div>
-
-
-<script>
-/* Hide/show tabs js */
-function openTab(evt, tabName) {
-    var i, tabcontent, tablinks;
-    tabcontent = document.getElementsByClassName("tabcontent");
-    for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].style.display = "none";
-    }
-    tablinks = document.getElementsByClassName("tablinks");
-    for (i = 0; i < tablinks.length; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" active", "");
-    }
-    document.getElementById(tabName).style.display = "block";
-    evt.currentTarget.className += " active";
-}
-
-/* Change submit to stay on same page */
-/*
-$(document).ready(function(){
-    form = $('form');
-
-    $(form).on('submit', function() {
-        $.post($(form).attr('action'), $(this).serialize(), function(response) {
-            $('form').hide();
-        },'json');
-
-        return false;
-    });
-});
-*/
-
-function fnShowSnackbar() {
-    var x = document.getElementById("snackbar")
-    x.className = "show";
-    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
-    
-    form = $('form');
-
-    $(form).on('submit', function() {
-        $.post($(form).attr('action'), $(this).serialize(), function(response) {
-            $('form').hide();
-        },'json');
-
-        return false;
-    });
-}
-
-//document.getElementsByClassName("pose-list")[0].click()
-//$(document).ready(function(){
-//    document.getElementsByClassName("tabcontent")[0].style.display = "block"
-//});
-
-
-    function getTextAndPost(sType) {
-      // Get the old name
-      var oldname = "Mark the Great"
-      tabcontent = document.getElementsByClassName("tabcontent");
-      for( i = 0; i < tabcontent.length; i++ ) {
-          if( tabcontent[i].style.display == "block" ){
-              oldname = tabcontent[i].getAttribute("name")
-          }
-      }
-      var newName = prompt("Enter a name for the new " + sType + ":", oldname)
-      if( newName != null ) {
-          var pData = $("form").serialize(true);
-          pData += '&newName='+newName
-          //console.log( pData )
-          $.post( "/"+sType, pData);
-          
-      }
-    }
-    function confirmAndPost(sType) {
-      var yn = confirm("Are you sure you want to delete this "+sType+"?")
-      if( yn == true ){
-          var pData = $("form").serialize(true);
-          pData += '&delName=True'
-          $.post( "/"+sType, pData);
-      }
-    }
-</script>
-     
-</body>
-
-{% block endOfPage %}
-{% endblock %}
-
 </html>
 

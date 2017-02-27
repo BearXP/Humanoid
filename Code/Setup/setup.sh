@@ -9,3 +9,5 @@ sudo apt-get install python-opencv
 #sudo pip install numpy
 sudo -H pip install --upgrade numpy
 sudo apt-get install uvccapture
+
+sudo pip install flask-socketio

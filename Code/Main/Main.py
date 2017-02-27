@@ -59,8 +59,6 @@ async_mode = None
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
-# create config variable, which acts like a dicto
-#app.config.from_object(__name__)
 socketio = SocketIO(app, async_mode=async_mode)
 #thread = None
 
@@ -220,11 +218,16 @@ def config():
             update_servo( int(i), int(pos) )
             #print ''
         #return redirect(url_for('config'))
+        return
         # flash("Hi world!")
     #elif request.method == 'GET':
     return render_template('Config.html',
                                configDb=query_db('select * from Config'),
                                async_mode=socketio.async_mode)
+
+@socketio.on('ConfigMoveToPos', namespace='/conf')
+def test_message(message):
+    print(message['data'])
 
 #------------------------------------------------
 # *  ___      _                ___                ___               
@@ -276,7 +279,7 @@ def pose():
         for limb in query_db("select distinct limb from Config;"):
             limbs.append( limb['limb'] )
         # Show webpage
-        print "GETTING POSE"
+        print " * GETTING POSE"
         return render_template('Pose.html',
                                configDb=configDb,
                                poseDb=poseDb,
@@ -347,6 +350,7 @@ def sequence():
                                poseDb=poseDb,
                                maxSeqId=maxSeqId,
                                seqDb=seqDb)
+
 
 #------------------------------------------------
 # *  __  __      _         ___                       _           
