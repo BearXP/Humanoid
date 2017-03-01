@@ -188,9 +188,10 @@ def index():
 # * |___/\___|\__|\_,_| .__/   \___\___/_||_|_| |_\__, |  |_| \__,_\__, \___|
 # *                   |_|                         |___/            |___/      
 #------------------------------------------------
-@app.route("/config",methods=['GET','POST','PUT'])
+@app.route("/config")
 def config():
     if request.method == 'POST':
+        print("Posting")
         # Get the index of the servo being inspected
         i = str(request.form['sel-conf'][5:])
         # APPLY CONFIG
@@ -218,16 +219,16 @@ def config():
             update_servo( int(i), int(pos) )
             #print ''
         #return redirect(url_for('config'))
-        return
         # flash("Hi world!")
     #elif request.method == 'GET':
     return render_template('Config.html',
                                configDb=query_db('select * from Config'),
                                async_mode=socketio.async_mode)
 
-@socketio.on('ConfigMoveToPos', namespace='/conf')
-def test_message(message):
-    print(message['data'])
+@socketio.on('move_servo', namespace='/conf')
+def move_servo(message):
+    position = int(message['data'])
+    update_servo(1, position)
 
 #------------------------------------------------
 # *  ___      _                ___                ___               
@@ -372,7 +373,7 @@ if __name__ == "__main__":
                                                  socket.SOCK_DGRAM)]][0][1]
         print(' * ' + s)
         socketio.run(app,
-                     host=str(s),
+                     #host=str(s),
                      debug=True,
                      port=5000,
                      use_reloader=True)

@@ -1,4 +1,18 @@
 {% extends "Template.html" %}
+
+{% block socketScripts %}
+  var socket = io.connect(location.protocol +
+                          '//' + document.domain +
+                          ':' + location.port + '/conf');
+  // Handlers for the emit form
+  $('form#emit').submit(function(event) {
+      //console.log( $('#emit_data').val() )
+      socket.emit('move_servo', {data: $('#emit_data').val()});
+      return false;
+  });
+{% endblock %}
+
+
 {% block pagebody %}
   <form id="servosForm" method="post" action='#'>
   <!-- Drop down menu -->

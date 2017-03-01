@@ -6,12 +6,14 @@
     <!--   http://www.w3schools.com/howto/howto_js_tabs.asp                    -->
     <head>
         <title>Flask-SocketIO Test</title>
-        <!-- Delete cache -->
+        <!-- Formatting for mobile -->
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Delete cache -->
         <meta http-equiv="cache-control"
               content="no-cache, must-revalidate, post-check=0, pre-check=0">
         <meta http-equiv="expires" content="Sat, 31 Oct 2014 00:00:00 GMT">
         <meta http-equiv="pragma" content="no-cache">
+        <!-- Styling -->
         <link rel="stylesheet"
               href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
         <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
@@ -27,17 +29,9 @@
                 </script>
         <script type="text/javascript" charset="utf-8">
             $(document).ready(function() {
-                var socket = io.connect(location.protocol +
-                                        '//' + document.domain +
-                                        ':' + location.port + '/conf');
-                // Handlers for the emit form
-                $('form#emit').submit(function(event) {
-                    console.log( 'Emitting' )
-                    socket.emit('my_event', {data: $('#emit_data').val()});
-                    return false;
-                });
                 {% block socketScripts %}
                 {% endblock %}
+            });
         </script>
     </head>
     <style>
@@ -145,36 +139,36 @@
     </style>
 
     <body>
-        <div data-role="page">
-          <!-- Title text -->
-          <div data-role="header">
-            <h1>Robobot</h1>
-          </div>
-          <!-- Load robobot image -->
-          <img src="https://cad.onshape.com/api/thumbnails/d/673e2068db18134e20d03cef/w/27f3b55c71efa25a17beb110/s/300x170?t=1480638183871">
-          <!-- Tabs -->
-          <div data-role="main" class="ui-content">
-            <ul class="tab">
-              <li><a href="config">Config</a></li>
-              <li><a href="pose">Pose</a></li>
-              <li><a href="sequence">Sequence</a></li>
-            </ul>
-            <!-- Pop-up Messages -->
-            <!-- (Not implemented in py) -->
-            {% with messages = get_flashed_messages() %}
-              {% if messages %}
-                <ul class=flashes>
-                {% for message in messages %}
-                  <li>{{ message }}</li>
-                {% endfor %}
-                </ul>
-              {% endif %}
-            {% endwith %}
-            <!-- Run page block -->
-            {% block pagebody %}
-            {% endblock %}
-          </div>
+      <div data-role="page">
+        <!-- Title text -->
+        <div data-role="header">
+          <h1>Robobot</h1>
         </div>
+        <!-- Load robobot image -->
+        <img src="https://cad.onshape.com/api/thumbnails/d/673e2068db18134e20d03cef/w/27f3b55c71efa25a17beb110/s/300x170?t=1480638183871">
+        <!-- Tabs -->
+        <div data-role="main" class="ui-content">
+          <ul class="tab">
+            <li><a href="config">Config</a></li>
+            <li><a href="pose">Pose</a></li>
+            <li><a href="sequence">Sequence</a></li>
+          </ul>
+          <!-- Pop-up Messages -->
+          <!-- (Not implemented in py) -->
+          {% with messages = get_flashed_messages() %}
+            {% if messages %}
+              <ul class=flashes>
+              {% for message in messages %}
+                <li>{{ message }}</li>
+              {% endfor %}
+              </ul>
+            {% endif %}
+          {% endwith %}
+          <!-- Run page block -->
+          {% block pagebody %}
+          {% endblock %}
+        </div>
+      </div>
 
         <script>
             /* Hide/show tabs js */
