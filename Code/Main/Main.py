@@ -60,17 +60,6 @@ async_mode = None
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app, async_mode=async_mode)
-#thread = None
-
-#def background_thread():
-#    """Example of how to send server generated events to clients."""
-#    count = 0
-#    while True:
-#        socketio.sleep(10)
-#        count += 1
-#        socketio.emit('my_response',
-#                      {'data': 'Server generated event', 'count': count},
-#                      namespace='/test')
 
 #------------------------------------------------
 # * Setup SQL database
@@ -151,24 +140,6 @@ def poseDbToList(dbRow):
     for i in range(NUM_SERVOS):
       out.append(dbRow['Servo%dPos' % (i+1)])
     return out
-
-
-#------------------------------------------------
-# * SocketIO Connect
-#------------------------------------------------
-@socketio.on('connect', namespace='/test')
-def test_connect():
-    #global thread
-    #if thread is None:
-    #    thread = socketio.start_background_task(target=background_thread)
-    emit('my_response', {'data': 'Connected', 'count': 0})
-
-
-@socketio.on('my_event', namespace='/test')
-def test_message(message):
-    session['receive_count'] = session.get('receive_count', 0) + 1
-    emit('my_response',
-         {'data': message['data'], 'count': session['receive_count']})
 
 #------------------------------------------------
 # *  ___      _                _  _                  ___               

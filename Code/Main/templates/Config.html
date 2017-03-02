@@ -6,7 +6,7 @@
                           ':' + location.port + '/conf');
   // Handlers for the emit form
   $('form#emit').submit(function(event) {
-      //console.log( $('#emit_data').val() )
+      console.log( $('#emit_data').val() )
       socket.emit('move_servo', {data: $('#emit_data').val()});
       return false;
   });
@@ -96,12 +96,31 @@
     <!-- <button onclick="fnShowSnackbar()">Apply Config</button>
          <div id="snackbar">Config saved.</div>
     -->
-	<input type="submit" id="ApplyConfig" name="ApplyConfig" value="Apply Config">
-	<input type="submit" id="MoveToPos" name="MoveToPos" value="Move To Pos">
+    <input type="submit" id="ApplyConfig" name="ApplyConfig" value="Apply Config">
+    <input type="submit" id="MoveToPos" name="MoveToPos" value="Move To Pos">
   </form>
   <form id="emit" method="POST" action='#'>
-        <input type="text" name="emit_data" id="emit_data" placeholder="Message">
+        <input type="range"
+               name="emit_data"
+               id  ="emit_data"
+               min="1"
+               max="10"
+               value="5"
+               onchange="moveMotor('')">
         <input type="submit" value="Echo">
   </form>
+  
+  <script>
+      function moveMotor(sType) {
+          console.log( "Running: moveMotor" )
+          var socket = io.connect(location.protocol +
+                                  '//' + document.domain +
+                                  ':' + location.port + '/conf');
+          // Handlers for the emit form
+          console.log( $('#emit_data').val() )
+          socket.emit('move_servo', {data: $('#emit_data').val()});
+          return false;
+       }
+  </script>
 {% endblock %}
 
