@@ -95,6 +95,24 @@ def save_db(db, sql_string):
 # * | |) / -_)  _|  | |_| | '_ \/ _` / _` |  _/ -_)  \__ \/ -_) '_\ V / _ \
 # * |___/\___|_|     \___/| .__/\__,_\__,_|\__\___|  |___/\___|_|  \_/\___/
 # *                       |_|
+
+def move_servo(index, pos, pin, i2caddr, offset, direction, minimum, maximum):
+    cal_pos = 90 + direction*(pos-90) + offset
+    pwm_val = int( 150.0 + float(cal_pos) * 65.0 / 18.0 )
+    print("Servo:%2d, %9s-%16s Pn:%2d I2C:%s Pos:%3d>%3d>%3d" % \
+        (index,
+         cfg['limb'],
+         cfg['name'],
+         cfg['pin'],
+         cfg['I2CAddr'],
+         pos,
+         cal_pos,
+         pwm_val   ))
+    if SERVOS_ACTIVE:
+        ServoController = Device( int(cfg['I2CAddr'], 0) )
+        ServoController.set_pwm(pin, pwm_val)
+        ServoController.set_pwm_frequency(int(60))
+        ServoController = None
 #------------------------------------------------
 
 def update_servo(index, pos):
@@ -196,10 +214,11 @@ def config():
                                configDb=query_db('select * from Config'),
                                async_mode=socketio.async_mode)
 
-@socketio.on('move_servo', namespace='/conf')
-def move_servo(message):
-    position = int(message['data'])
-    update_servo(1, position)
+@socketio.on('test_servo', namespace='/conf')
+def test_servo(message):
+    position = int(message['pos'])
+    servoID = int(message['servoID'][5:])
+    update_servo(servoID, position)
 
 #------------------------------------------------
 # *  ___      _                ___                ___               
