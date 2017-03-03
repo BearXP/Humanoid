@@ -1,18 +1,5 @@
 {% extends "Template.html" %}
 
-{% block socketScripts %}
-  var socket = io.connect(location.protocol +
-                          '//' + document.domain +
-                          ':' + location.port + '/conf');
-  // Handlers for the emit form
-  $('form#emit').submit(function(event) {
-      console.log( $('#emit_data').val() )
-      socket.emit('move_servo', {data: $('#emit_data').val()});
-      return false;
-  });
-{% endblock %}
-
-
 {% block pagebody %}
   <form id="servosForm" method="post" action='#'>
   <!-- Drop down menu -->
@@ -51,9 +38,10 @@
                      name="Servo{{ servo['Id'] }}Offset"
                      id="Servo{{ servo['Id'] }}Offset"
                      value="{{ servo['Offset'] }}"
-                     min="-50"
-                     max="50"
-                     step="1">
+                     min="-30"
+                     max="30"
+                     step="1"
+                     onchange="test_servo( {{ servo['Id'] }} )">
 
         <label for="Servo{{ servo['Id'] }}Direction">Direction</label>
         <input type="range"
@@ -62,7 +50,8 @@
                      value="{{ servo['direction'] }}"
                      min="-1"
                      max="1"
-                     step="2">
+                     step="2"
+                     onchange="test_servo( {{ servo['Id'] }} )">
                      
         <label for="Servo{{ servo['Id'] }}Minimum">Minimum</label>
         <input type="range"
@@ -71,7 +60,8 @@
                      value="{{ servo['Minimum'] }}"
                      min="-10"
                      max="190"
-                     step="1">
+                     step="1"
+                     onchange="test_servo( {{ servo['Id'] }} )">
 
         <label for="Servo{{ servo['Id'] }}Maximum">Maximum</label>
         <input type="range"
@@ -80,7 +70,8 @@
                      value="{{ servo['Maximum'] }}"
                      min="-10"
                      max="190"
-                     step="1">
+                     step="1"
+                     onchange="test_servo( {{ servo['Id'] }} )">
 
         <label for="Servo{{ servo['Id'] }}Pos">Position</label>
         <input type="range"
@@ -89,37 +80,33 @@
                      value="{{ servo['Pos'] }}"
                      min="{{ servo['Minimum'] }}"
                      max="{{ servo['Maximum'] }}"
-                     step="10">
+                     step="10"
+                     onchange="test_servo( {{ servo['Id'] }} )">
        </div>
     {% endfor %}
-    
-    <!-- <button onclick="fnShowSnackbar()">Apply Config</button>
-         <div id="snackbar">Config saved.</div>
-    -->
-    <input type="submit" id="ApplyConfig" name="ApplyConfig" value="Apply Config">
-    <input type="submit" id="MoveToPos" name="MoveToPos" value="Move To Pos">
-  </form>
-  <form id="emit" method="POST" action='#'>
-        <input type="range"
-               name="emit_data"
-               id  ="emit_data"
-               min="1"
-               max="10"
-               value="5"
-               onchange="moveMotor('')">
-        <input type="submit" value="Echo">
+    <input type="submit"
+           id="ApplyConfig"
+           name="ApplyConfig"
+           value="Apply Config">
   </form>
   
   <script>
-      function moveMotor(sType) {
+      function test_servo(sId) {
           var socket = io.connect(location.protocol +
                                   '//' + document.domain +
                                   ':' + location.port + '/conf');
           // Handlers for the emit form
-          console.log( $('#emit_data').val() )
-          socket.emit('move_servo', {pos:     $('#emit_data').val(),
-                                     servoID: $('#sel-conf').val()
-                                    });
+          var message = {servoID   : sId
+                        ,pos       : $('#Servo1Pos'      ).val()
+                        ,pin       : $('#Servo1Pin'      ).val()
+                        ,I2CAddr   : $('#Servo1I2CAddr'  ).val()
+                        ,Offset    : $('#Servo1Offset'   ).val()
+                        ,Direction : $('#Servo1Direction').val()
+                        ,Minimum   : $('#Servo1Minimum'  ).val()
+                        ,Maximum   : $('#Servo1Maximum'  ).val()
+                        }
+          console.log( JSON.stringify(message) )
+          socket.emit('test_servo', message);
           return false;
        }
   </script>

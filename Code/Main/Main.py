@@ -89,59 +89,43 @@ def save_db(db, sql_string):
     db.execute(sql_string)
     db.commit()
 
-#------------------------------------------------
+#-------------------------------------------------------------------------------
 # *  ___       __    _   _          _      _          ___                     
 # * |   \ ___ / _|  | | | |_ __  __| |__ _| |_ ___   / __| ___ _ ___ _____
 # * | |) / -_)  _|  | |_| | '_ \/ _` / _` |  _/ -_)  \__ \/ -_) '_\ V / _ \
 # * |___/\___|_|     \___/| .__/\__,_\__,_|\__\___|  |___/\___|_|  \_/\___/
 # *                       |_|
+#-------------------------------------------------------------------------------
 
-def move_servo(index, pos, pin, i2caddr, offset, direction, minimum, maximum):
-    cal_pos = 90 + direction*(pos-90) + offset
-    pwm_val = int( 150.0 + float(cal_pos) * 65.0 / 18.0 )
-    print("Servo:%2d, %9s-%16s Pn:%2d I2C:%s Pos:%3d>%3d>%3d" % \
-        (index,
-         cfg['limb'],
-         cfg['name'],
-         cfg['pin'],
-         cfg['I2CAddr'],
-         pos,
-         cal_pos,
-         pwm_val   ))
-    if SERVOS_ACTIVE:
-        ServoController = Device( int(cfg['I2CAddr'], 0) )
-        ServoController.set_pwm(pin, pwm_val)
-        ServoController.set_pwm_frequency(int(60))
-        ServoController = None
-#------------------------------------------------
-
-def update_servo(index, pos):
-    cfg = query_db('SELECT * FROM Config WHERE ID=' + str(index))[0]
-    pin = cfg['Pin']
+def move_servo(index, pos, cfg):
     cal_pos = 90 + cfg['Direction']*(pos-90) + cfg['Offset']
     pwm_val = int( 150.0 + float(cal_pos) * 65.0 / 18.0 )
     print("Servo:%2d, %9s-%16s Pn:%2d I2C:%s Pos:%3d>%3d>%3d" % \
-        (index,
-         cfg['limb'],
-         cfg['name'],
-         cfg['pin'],
-         cfg['I2CAddr'],
-         pos,
-         cal_pos,
-         pwm_val   ))
+          (index,
+           cfg['Limb'],
+           cfg['Name'],
+           cfg['Pin'],
+           cfg['I2CAddr'],
+           pos,
+           cal_pos,
+           pwm_val   ))
     if SERVOS_ACTIVE:
         ServoController = Device( int(cfg['I2CAddr'], 0) )
         ServoController.set_pwm(pin, pwm_val)
         ServoController.set_pwm_frequency(int(60))
         ServoController = None
 
-#------------------------------------------------
+def update_servo(index, pos):
+    cfg = query_db('SELECT * FROM Config WHERE ID=' + str(index))[0]
+    move_servo(index, pos, cfg)
+
+#-------------------------------------------------------------------------------
 # *  ___       __    _   _          _      _          ___                     
 # * |   \ ___ / _|  | | | |_ __  __| |__ _| |_ ___   / __| ___ _ ___ _____ ___
 # * | |) / -_)  _|  | |_| | '_ \/ _` / _` |  _/ -_)  \__ \/ -_) '_\ V / _ (_-<
 # * |___/\___|_|     \___/| .__/\__,_\__,_|\__\___|  |___/\___|_|  \_/\___/__/
 # *                       |_|
-#------------------------------------------------
+#-------------------------------------------------------------------------------
 
 def update_servos(servos):
     print(" -> Updating servos")
@@ -159,24 +143,24 @@ def poseDbToList(dbRow):
       out.append(dbRow['Servo%dPos' % (i+1)])
     return out
 
-#------------------------------------------------
+#-------------------------------------------------------------------------------
 # *  ___      _                _  _                  ___               
 # * / __| ___| |_ _  _ _ __   | || |___ _ __  ___   | _ \__ _ __ _ ___ 
 # * \__ \/ -_)  _| || | '_ \  | __ / _ \ '  \/ -_)  |  _/ _` / _` / -_)
 # * |___/\___|\__|\_,_| .__/  |_||_\___/_|_|_\___|  |_| \__,_\__, \___|
 # *                   |_|                                    |___/     
-#------------------------------------------------
+#-------------------------------------------------------------------------------
 @app.route("/",methods=['GET','POST','PUT'])
 def index():
     return redirect(url_for('pose'))
 
-#------------------------------------------------
+#-------------------------------------------------------------------------------
 # *  ___      _                 ___           __ _         ___               
 # * / __| ___| |_ _  _ _ __    / __|___ _ _  / _(_)__ _   | _ \__ _ __ _ ___ 
 # * \__ \/ -_)  _| || | '_ \  | (__/ _ \ ' \|  _| / _` |  |  _/ _` / _` / -_)
 # * |___/\___|\__|\_,_| .__/   \___\___/_||_|_| |_\__, |  |_| \__,_\__, \___|
 # *                   |_|                         |___/            |___/      
-#------------------------------------------------
+#-------------------------------------------------------------------------------
 @app.route("/config")
 def config():
     if request.method == 'POST':
@@ -216,9 +200,18 @@ def config():
 
 @socketio.on('test_servo', namespace='/conf')
 def test_servo(message):
-    position = int(message['pos'])
-    servoID = int(message['servoID'][5:])
-    update_servo(servoID, position)
+    servoID      = int(message['servoID'])
+    cfg = query_db('SELECT * FROM Config WHERE ID=' + str(servoID))[0]
+    #cfg = {i: y for (i,y) in enumerate(cfg) }
+    cfg = dict(zip(cfg.keys(), cfg)) 
+    position         = int(message['pos'])
+    cfg['Pin']       = int(message['pin'])
+    cfg['I2CAddr']   =     message['I2CAddr']
+    cfg['Offset']    = int(message['Offset'])
+    cfg['Direction'] = int(message['Direction'])
+    cfg['Minimum']   = int(message['Minimum'])
+    cfg['Maximum']   = int(message['Maximum'])
+    move_servo(servoID, position, cfg)
 
 #------------------------------------------------
 # *  ___      _                ___                ___               
