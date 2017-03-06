@@ -98,13 +98,14 @@ def save_db(db, sql_string):
 #-------------------------------------------------------------------------------
 
 def move_servo(index, pos, cfg):
+    pin = cfg['Pin']
     cal_pos = 90 + cfg['Direction']*(pos-90) + cfg['Offset']
     pwm_val = int( 150.0 + float(cal_pos) * 65.0 / 18.0 )
     print("Servo:%2d, %9s-%16s Pn:%2d I2C:%s Pos:%3d>%3d>%3d" % \
           (index,
            cfg['Limb'],
            cfg['Name'],
-           cfg['Pin'],
+           pin,
            cfg['I2CAddr'],
            pos,
            cal_pos,
